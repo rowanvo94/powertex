@@ -3,11 +3,11 @@
   "entryPoints": {
     "comaxx-cms": {
       "css": [
-        "/bundles/comaxxcms/administration/assets/comaxx-cms-Bx8oMn37.css"
+        "/bundles/comaxxcms/administration/assets/comaxx-cms-9eNW8Oao.css"
       ],
       "dynamic": [],
       "js": [
-        "/bundles/comaxxcms/administration/assets/comaxx-cms-BWekMET4.js"
+        "/bundles/comaxxcms/administration/assets/comaxx-cms-K33UJ0Az.js"
       ],
       "legacy": false,
       "preload": []

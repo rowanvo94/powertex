@@ -1,0 +1,121 @@
+.checkout-progress-bar {
+    display: flex;
+    align-items: center;
+    margin-top: 70px;
+    margin-bottom: $comaxx-base-padding-large;
+
+    @include media-breakpoint-up(lg) {
+        margin-bottom: ($comaxx-base-padding-extra-large * 1.5);
+    }
+
+    &-line {
+        width: 100%;
+        height: 2px;
+        background-color: $comaxx-checkout-step-line-color;
+
+        &.first {
+            max-width: 40px;
+
+            @include media-breakpoint-up(sm) {
+                max-width: 50px;
+            }
+
+            @include media-breakpoint-up(lg) {
+                max-width: 100px;
+            }
+        }
+
+        &.last {
+            max-width: 40px;
+
+            @include media-breakpoint-up(sm) {
+                max-width: 50px;
+            }
+
+            @include media-breakpoint-up(lg) {
+                max-width: 100px;
+            }
+        }
+
+        &.filled {
+            background-color: $comaxx-checkout-step-success-line-color;
+        }
+    }
+
+    &-circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: ($comaxx-base-padding * 1.5);
+        height: ($comaxx-base-padding * 1.5);
+        border-radius: 50%;
+        background: $comaxx-checkout-step-circle-color;
+        position: relative;
+
+        @include media-breakpoint-up(md) {
+            min-width: $comaxx-base-padding-extra-large;
+            height: $comaxx-base-padding-extra-large;
+        }
+
+        &.filled {
+            background-color: $comaxx-checkout-step-success-circle-color;
+
+            span {
+                &.step-extra {
+                    color: $comaxx-checkout-step-success-icon-number-color;
+
+                    &.icon {
+                        display: block;
+
+                        .material-symbols-rounded {
+                            font-size: 22px;
+                        }
+                    }
+                }
+            }
+        }
+
+        span {
+            text-align: center;
+
+            &.step-text {
+                position: absolute;
+                width: 120px;
+                top: -55px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: $comaxx-checkout-step-text-color;
+                font-size: 0.875rem;
+
+                @include media-breakpoint-up(md) {
+                    font-size: clamp(
+                        $comaxx-font-size-text * 0.8,
+                        $comaxx-font-size-text,
+                        $comaxx-font-size-text * 1.2
+                    );
+                }
+
+                @include media-breakpoint-up(lg) {
+                    width: auto;
+                    white-space: nowrap;
+                    top: -42px;
+                }
+            }
+
+            &.step-extra {
+                font-weight: $comaxx-font-weight-semibold;
+                color: $comaxx-checkout-step-icon-number-color;
+
+                &.icon {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .step-extra {
+        @include media-breakpoint-down(md) {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,96 @@
+{% sw_extends '@Storefront/storefront/layout/navbar/navbar.html.twig' %}
+
+{% set comaxxHeaderType = theme_config('comaxx-header-variant') %}
+{% set comaxxShowSearch = theme_config('comaxx-header-search-show') %}
+{% set comaxxShowHome = theme_config('comaxx-show-home-in-menu') %}
+{% set comaxxMainMenuWidth = theme_config('comaxx-main-menu-width') %}
+{% set comaxxFlyoutBehavior = theme_config('comaxx-header-flyout-menu-behavior') %}
+{% set comaxxBackdropShow = theme_config('comaxx-header-flyout-menu-backdrop') %}
+{% set comaxxShowMegaMenu = theme_config('comaxx-header-mega-menu') %}
+{% set comaxxFlyoutWidth = theme_config('comaxx-header-flyout-menu-width') %}
+
+{# Set class for header width #}
+{% if comaxxMainMenuWidth == '1' %}
+	{% set mainMenuClasses = 'container' %}
+{% elseif comaxxMainMenuWidth == '2' %}
+	{% set mainMenuClasses = 'container-fluid' %}
+{% elseif comaxxMainMenuWidth == '3' %}
+	{% set mainMenuClasses = 'container' %}
+{% else %}
+	{% set mainMenuClasses = '' %}
+{% endif %}
+
+{% block layout_navbar %}
+	<div class="">
+		<nav class="navbar navbar-expand-lg main-navigation-menu{% if comaxxShowMegaMenu %} has-comaxx-mega-menu{% endif %}{% if comaxxMainMenuWidth == "1" %} is-boxed{% elseif comaxxMainMenuWidth == "3" %} content-boxed{% endif %}" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement" data-navbar="true" {% if comaxxShowMegaMenu %} data-has-mega-menu {% endif %} {% if comaxxBackdropShow %} data-backdrop-show {% endif %}>
+			{% block layout_navbar_container %}
+				<div class="{{ mainMenuClasses }}">
+					<div class="navbar-holder" {% if comaxxFlyoutWidth == 'container' %} style="position:relative;" {% endif %}>
+						{% block layout_navbar_main_nav %}
+							<div class="collapse navbar-collapse" id="main_nav">
+								<ul class="navbar-nav d-flex flex-wrap">
+									{% set homeLabel = context.salesChannel.translated.homeName|default('general.homeLink'|trans) %}
+
+									{% block layout_navbar_menu_home %}
+										{% if context.salesChannel.translated.homeEnabled and comaxxShowHome %}
+											{{ parent() }}
+										{% endif %}
+									{% endblock %}
+
+									{% block layout_navbar_menu_items %}
+										{{ parent() }}
+									{% endblock %}
+								</ul>
+							</div>
+						{% endblock %}
+					</div>
+				</div>
+			{% endblock %}
+		</nav>
+	</div>
+{% endblock %}
+
+{% block layout_navbar_menu_item %}
+	{% if category.type == 'folder' %}
+		{% block layout_navbar_menu_item_folder %}
+			<li class="nav-item" {% if treeItem.children|length > 0 %} data-flyout-menu-trigger="{{ category.id }}" {% endif %} title="{{ name }}">
+				<span class="nav-link main-navigation-link p-2">
+					{{ name }}
+				</span>
+			</li>
+		{% endblock %}
+	{% else %}
+		{% block layout_navbar_menu_item_link %}
+			<li class="nav-item {% if treeItem.children|length > 0 %}dropdown position-static pe-2{% endif %}" {% if treeItem.children|length > 0 and comaxxFlyoutBehavior == 'hover' %} data-flyout-hover {% endif %}>
+				{% block layout_navbar_menu_item_link_toggle %}
+					<a class="nav-link dropdown-toggle main-navigation-link{% if category.id == page.header.navigation.active.id or category.id in activePath %} active{% endif %} p-2" href="{{ category_url(category) }}" {% if treeItem.children|length > 0 and comaxxFlyoutBehavior == 'click' %} data-bs-toggle="dropdown" data-bs-auto-close="outside" {% endif %} itemprop="url" {% if category_linknewtab(category) %} target="_blank" {% endif %} title="{{ name }}">
+						{{ name }}
+					</a>
+				{% endblock %}
+				{% if (treeItem.children|length > 0) %}
+					{% block layout_navbar_menu_item_dropdown %}
+						<div class="dropdown-menu w-100 p-4" role="menu" tabindex="-1">
+							{% if comaxxFlyoutWidth == 'full-content-container' %}
+								<div class="container">
+									{% sw_include '@Storefront/storefront/layout/navbar/content.html.twig' with {
+                                        themeIconConfig: themeIconConfig,
+                                        navigationTree: treeItem,
+                                        level: level+1,
+                                        page: page
+                                    } only %}
+								</div>
+							{% else %}
+								{% sw_include '@Storefront/storefront/layout/navbar/content.html.twig' with {
+                                        themeIconConfig: themeIconConfig,
+                                        navigationTree: treeItem,
+                                        level: level+1,
+                                        page: page
+                                    } only %}
+							{% endif %}
+						</div>
+					{% endblock %}
+				{% endif %}
+			</li>
+		{% endblock %}
+	{% endif %}
+{% endblock %}

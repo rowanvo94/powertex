@@ -1,0 +1,56 @@
+{% if element.config.media.value %}
+    {% set bannerMediaId = element.config.media.value %}
+    {% set mediaCollection = searchMedia([bannerMediaId], context.context) %}
+    {% set bannerMedia = mediaCollection.get(bannerMediaId) %}
+{% else %}
+    {% set bannerMedia = '' %}
+{% endif %}
+
+{% set bannerContent = element.config.bannerContent.value|raw %}
+{% set bannerBackgroundColor = element.config.bannerBackgroundColor.value %}
+{% set bannerTextContainerAlignment = element.config.textAlignment.value %}
+{% set bannerTextContainerHorizontalAlignment = element.config.textAlignmentHorizontal.value %}
+{% set bannerTextContainerBackground = element.config.textContainerBackground.value %}
+{% set bannerTextContainerPadding = element.config.textContainerPadding.value %}
+{% set bannerTextContainerWidth = element.config.textContainerMaxWidth.value %}
+{% set bannerImageFit = element.config.imageFit.value %}
+{% set bannerSmImageHeight = element.config.mobileHeight.value %}
+{% set bannerMdImageHeight = element.config.tabletHeight.value %}
+{% set bannerLgImageHeight = element.config.desktopHeight.value %}
+
+
+{% block cms_element_banner %}
+    <div class="cms-element-{{ element.type }}">
+        <div class="cms-element-{{ element.type }}-container"
+            style="
+            background-color: {{ bannerBackgroundColor }};
+            background-image: {% if bannerMedia.url %}url('{{ bannerMedia.url }}'){% else %}none{% endif %};
+            background-repeat: no-repeat;
+            display: flex;
+            {{ bannerMedia.url and bannerImageFit ? 'background-size: ' ~ bannerImageFit ~ ';' : '' }}
+            justify-content: {{ bannerTextContainerHorizontalAlignment }};
+            align-items: {{ bannerTextContainerAlignment }};
+            {% if bannerSmImageHeight %}--bannerSmImageHeight: {{ bannerSmImageHeight }};{% endif %}
+            {% if bannerMdImageHeight %}--bannerMdImageHeight: {{ bannerMdImageHeight }};{% endif %}
+            {% if bannerLgImageHeight %}--bannerLgImageHeight: {{ bannerLgImageHeight }};{% endif %}
+            ">
+            <div class="cms-element-{{ element.type }}-container-intro"
+                style="
+                background: {{ bannerTextContainerBackground }};
+                padding: {{ bannerTextContainerPadding }};
+                margin: {{ bannerTextContainerHorizontalAlignment == 'center' ? '0 auto' : '0' }};
+                {% if bannerTextContainerWidth %}
+                    max-width: {{ bannerTextContainerWidth }};
+                {% endif %}
+                height: fit-content;">
+                {% block cms_element_banner_title %}
+                    {% if bannerContent %}
+                        <div class="cms-element-{{ element.type }}-container-content" style="color:{{ bannerTextColor }};">
+                            {{ bannerContent|raw }}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+        </div>  
+    </div>
+{% endblock %}

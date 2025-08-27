@@ -1,0 +1,27 @@
+.cms-element-banner {
+    height: 100%;
+
+    &-container {
+        height: var(--bannerSmImageHeight, 100%); // <-- hier nu `height`
+
+        @include media-breakpoint-up(md) {
+            height: var(--bannerMdImageHeight, 100%);
+        }
+
+        @include media-breakpoint-up(lg) {
+            height: var(--bannerLgImageHeight, 100%);
+        }
+
+        &-intro {
+            width: 100%;
+        }
+
+        &-content {
+            p {
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+{% sw_extends '@Storefront/storefront/page/search/index.html.twig' %}
+
+{% set comaxxSearchResultLayout = theme_config('comaxx-search-page-layout') %}
+{% set comaxxShowHomeBreadcrumb = theme_config('comaxx-show-home-breadcrumbs') %}
+
+{# Check if there is a sidebar and if fallback values are needed #}
+{% set sectionHasSidebar = comaxxSearchResultLayout == 'Sidebar' %}
+
+{% block page_search %}
+    {% block cms_breadcrumb %}
+        <div class="cms-breadcrumb mb-5">
+            {% block layout_breadcrumb_list %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb"
+                        itemscope
+                        itemtype="https://schema.org/BreadcrumbList">
+
+                        {% set home_breadcrumb_shown = comaxxShowHomeBreadcrumb %}
+
+                        {% if home_breadcrumb_shown %}
+                            <li class="breadcrumb-item is-home"
+                                itemprop="itemListElement"
+                                itemscope
+                                itemtype="https://schema.org/ListItem">
+                                <a href="{{ path('frontend.home.page') }}"
+                                   class="breadcrumb-link"
+                                   title="{{ 'Home'|trans }}"
+                                   itemprop="item">
+                                    <link itemprop="url" href="{{ path('frontend.home.page') }}">
+                                    <span class="breadcrumb-title" itemprop="name">{{ 'Home'|trans }}</span>
+                                </a>
+                                <meta itemprop="position" content="1">
+                            </li>
+
+                            <span class="material-symbols-{{ comaxxIconStyleClass }} is-last">arrow_forward</span>
+                        {% endif %}
+
+                        <li class="breadcrumb-item"
+                            aria-current="page"
+                            itemprop="itemListElement"
+                            itemscope
+                            itemtype="https://schema.org/ListItem">
+                            <span class="breadcrumb-link is-active"
+                               title="{{ name }}"
+                               itemprop="item">
+                                <span class="breadcrumb-title" itemprop="name"> {{ 'comaxx.search.breadcrumb.text'|trans|sw_sanitize }} </span>
+                            </span>
+                        </li>
+                    </ol>
+                </nav>
+            {% endblock %}
+        </div>
+    {% endblock %}
+    {{ parent() }}
+{% endblock %}
+
+{% block page_search_headline %}
+    {% if not sectionHasSidebar %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+

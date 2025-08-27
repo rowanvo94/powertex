@@ -1,0 +1,17 @@
+{% sw_extends '@Storefront/storefront/layout/scroll-up.html.twig' %}
+
+{% set comaxxScrollUpShow = theme_config('comaxx-show-scroll-to-top') %}
+
+{% block layout_scroll_up_button %}
+    {% if comaxxScrollUpShow %}
+        <div class="scroll-up-button js-scroll-up-button">
+            <button type="submit"
+                    class="btn btn-primary"
+                    aria-hidden="true">
+                {% block layout_scroll_up_button_icon %}
+                    {% sw_icon 'arrow-up' style { size: 'sm' } %}
+                {% endblock %}
+            </button>
+        </div>
+    {% endif %}
+{% endblock %}

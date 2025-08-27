@@ -1,0 +1,165 @@
+{% set categories = element.config.categories.value %}
+{% set fallbackImageUrl = asset('bundles/comaxxcms/images/cms/fallback.jpg') %}
+{% set categoryEntities = categories ? categories|map(categoryId => get_category(categoryId, context)) : [] %}
+
+{% block cms_element_category_slider %}
+    {% set categoryBackgroundColor = element.config.categoryBackgroundColor.value %}
+    {% set categoryShape = element.config.categoryShape.value %}
+    {% set categoryImageFit = element.config.categoryImageFit.value %}
+    {% set categoryImagePadding = element.config.categoryImagePadding.value %}
+    {% set categoryContent = element.config.categoryContent.value %}
+    {% set sliderControlPosition = element.config.categorySliderControlPosition.value %}
+    {% set sliderControlSpacing = element.config.categorySliderControlSpacing.value %}
+    {% set sliderControlSpacingValue = sliderControlSpacing %}
+
+    {# Match integer #}
+    {% if sliderControlSpacing matches '/^\\d+$/' %}
+        {% set sliderControlSpacingValue = sliderControlSpacing ~ 'px' %}
+    {% endif %}
+
+    <div class="cms-element-{{ element.type }}">
+        {% block cms_element_category_slider_intro %}
+            {% if categoryContent %}
+                <div class="cms-element-{{ element.type }}-intro">
+                    {{ categoryContent|raw }}
+                </div>
+            {% endif %}
+        {% endblock %}
+
+        {% set controlsContainerId = '#category-slider-controls-' ~ element.id %}
+        {% set categorySliderOptions = {
+            slider: {
+                gutter: element.config.categorySliderGutter.value,
+                swipeAngle: false,
+                slideBy: element.config.categorySliderSlideBy.value,
+                lazyload: element.config.categorySliderLazy.value,
+                mouseDrag: element.config.categorySliderDrag.value,
+                autoplay: element.config.categorySliderAuto.value,
+                loop: element.config.categorySliderLoop.value,
+                speed: element.config.categorySliderSpeed.value|intval,
+                controlsContainer: controlsContainerId,
+                responsive: {
+                    350: {
+                        items: element.config.categorySliderItemsSm.value,
+                        nav: element.config.categorySliderMobileNav.value,
+                        mouseDrag: element.config.categorySliderDrag.value,
+                        controls: element.config.categorySliderMobileControls.value
+                    },
+                    768: {
+                        items: element.config.categorySliderItemsMd.value,
+                        nav: element.config.categorySliderNav.value,
+                        mouseDrag: element.config.categorySliderDrag.value,
+                        controls: element.config.categorySliderControls.value
+                    },
+                    1024: {
+                        mouseDrag: element.config.categorySliderDrag.value,
+                        items: element.config.categorySliderItemsLg.value,
+                    }
+                }
+            }
+        } %}
+
+        {% block cms_element_category_slider_content %}
+            {% block cms_element_category_slider_content_controls_top %}
+                {% if sliderControlPosition == "top-right" %}
+                    <div class="category-slider-controls-container controls-top" {% if not element.config.categorySliderControls.value and not element.config.categorySliderMobileControls.value %}style="display:none"{% endif %}>
+                        <div class="base-slider-controls"
+                             id="category-slider-controls-{{ element.id }}">
+                            {% block element_category_slider_controls_top_items %}
+                                <button class="base-slider-controls-prev category-slider-controls-prev">
+                                    {% block element_category_slider_controls_top_items_prev_icon %}
+                                        <span class="material-symbols-rounded">
+                                            arrow_back
+                                        </span>
+                                    {% endblock %}
+                                </button>
+                                <button class="base-slider-controls-next category-slider-controls-next">
+                                    {% block element_category_slider_controls_top_items_next_icon %}
+                                        <span class="material-symbols-rounded">
+                                            arrow_forward
+                                        </span>
+                                    {% endblock %}
+                                </button>
+                            {% endblock %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+            {% block cms_element_category_slider_content_slider %}
+                <div class="cms-element-{{ element.type }}-row base-slider category-slider{% if element.config.categorySliderMobileNav.value %} mobile-nav{% endif %}{% if element.config.categorySliderNav.value %} desktop-nav{% endif %}{% if sliderControlPosition == "centered" and element.config.categorySliderControls.value %} desktop-controls-inside{% endif %}{% if sliderControlPosition == "centered" and element.config.categorySliderMobileControls.value %} mobile-controls-inside{% endif %}{% if sliderControlPosition == "centered-whitespace" %} centered-whitespace{% endif %}"
+                     data-category-slider="true"
+                     style="padding: 0 {{ sliderControlSpacingValue }}"
+                     data-category-slider-options="{{ categorySliderOptions|json_encode }}">
+                    {% block cms_element_category_slider_content_slider_container %}
+                        <div class="category-slider-container"
+                             data-category-slider-container="true">
+                            {% for category in categoryEntities %}
+                                {% if category %}
+                                    {% set media = category.mediaId ? searchMedia([category.mediaId], context.context).get(category.mediaId) : null %}
+                                    {% block cms_element_category_slider_content_slider_item %}
+                                        <div class="cms-element-{{ element.type }}-item">
+                                            <a href="{{ category_url(category) }}">
+                                                {% block cms_element_category_slider_content_slider_item_image %}
+                                                    <div class="cms-element-{{ element.type }}-image is-{{ categoryShape }}" style="background-color:{{ categoryBackgroundColor }}; padding:{{ categoryImagePadding }}">
+                                                        {% if media %}
+                                                            <img src="{{ media.url }}" alt="{{ category.translated.name }}" class="is-{{ categoryImageFit }}">
+                                                        {% else %}
+                                                            <img src="{{ fallbackImageUrl }}" alt="Fallback Image" class="is-{{ categoryImageFit }}">
+                                                        {% endif %}
+                                                    </div>
+                                                {% endblock %}
+                                                {% block cms_element_category_slider_content_slider_item_content %}
+                                                    <div class="cms-element-{{ element.type }}-content">
+                                                        {% if category.translated.name %}
+                                                            <span>{{ category.translated.name }}</span>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endblock %}
+                                            </a>
+                                        </div>
+                                    {% endblock %}
+                                {% else %}
+                                    <div class="cms-element-{{ element.type }}-item">
+                                        <div class="cms-element-{{ element.type }}-image is-{{ categoryShape }}" style="background-color:{{ categoryBackgroundColor }}; padding:{{ categoryImagePadding }}">
+                                            <img src="{{ fallbackImageUrl }}" alt="Fallback Image" class="is-{{ categoryImageFit }}">
+                                        </div>
+                                        <div class="cms-element-{{ element.type }}-content">
+                                            <span>No category available</span>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endblock %}
+
+                    {% block cms_element_category_slider_content_controls_centered %}
+                        {% if sliderControlPosition == "centered" or sliderControlPosition == "centered-whitespace" %}
+                            <div class="category-slider-controls-container">
+                                <div class="base-slider-controls"
+                                     id="category-slider-controls-{{ element.id }}">
+                                    {% block element_category_slider_controls_centered_items %}
+                                        <button class="base-slider-controls-prev category-slider-controls-prev">
+                                            {% block element_category_slider_controls_centered_items_prev_icon %}
+                                                <span class="material-symbols-rounded">
+                                                    arrow_back
+                                                </span>
+                                            {% endblock %}
+                                        </button>
+                                        <button class="base-slider-controls-next category-slider-controls-next">
+                                            {% block element_category_slider_controls_centered_items_next_icon %}
+                                                <span class="material-symbols-rounded">
+                                                    arrow_forward
+                                                </span>
+                                            {% endblock %}
+                                        </button>
+                                    {% endblock %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{
+  "main.js": {
+    "file": "assets/comaxx-cms-BWekMET4.js",
+    "name": "comaxx-cms",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "assets/comaxx-cms-Bx8oMn37.css"
+    ]
+  }
+}

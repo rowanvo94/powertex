@@ -1,0 +1,16 @@
+@mixin heading-style-clamp($font-size-min, $font-size-max, $line-height, $margin-bottom, $font-weight) {
+    font-size: clamp(#{$font-size-min}, 5vw, #{$font-size-max});
+    line-height: $line-height;
+    margin-bottom: $margin-bottom;
+    font-weight: $font-weight;
+    font-family: $sw-font-family-headline, sans-serif;
+}
+
+@mixin card-title-style($font-size: $comaxx-card-title-font-size) {
+    font-size: clamp(#{$font-size * 0.5}, 5vw, #{$font-size * 1.2});
+    font-weight: $comaxx-card-title-font-weight;
+    border-color: $comaxx-card-title-border-color;
+    color: $comaxx-card-title-color;
+    padding-bottom: $comaxx-card-title-padding-bottom;
+    margin-bottom: $comaxx-card-title-margin-bottom;
+}

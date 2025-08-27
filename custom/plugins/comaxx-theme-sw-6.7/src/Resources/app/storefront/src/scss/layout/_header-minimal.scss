@@ -1,0 +1,31 @@
+.header-minimal {
+    background: $comaxx-minimal-header-bg;
+
+    &-row {
+        padding: $comaxx-minimal-header-padding;
+    }
+
+    &-logo {
+        .header-logo-picture {
+            @include media-breakpoint-down(md) {
+                width: clamp(100px, 160px, 180px);
+                max-width: unset;
+                min-width: auto;
+            }
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &-back-to-shop {
+        width: auto;
+
+        &-button {
+            @include media-breakpoint-down(md) {
+                padding: 0.2rem 1rem;
+            }
+        }
+    }
+}

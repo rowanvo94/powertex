@@ -1,0 +1,198 @@
+{% if element.config.media.value %}
+    {% set bannerlinkMediaId = element.config.media.value %}
+    {% set mediaCollection = searchMedia([bannerlinkMediaId], context.context) %}
+    {% set bannerlinkMedia = mediaCollection.get(bannerlinkMediaId) %}
+{% else %}
+    {% set bannerlinkMedia = '' %}
+{% endif %}
+
+{% set bannerLinkLabelType = element.config.labelType.value %}
+{% set bannerLinkButtonType = element.config.buttonType.value %}
+{% set bannerLinkhoverColor = element.config.hoverColor.value %}
+{% set bannerLinkactionLabel = element.config.actionLabel.value %}
+{% set bannerLinkminHeightLg = element.config.minHeightLg.value %}
+{% set bannerLinkminHeightMd = element.config.minHeightMd.value %}
+{% set bannerLinkminHeightSm = element.config.minHeightSm.value %}
+{% set bannerLinkctaButtonUrl = element.config.ctaButtonUrl.value %}
+{% set bannerLinkgeneralTitle = element.config.generalTitle.value %}
+{% set bannerLinkgeneralTitleColor = element.config.generalTitleColor.value %}
+{% set headingType = element.config.titleHeadingType.value %}
+{% set bannerLinklabelContent = element.config.labelContent.value %}
+{% set bannerLinkctaButtonText = element.config.ctaButtonText.value %}
+{% set bannerLinkimagePosition = element.config.imagePosition.value %}
+{% set bannerLinkimagePositionVertical = element.config.imagePositionVertical.value %}
+{% set bannerLinklabelPosition = element.config.labelPosition.value %}
+{% set bannerLinkbannerImageFit = element.config.bannerImageFit.value %}
+{% set bannerLinkbuttonPosition = element.config.buttonPosition.value %}
+{% set bannerLinkelementPadding = element.config.elementPadding.value %}
+{% set bannerLinklabelFontWeight = element.config.labelFontWeight.value %}
+{% set bannerLinkhoverBorderColor = element.config.hoverBorderColor.value %}
+{% set bannerLinkbuttonBorderColor = element.config.buttonBorderColor.value %}
+{% set bannerLinkbuttonContentColor = element.config.buttonContentColor.value %}
+{% set bannerLinkgeneralDescription = element.config.generalDescription.value %}
+{% set bannerLinkbannerLinkButtonUrl = element.config.bannerLinkButtonUrl.value %}
+{% set bannerLinkbannerLinkButtonText = element.config.bannerLinkButtonText.value %}
+{% set bannerLinkhoverBackgroundColor = element.config.hoverBackgroundColor.value %}
+{% set bannerLinkbuttonBackgroundColor = element.config.buttonBackgroundColor.value %}
+{% set bannerLinkgeneralBackgroundColor = element.config.generalBackgroundColor.value %}
+
+{% if bannerLinkactionLabel %}
+    {% set labelActivePosition = bannerLinklabelPosition %}
+{% endif %}
+
+{% set paddingValues = bannerLinkelementPadding|split(' ') %}
+{% if bannerLinklabelPosition == 'top-right' or bannerLinklabelPosition == 'bottom-right' %}
+    {% set marginRight = '' %}
+    {% if paddingValues|length == 1 %}
+        {% set marginRight = '-' ~ paddingValues[0] %}
+    {% elseif paddingValues|length == 2 %}
+        {% set marginRight = '-' ~ paddingValues[1] %}
+    {% elseif paddingValues|length == 4 %}
+        {% set marginRight = '-' ~ paddingValues[2] %}
+    {% endif %}
+    {% set paddingRight = '' %}
+    {% if paddingValues|length == 1 %}
+        {% set paddingRight = paddingValues[0] %}
+    {% elseif paddingValues|length == 2 %}
+        {% set paddingRight = paddingValues[1] %}
+    {% elseif paddingValues|length == 4 %}
+        {% set paddingRight = paddingValues[2] %}
+    {% endif %}
+{% else %}
+    {% set marginLeft = '' %}
+    {% if paddingValues|length == 1 %}
+        {% set marginLeft = '-' ~ paddingValues[0] %}
+    {% elseif paddingValues|length == 2 %}
+        {% set marginLeft = '-' ~ paddingValues[0] %}
+    {% elseif paddingValues|length == 2 %}
+        {% set marginLeft = '-' ~ paddingValues[3] %}
+    {% endif %}
+    {% set paddingLeft = '' %}
+    {% if paddingValues|length == 1 %}
+        {% set paddingLeft = paddingValues[0] %}
+    {% elseif paddingValues|length == 2 %}
+        {% set paddingLeft = paddingValues[0] %}
+    {% elseif paddingValues|length == 4 %}
+        {% set paddingLeft = paddingValues[3] %}
+    {% endif %}
+{% endif %}
+
+{% block cms_element_bannerlink %}
+    <div class="cms-element-{{ element.type }}">
+        <div class="cms-element-{{ element.type }}-container"
+             style="
+                     background-color: {{ bannerLinkgeneralBackgroundColor }};
+                     background-image: {% if bannerlinkMedia.url %}url('{{ bannerlinkMedia.url }}'){% else %}none{% endif %};
+                     background-repeat: no-repeat;
+             {% if bannerLinkbannerImageFit is defined and bannerLinkbannerImageFit is not empty %}
+                     background-size: {{ bannerLinkbannerImageFit }};
+             {% endif %}
+            {% if bannerLinkimagePosition is defined and bannerLinkimagePosition is not empty and bannerLinkimagePositionVertical is defined and bannerLinkimagePositionVertical is not empty %}
+                background-position:
+                {{ bannerLinkimagePosition }}
+                {{ bannerLinkimagePositionVertical }};
+            {% elseif bannerLinkimagePosition is defined and bannerLinkimagePosition is not empty %}
+                background-position:
+                {{ bannerLinkimagePosition }}
+                center;
+            {% elseif bannerLinkimagePositionVertical is defined and bannerLinkimagePositionVertical is not empty %}
+                background-position: center
+                {{ bannerLinkimagePositionVertical }};
+            {% endif %}
+             {% if bannerLinkelementPadding is defined and bannerLinkelementPadding is not empty %}
+                     padding: {{ bannerLinkelementPadding }};
+             {% endif %}
+                     --banner-min-height-sm: {{ bannerLinkminHeightSm }};
+                     --banner-min-height-md: {{ bannerLinkminHeightMd }};
+                     --banner-min-height-lg: {{ bannerLinkminHeightLg }};
+                     ">
+            {% block cms_element_bannerlink_content %}
+                {% if bannerLinkButtonType == 'clickable'%}
+                    <a href="{{ bannerLinkbannerLinkButtonUrl }}" class="cms-element-{{ element.type }}-clickable"></a>
+                {% endif %}
+                <div class="cms-element-{{ element.type }}-content">
+                    <div class="cms-element-{{ element.type }}-content-text {% if bannerLinkactionLabel and bannerLinklabelPosition == 'bottom-left' or bannerLinkactionLabel and bannerLinklabelPosition == 'bottom-right' %}label-padding-bottom{% endif %} {% if bannerLinkactionLabel %}has-label{% endif %}">
+                        {% if labelActivePosition == 'top-right' %}
+                            {% block cms_element_bannerlink_content_label_top %}
+                                <div class="cms-element-{{ element.type }}-label {{ labelActivePosition }} alert alert-{{ bannerLinkLabelType }}"
+                                     style="font-weight: {{ bannerLinklabelFontWeight }};
+                                             margin-right: {{ marginRight }};
+                                             padding-right: {{ paddingRight }};">
+                                    {{ bannerLinklabelContent }}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                        {% if bannerLinkgeneralTitle %}
+                            {% block cms_element_bannerlink_content_title %}
+                                {% if headingType == 'h1' %}
+                                    <h1 {% if bannerLinkgeneralTitleColor %}style="color:{{ bannerLinkgeneralTitleColor }}"{% endif %}>{{ bannerLinkgeneralTitle }}</h1>
+                                {% elseif headingType == 'h2' %}
+                                    <h2 {% if bannerLinkgeneralTitleColor %}style="color:{{ bannerLinkgeneralTitleColor }}"{% endif %}>{{ bannerLinkgeneralTitle }}</h2>
+                                {% elseif headingType == 'h3' %}
+                                    <h3 {% if bannerLinkgeneralTitleColor %}style="color:{{ bannerLinkgeneralTitleColor }}"{% endif %}>{{ bannerLinkgeneralTitle }}</h3>
+                                {% elseif headingType == 'h4' %}
+                                    <h4 {% if bannerLinkgeneralTitleColor %}style="color:{{ bannerLinkgeneralTitleColor }}"{% endif %}>{{ bannerLinkgeneralTitle }}</h4>
+                                {% elseif headingType == 'h5' %}
+                                    <h5 {% if bannerLinkgeneralTitleColor %}style="color:{{ bannerLinkgeneralTitleColor }}"{% endif %}>{{ bannerLinkgeneralTitle }}</h5>
+                                {% elseif headingType == 'h6' %}
+                                    <h6 {% if bannerLinkgeneralTitleColor %}style="color:{{ bannerLinkgeneralTitleColor }}"{% endif %}>{{ bannerLinkgeneralTitle }}</h6>
+                                {% else %}
+                                    {{ bannerLinkgeneralTitle }}
+                                {% endif %}
+                            {% endblock %}
+                        {% endif %}
+                        {% if bannerLinkgeneralDescription %}
+                            {% block cms_element_bannerlink_content_description %}
+                                <div class="cms-element-{{ element.type }}-content-description">
+                                    {{ bannerLinkgeneralDescription|raw }}
+                                </div>
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                    {% if labelActivePosition == 'bottom-right' %}
+                        {% block cms_element_bannerlink_content_label_bottom_right %}
+                            <div class="cms-element-{{ element.type }}-label {{ labelActivePosition }} alert alert-{{ bannerLinkLabelType }}"
+                                 style="font-weight: {{ bannerLinklabelFontWeight }};
+                                         margin-right: {{ marginRight }};
+                                         padding-right: {{ paddingRight }};">
+                                {{ bannerLinklabelContent }}
+                            </div>
+                            {% endblock %}
+                        {% elseif labelActivePosition == 'bottom-left' %}
+                            {% block cms_element_bannerlink_content_label_bottom_left %}
+                            <div class="cms-element-{{ element.type }}-label {{ labelActivePosition }} alert alert-{{ bannerLinkLabelType }}"
+                                 style="font-weight: {{ bannerLinklabelFontWeight }};
+                                         margin-left: {{ marginLeft }};
+                                         padding-left: {{ paddingLeft }};">
+                                {{ bannerLinklabelContent }}
+                            </div>
+                        {% endblock %}
+                    {% endif %}
+                </div>
+            {% endblock %}
+            {% if bannerLinkButtonType != 'clickable'%}
+                {% block cms_element_bannerlink_button %}
+                    <div class="cms-element-{{ element.type }}-button position-{{ bannerLinkbuttonPosition }}">
+                        <a href="{{ bannerLinkbannerLinkButtonUrl }}" class="btn btn-{{ bannerLinkButtonType }} {% if bannerLinkButtonType == 'custom'%}btn-primary{% endif %}"
+                                {% if bannerLinkButtonType == 'custom' or bannerLinkButtonType == 'arrow'%}
+                            style="color:{{ bannerLinkbuttonContentColor }};
+                                    border:1px solid {{ bannerLinkbuttonBorderColor }};
+                                    background-color: {{ bannerLinkbuttonBackgroundColor }};
+                                    --button-hover-color: {{ bannerLinkhoverColor }};
+                                    --button-hover-border-color: {{ bannerLinkhoverBorderColor }};
+                                    --button-hover-background-color: {{ bannerLinkhoverBackgroundColor }};"
+                                {% endif %}>
+                            {% if bannerLinkButtonType != 'arrow' %}
+                                {{ bannerLinkbannerLinkButtonText }}
+                                {% else %}
+                                    <span class="material-symbols-rounded">
+                                    arrow_forward
+                                    </span>
+                            {% endif %}
+                        </a>
+                    </div>
+                {% endblock %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

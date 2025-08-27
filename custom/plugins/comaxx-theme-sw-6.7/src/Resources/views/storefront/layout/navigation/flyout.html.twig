@@ -1,0 +1,9 @@
+{% sw_extends '@Storefront/storefront/layout/navigation/flyout.html.twig' %}
+
+{% set comaxxShowFlyout = theme_config('comaxx-header-flyout-menu-bar') %}
+
+{% block layout_navigation_flyout_bar %}
+    {% if comaxxShowFlyout %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

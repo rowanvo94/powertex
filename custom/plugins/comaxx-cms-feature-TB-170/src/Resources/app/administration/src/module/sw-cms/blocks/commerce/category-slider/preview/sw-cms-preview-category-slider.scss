@@ -1,0 +1,47 @@
+.sw-cms-preview-block-category-slider {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  gap: 16px;
+
+  &-content {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 16px 1fr 16px;
+    grid-gap: 8px;
+  }
+
+  &-items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+
+    &-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+      flex: 1;
+      background-color: #f0f2f5;
+      padding: 8px;
+      gap: 8px;
+
+      img {
+        flex: 100%;
+      }
+
+      &-title {
+        flex: 2;
+        font-size: 10px;
+        text-align: center;
+      }
+
+      &-button {
+        flex: 1;
+      }
+    }
+  }
+}

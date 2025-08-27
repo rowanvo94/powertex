@@ -1,0 +1,10 @@
+.cms-element-image-gallery {
+    position: relative;
+
+    .product-badges {
+        top: $comaxx-base-padding;
+        bottom: unset;
+        justify-content: flex-end;
+        padding: 0 $comaxx-base-padding;
+    }
+}

@@ -1,0 +1,22 @@
+.sw-cms-el-faq {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex: 1;
+
+    ul {
+        li {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            padding: 8px;
+            border-bottom: 1px solid black;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+    }
+}

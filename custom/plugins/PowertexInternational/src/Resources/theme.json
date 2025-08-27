@@ -1,0 +1,22 @@
+{
+  "name": "PowertexInternational",
+  "author": "Shopware AG",
+  "views": [
+     "@Storefront",
+     "@Plugins",
+     "@PowertexInternational"
+  ],
+  "style": [
+    "app/storefront/src/scss/overrides.scss",
+    "@Storefront",
+    "app/storefront/src/scss/base.scss"
+  ],
+  "script": [
+    "@Storefront",
+    "app/storefront/dist/storefront/js/powertex-international/powertex-international.js"
+  ],
+  "asset": [
+    "@Storefront",
+    "app/storefront/src/assets"
+  ]
+}

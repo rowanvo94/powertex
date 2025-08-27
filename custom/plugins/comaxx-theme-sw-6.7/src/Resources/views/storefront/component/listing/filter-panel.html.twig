@@ -1,0 +1,29 @@
+{% sw_extends '@Storefront/storefront/component/listing/filter-panel.html.twig' %}
+
+{% set comaxxShowFilterTitle = theme_config('comaxx-show-filter-title') %}
+{% set comaxxShowManufacturerFilter = theme_config('comaxx-show-manufacturer-filter') %}
+{% set comaxxShowPriceFilter = theme_config('comaxx-show-price-filter') %}
+
+{% block component_filter_panel_header %}
+
+	{% if comaxxShowFilterTitle %}
+		{% block component_filter_panel_header_title %}
+			<h4 class="d-none d-lg-block">{{ "listing.filterTitleText"|trans }}</h4>
+		{% endblock %}
+	{% endif %}
+
+	{{ parent() }}
+
+{% endblock %}
+
+{% block component_filter_panel_item_manufacturer %}
+	{% if comaxxShowManufacturerFilter %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}
+
+{% block component_filter_panel_item_price %}
+	{% if comaxxShowPriceFilter %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

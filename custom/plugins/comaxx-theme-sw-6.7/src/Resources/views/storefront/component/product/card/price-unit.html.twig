@@ -1,0 +1,189 @@
+{% sw_extends '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
+
+{% set comaxxPriceTaxDisplay = theme_config('comaxx-show-price-taxes-display') %}
+{% set comaxxSalePercentageShow = theme_config('comaxx-show-sale-percentage-saved')%}
+{% set comaxxShowTaxLink = theme_config('comaxx-show-tax-link-product-box') %}
+
+{% block component_product_box_price_unit %}
+	{% if showPriceUnit and referencePrice is not null and referencePrice.unitName %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}
+
+{% block component_product_box_price %}
+	<div class="product-price-wrapper">
+		{% set price = real %}
+		{% set isListPrice = price.listPrice.percentage > 0 %}
+		{% set isRegulationPrice = price.regulationPrice != null %}
+
+		{% block component_product_box_price_cheapest %}
+			{% if cheapest.unitPrice != real.unitPrice and cheapest.variantId != product.id %}
+				<div class="product-cheapest-price{% if isListPrice and isRegulationPrice and not displayFrom and not displayFromVariants %} with-list-price{% endif %}{% if isRegulationPrice and not displayFrom and displayFromVariants %} with-regulation-price{% endif %}{% if displayFrom and isRegulationPrice %} with-from-price{% endif %}">
+					<div>
+						{{ 'listing.cheapestPriceLabel'|trans|sw_sanitize }}
+						<span class="product-cheapest-price-price">
+							{{ cheapest.unitPrice|currency }}{{ 'general.star'|trans|sw_sanitize }}
+						</span>
+					</div>
+				</div>
+			{% endif %}
+		{% endblock %}
+
+		{% if displayFrom or (displayParent and hasDifferentPrice and totalVariants|length > 1) %}
+			{{ 'listing.listingTextFrom'|trans|sw_sanitize }}
+		{% endif %}
+
+		{% set tax = price.calculatedTaxes.first.tax %}
+		{% set priceNett = price.unitPrice %}
+		{% set priceGross = priceNett - tax %}
+
+		{% if comaxxPriceTaxDisplay != "no-tax-display" and not displayFrom or (cheapest.unitPrice != real.unitPrice and cheapest.variantId != product.id) %}
+			{% block component_product_box_price_taxes %}
+				<div class="product-price-tax">
+
+					{% if comaxxPriceTaxDisplay == "show-incl" or comaxxPriceTaxDisplay == "show-incl-excl" %}
+						{% block component_product_box_price_taxes_inc %}
+							<div class="product-price product-price-incl-btw {% if isListPrice and not displayFrom and not displayFromVariants %} with-list-price{% endif %}">
+								<span class="product-price-tax-amount">
+									{{ price.unitPrice|currency }}
+								</span>
+
+								{% if isListPrice and not displayFrom and not displayFromVariants %}
+									{% set afterListPriceSnippetExists = 'listing.afterListPrice'|trans|length > 0 %}
+									{% set beforeListPriceSnippetExists = 'listing.beforeListPrice'|trans|length > 0 %}
+									{% set hideStrikeTrough = beforeListPriceSnippetExists or afterListPriceSnippetExists %}
+
+									<span class="list-price{% if hideStrikeTrough %} list-price-no-line-through{% endif %}">
+										{% if beforeListPriceSnippetExists %}
+											{{ 'listing.beforeListPrice'|trans|trim|sw_sanitize }}
+										{% endif %}
+
+										<span class="list-price-price">{{ price.listPrice.price|currency }}
+											{% if not feature('ACCESSIBILITY_TWEAKS') %}
+												{{ 'general.star'|trans|sw_sanitize }}
+											{% endif %}
+										</span>
+
+										{% if afterListPriceSnippetExists %}
+											{{ 'listing.afterListPrice'|trans|trim|sw_sanitize }}
+										{% endif %}
+
+										{% if comaxxSalePercentageShow %}
+											<span class="list-price-percentage">{{ 'detail.listPricePercentage'|trans({'%price%': price.listPrice.percentage })|sw_sanitize }}</span>
+										{% endif %}
+									</span>
+								{% endif %}
+
+								{% block component_product_box_price_taxes_inc_label %}
+									<span class="product-price-tax-label">
+										{{ 'comaxx.product.price.tax.incLabel'|trans|sw_sanitize }}
+									</span>
+								{% endblock %}
+							</div>
+						{% endblock %}
+					{% endif %}
+
+					{% if comaxxPriceTaxDisplay == "show-excl" or comaxxPriceTaxDisplay == "show-incl-excl" %}
+						{% block component_product_box_price_taxes_excl %}
+							<div class="product-price product-price-excl-btw">
+								<span class="product-price-tax-amount">
+									{{ priceGross|currency }}
+								</span>
+
+								{% if isListPrice and not displayFrom and not displayFromVariants %}
+									{% set afterListPriceSnippetExists = 'listing.afterListPrice'|trans|length > 0 %}
+									{% set beforeListPriceSnippetExists = 'listing.beforeListPrice'|trans|length > 0 %}
+									{% set hideStrikeTrough = beforeListPriceSnippetExists or afterListPriceSnippetExists %}
+									{% set salePriceNett = price.listPrice.price %}
+									{% set salePriceGross = salePriceNett - tax %}
+
+									<span class="list-price{% if hideStrikeTrough %} list-price-no-line-through{% endif %}">
+										{% if beforeListPriceSnippetExists %}
+											{{ 'listing.beforeListPrice'|trans|trim|sw_sanitize }}
+										{% endif %}
+
+										<span class="list-price-price">
+											{{ salePriceGross|currency }}
+											{% if not feature('ACCESSIBILITY_TWEAKS') %}
+												{{ 'general.star'|trans|sw_sanitize }}
+											{% endif %}
+										</span>
+
+										{% if afterListPriceSnippetExists %}
+											{{ 'listing.afterListPrice'|trans|trim|sw_sanitize }}
+										{% endif %}
+
+										{% if comaxxSalePercentageShow %}
+											<span class="list-price-percentage">{{ 'detail.listPricePercentage'|trans({'%price%': price.listPrice.percentage })|sw_sanitize }}</span>
+										{% endif %}
+									</span>
+								{% endif %}
+
+								{% block component_product_box_price_taxes_excl_label %}
+									<span class="product-price-tax-label">
+										{{ 'comaxx.product.price.tax.exclLabel'|trans|sw_sanitize }}
+									</span>
+								{% endblock %}
+							</div>
+						{% endblock %}
+					{% endif %}
+				</div>
+			{% endblock %}
+		{% else %}
+			{% block component_product_box_price_default %}
+				<span
+					class="product-price{% if isListPrice and not displayFrom and not displayFromVariants %} with-list-price{% endif %}">
+					{# @deprecated tag:v6.7.0 - Showing asterisk next to every price is deprecated. Tax and shipping info is displayed as text instead if `allowBuyInListing` is true. #}
+					{{ price.unitPrice|currency }}
+					{% if not feature('ACCESSIBILITY_TWEAKS') %}
+						{{ 'general.star'|trans|sw_sanitize }}
+					{% endif %}
+
+					{% if isListPrice and not displayFrom and not displayFromVariants %}
+						{% set afterListPriceSnippetExists = 'listing.afterListPrice'|trans|length > 0 %}
+						{% set beforeListPriceSnippetExists = 'listing.beforeListPrice'|trans|length > 0 %}
+						{% set hideStrikeTrough = beforeListPriceSnippetExists or afterListPriceSnippetExists %}
+
+						<span class="list-price{% if hideStrikeTrough %} list-price-no-line-through{% endif %}">
+							{% if beforeListPriceSnippetExists %}
+								{{ 'listing.beforeListPrice'|trans|trim|sw_sanitize }}
+							{% endif %}
+
+							{# @deprecated tag:v6.7.0 - Showing asterisk next to every price is deprecated. Tax and shipping info is displayed as text instead if `allowBuyInListing` is true. #}
+							<span class="list-price-price">{{ price.listPrice.price|currency }}
+								{% if not feature('ACCESSIBILITY_TWEAKS') %}
+									{{ 'general.star'|trans|sw_sanitize }}
+								{% endif %}
+							</span>
+
+							{% if afterListPriceSnippetExists %}
+								{{ 'listing.afterListPrice'|trans|trim|sw_sanitize }}
+							{% endif %}
+
+							<span class="list-price-percentage">{{ 'detail.listPricePercentage'|trans({'%price%': price.listPrice.percentage })|sw_sanitize }}</span>
+						</span>
+					{% endif %}
+				</span>
+				{% if isRegulationPrice %}
+					<span
+						class="product-price with-regulation-price">
+						{# @deprecated tag:v6.7.0 - Showing asterisk next to every price is deprecated. Tax and shipping info is displayed as text instead if `allowBuyInListing` is true. #}
+						{% if isListPrice %}<br>
+						{% endif %}
+						<span class="regulation-price">{{ 'general.listPricePreviously'|trans({'%price%': price.regulationPrice.price|currency }) }}
+							{% if not feature('ACCESSIBILITY_TWEAKS') %}
+								{{ 'general.star'|trans|sw_sanitize }}
+							{% endif %}
+						</span>
+					</span>
+				{% endif %}
+			{% endblock %}
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block component_product_box_price_tax_info %}
+	{% if comaxxShowTaxLink %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

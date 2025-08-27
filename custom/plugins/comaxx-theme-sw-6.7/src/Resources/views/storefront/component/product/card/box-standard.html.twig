@@ -1,0 +1,147 @@
+{% sw_extends '@Storefront/storefront/component/product/card/box-standard.html.twig' %}
+
+{% set comaxxShowSecondThumb = theme_config('comaxx-show-second-thumbnail') %}
+{% set comaxxShowBuyIcon = theme_config('comaxx-show-buy-button-icon') %}
+
+{% block component_product_box %}
+
+	{% if product %}
+		{% set name = product.translated.name %}
+		{% set id = product.id %}
+		{% set cover = product.cover.media %}
+		{% set variation = product.variation %}
+		{% set displayParent = product.variantListingConfig.displayParent and product.parentId is null %}
+		{% set layout = layout ?: 'standard' %}
+		{% set productMedia = get_product(product.id, context.context).media %}
+
+		{% set showBorder = (theme_config('comaxx-show-border-box-' ~ layout) == '1') %}
+		{% set backgroundColor = theme_config('comaxx-background-color-box-' ~ layout) ?: '#ffffff' %}
+		{% set productBoxPadding = theme_config('comaxx-product-box-padding-box-' ~ layout) %}
+		{% set productBoxInfoInnerPadding = theme_config('comaxx-product-box-inner-padding-box-' ~ layout) %}
+		{% set configValue = theme_config('comaxx-show-product-rating-box-' ~ layout) %}
+		{% set showDescription = (theme_config('comaxx-show-description-box-' ~ layout) == '1') %}
+		{% set showProductVariantInfo = (theme_config('comaxx-show-product-variant-info-box-' ~ layout) == '1') %}
+		{% set showPriceUnit = (theme_config('comaxx-show-price-unit-box-' ~ layout) == '1') %}
+		{% set showCheapestPrice = (theme_config('comaxx-show-cheapest-price-box-' ~ layout) == '1') %}
+		{% set showProductRating = (theme_config('comaxx-show-product-rating-box-' ~ layout) == '1') %}
+		{% set showQuantitySelect = (theme_config('comaxx-show-quantity-select-box-' ~ layout) == '1') %}
+
+		<div class="card product-box box-{{ layout }} {% if showBorder %}box-has-border{% endif %}" data-product-information="{{ {id, name}|json_encode }}">
+			{% block component_product_box_content %}
+				<div class="card-body" style="background-color: {{ backgroundColor }}; padding: {{ productBoxPadding }}">
+					{% block component_product_box_badges %}{% endblock %}
+
+					{% block component_product_box_image %}
+						{{ parent() }}
+					{% endblock %}
+
+					{% block component_product_box_info %}
+						<div class="product-info{% if comaxxShowBuyIcon == '2' %} minimal-buy{% endif %}" style="padding: {{ productBoxInfoInnerPadding }}">
+							{% block component_product_box_rating %}
+								{% if showProductRating and config('core.listing.showReview') and product.ratingAverage %}
+									<div class="product-rating">
+										{% sw_include '@Storefront/storefront/component/review/rating.html.twig' with {
+                                            points: product.ratingAverage,
+                                            style: 'text-primary'
+                                        } %}
+									</div>
+								{% endif %}
+							{% endblock %}
+
+							{% block component_product_box_name %}
+								<a href="{{ seoUrl('frontend.detail.page', {productId: id}) }}" class="product-name" title="{{ name }}">
+									{{ name }}
+								</a>
+							{% endblock %}
+
+							{% block component_product_box_variant_characteristics %}
+								{% if showProductVariantInfo and product.variation|length > 0 %}
+									<div class="product-variant-characteristics">
+										<div class="product-variant-characteristics-text">
+											{% if not displayParent %}
+												{% for variation in product.variation %}
+													{{ variation.group }}:
+													<span class="product-variant-characteristics-option">
+														{{ variation.option }}
+													</span>
+													{% if product.variation|last != variation %}
+														{{ ' | ' }}
+													{% endif %}
+												{% endfor %}
+											{% endif %}
+										</div>
+									</div>
+								{% endif %}
+
+							{% endblock %}
+
+							{% block component_product_box_description %}
+								{% if showDescription %}
+									<div class="product-description">
+										{{ product.translated.description|striptags|raw }}
+									</div>
+								{% endif %}
+							{% endblock %}
+
+                            {% block component_product_box_buy_wrapper %}
+                                {% if comaxxShowBuyIcon == '2' %}
+                                    <div class="product-minimal-buy">
+                                {% endif %}
+
+                                    {% block component_product_box_price %}
+                                        {{ parent() }}
+                                    {% endblock %}
+
+                                    {% block component_product_box_action %}
+                                        {{ parent() }}
+                                    {% endblock %}
+
+                                {% if comaxxShowBuyIcon == '2' %}
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+						</div>
+					{% endblock %}
+				</div>
+			{% endblock %}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block component_product_box_image_thumbnail %}
+	{% set mediaList = productMedia|sort((a, b) => a.position <=> b.position)|slice(0, 2) %}
+
+	<div class="product-image-wrapper-container{% if comaxxShowSecondThumb and mediaList|length == 2 %} has-two-images{% else %} has-zoom{% endif %}" {% if comaxxShowSecondThumb %} data-second-thumb {% endif %}>
+        <a href="{{ seoUrl('frontend.detail.page', {productId: id}) }}" class="product-image-link" title="{{ name }}">
+            {% for mediaItem in mediaList %}
+                {% set mediaCollection = searchMedia([mediaItem.mediaId], context.context) %}
+                {% set productMedia = mediaCollection.get(mediaItem.mediaId) %}
+
+                {% if mediaItem.mediaId %}
+                    {% set attributes = {
+                        class: 'product-image is-' ~ displayMode,
+                        title: (productMedia.translated.title ?: name)
+                    } %}
+                    {% set attributes = attributes|merge({
+                        alt: (productMedia.translated.alt ?: name),
+                        loading: 'lazy'
+                    }) %}
+
+                    {% sw_thumbnails 'product-image-thumbnails' with {
+                        media: productMedia,
+                        sizes: sizes,
+                        attributes: attributes
+                    } %}
+                {% endif %}
+            {% endfor %}
+        </a>
+	</div>
+{% endblock %}
+
+{% block component_product_box_image_link_inner %}
+	{% block component_product_box_badges_inside_image %}
+		{% sw_include '@Storefront/storefront/component/product/card/badges.html.twig' %}
+	{% endblock %}
+
+	{{ parent() }}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% block sw_cms_el_comaxx_image_slider %}
+    <div class="comaxx-image-slider-wrapper" style="position: relative; display: flex; align-items: center;">
+        <mt-icon
+            class="sw-cms-el-image-slider__navigation-button left"
+            name="regular-chevron-left"
+            size="24"
+            @click="setSliderArrowItem(-1)"
+        />
+
+        <div class="comaxx-image-slider" :style="'min-height: ' + (element.config.minHeight.value || '300px')">
+            <div v-for="(item, index) in sliderItems.slice(0, 4)"
+                :key="index"
+                class="comaxx-image-slider__slide"
+                role="img"
+                :aria-label="item.alt || ''"
+                :aria-hidden="!item.alt"
+                :style="getBackgroundStyle(item)">
+            </div>
+        </div>
+
+        <mt-icon
+            class="sw-cms-el-image-slider__navigation-button right"
+            name="regular-chevron-right"
+            size="24"
+            @click="setSliderArrowItem(1)"
+        />
+    </div>
+{% endblock %}

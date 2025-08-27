@@ -1,0 +1,94 @@
+{% set depth = 0 %}
+
+{% if element.config.categoryMain %}
+    {% set mainCategory = get_category(element.config.categoryMain.value, context) %}
+    {% set mainCategoryTree = get_category_highlight_tree(element.config.categoryMain.value, context) %}
+{% endif %}
+{% if element.config.categoryHighlight1.value %}
+    {% set highlight1 = get_category(element.config.categoryHighlight1.value, context) %}
+{% endif %}
+{% if element.config.categoryHighlight2.value %}
+    {% set highlight2 = get_category(element.config.categoryHighlight2.value, context) %}
+{% endif %}
+{% if element.config.categoryHighlight3.value %}
+    {% set highlight3 = get_category(element.config.categoryHighlight3.value, context) %}
+{% endif %}
+
+{% set categoryTitle = element.config.categoryTitle.value %}
+{% set categoryTitleSize = element.config.categoryTitleSize.value %}
+{% set categoryTitleColor = element.config.categoryTitleColor.value %}
+{% set categoryHighlight1Color = element.config.highlight1Color.value %}
+{% set categoryHighlight2Color = element.config.highlight2Color.value %}
+{% set categoryHighlight3Color = element.config.highlight3Color.value %}
+
+{% block cms_element_category_highlight %}
+    <div class="cms-element-{{ element.type }}">
+        <div class="cms-element-{{ element.type }}-container">
+            {% block cms_element_category_highlight_title %}
+                {% if categoryTitle %}
+                    <div class="cms-element-{{ element.type }}-title"
+                         style="color:{{ categoryTitleColor }}; font-size: {{ categoryTitleSize }}">
+                        {{ categoryTitle }}
+                    </div>
+                {% endif %}
+            {% endblock %}
+            {% block cms_element_category_highlight_list %}
+                <div class="cms-element-{{ element.type }}-list">
+                    {% block cms_element_category_highlight_list_tree %}
+                        <ul class="cms-element-{{ element.type }}-list-tree">
+                            {% for category in mainCategoryTree %}
+                                {% if category[0].active %}
+                                    <li class="level-{{ category[1] }}">
+                                        <a href="{{ category_url(category[0]) }}">{{ category[0].name }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endblock %}
+                    {% block cms_element_category_highlight_list_highlight %}
+                        {% if highlight1 or highlight2 or highlight3 %}
+                            <ul class="cms-element-{{ element.type }}-list-highlight">
+                                {% if highlight1 %}
+                                    <li>
+                                        <a href="{{ category_url(highlight1) }}" style="color:{{ categoryHighlight1Color }}">
+                                            <span class="cms-element-{{ element.type }}-list-link">
+                                                {{ highlight1.name }}
+                                            </span>
+                                            <span class="link-icon material-symbols-rounded">
+                                                arrow_forward
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if highlight2 %}
+                                    <li>
+                                        <a href="{{ category_url(highlight2) }}" style="color:{{ categoryHighlight2Color }}">
+                                            <span class="cms-element-{{ element.type }}-list-link">
+                                                {{ highlight2.name }}
+                                            </span>
+                                            <span class="link-icon material-symbols-rounded">
+                                                arrow_forward
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if highlight3 %}
+                                    <li>
+                                        <a href="{{ category_url(highlight3) }}" style="color:{{ categoryHighlight3Color }}">
+                                            <span class="cms-element-{{ element.type }}-list-link">
+                                                {{ highlight3.name }}
+                                            </span>
+                                            <span class="link-icon material-symbols-rounded">
+                                                arrow_forward
+                                            </span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

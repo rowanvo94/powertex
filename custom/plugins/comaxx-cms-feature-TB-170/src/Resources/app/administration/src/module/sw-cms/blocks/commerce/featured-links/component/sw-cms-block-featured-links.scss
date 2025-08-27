@@ -1,0 +1,11 @@
+.sw-cms-block-featured-links-container-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+  align-content: stretch;
+  align-items: start;
+  grid-gap: 40px;
+
+  .sw-cms-block-featured-links-container-item {
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 20%);
+  }
+}

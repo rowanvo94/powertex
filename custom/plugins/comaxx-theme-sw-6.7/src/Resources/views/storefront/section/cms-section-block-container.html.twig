@@ -1,0 +1,63 @@
+{% sw_extends '@Storefront/storefront/section/cms-section-block-container.html.twig' %}
+
+{% block section_content_block %}
+    {% set top = block.marginTop ?: 0 %}
+    {% set right = block.marginRight ?: 0 %}
+    {% set bottom = block.marginBottom ?: 0 %}
+    {% set left = block.marginLeft ?: 0 %}
+
+    {% if top or right or bottom or left %}
+        {% set padding = top ~ ' ' ~ right ~ ' ' ~ bottom ~ ' ' ~ left %}
+    {% endif %}
+
+    {% set blockBgColor = block.backgroundColor %}
+
+    {# Start with basic classes #}
+    {% set blockClasses = [block.cssClass, 'pos-' ~ block.position, 'cms-block-' ~ block.type] %}
+
+    {% if block.backgroundMedia %}
+        {% set blockClasses = ['bg-image']|merge(blockClasses) %}
+    {% endif %}
+
+    {% if blockBgColor %}
+        {% set blockClasses = ['bg-color']|merge(blockClasses) %}
+    {% endif %}
+
+    {% set isInSidebar = block.sectionPosition == 'sidebar' %}
+    {% set sidebarClasses = isInSidebar ? 'has--sidebar' : '' %}
+
+    {% set visibility = block.visibility ?? {
+        mobile: true,
+        tablet: true,
+        desktop: true
+    } %}
+
+    {% if not visibility.mobile %}
+        {% set blockClasses = ['hidden-mobile']|merge(blockClasses) %}
+    {% endif %}
+    {% if not visibility.tablet %}
+        {% set blockClasses = ['hidden-tablet']|merge(blockClasses) %}
+    {% endif %}
+    {% if not visibility.desktop %}
+        {% set blockClasses = ['hidden-desktop']|merge(blockClasses) %}
+    {% endif %}
+
+    {# Add your custom field value as an extra class #}
+    {% set customClass = block.customFields.comaxx_sidebar_custom_text|default('')|trim|lower|replace({' ': '-'}) %}
+    {% if customClass is not empty %}
+        {% set blockClasses = blockClasses|merge([customClass]) %}
+    {% endif %}
+
+    <div
+        class="cms-block{% block section_custom_config_classes %}{% endblock %} {{ blockClasses|join(' ') }} position-relative"
+        {% if blockBgColor %}style="background-color: {{ blockBgColor }}"{% endif %}
+    >
+        {% block section_content_block_background_image %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% block section_content_block_container %}
+            {{ parent() }}
+        {% endblock %}
+    </div>
+{% endblock %}

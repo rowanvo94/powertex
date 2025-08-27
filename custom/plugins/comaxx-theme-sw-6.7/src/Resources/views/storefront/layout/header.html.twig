@@ -1,0 +1,81 @@
+{% sw_extends '@Storefront/storefront/layout/header.html.twig' %}
+
+{% set comaxxTopBarShow = theme_config('comaxx-header-top-bar-show') %}
+{% set comaxxActivateStickyHeader = theme_config('comaxx-header-sticky-header-activate') %}
+{% set comaxxStickyHeaderBehaviour = theme_config('comaxx-header-sticky-header-behaviour') %}
+{% set comaxxStickyHeaderMobileBehaviour = theme_config('comaxx-header-sticky-header-behaviour-mobile') %}
+{% set comaxxUspBelowHeaderLayout = theme_config('comaxx-uspbar-layout') %}
+{% set comaxxShowUspBelowHeader = theme_config('comaxx-uspbar-show') %}
+{% set comaxxHeaderType = theme_config('comaxx-header-variant') %}
+{% set comaxxHeaderWidth = theme_config('comaxx-header-width') %}
+{% set comaxxShowHero = context.salesChannel.customFields.comaxx_hero_show %}
+{% set comaxxTopBarHeight = theme_config('comaxx-header-top-bar-height') %}
+{% set comaxxTopBarHideMobile = theme_config('comaxx-header-top-bar-hide-mobile')|lower %}
+
+{% block base_header %}
+    {% sw_include '@Storefront/storefront/utilities/staging-info.html.twig' %}
+
+    {% if comaxxActivateStickyHeader %}
+        <div {{ 'data-sticky-header-' ~ comaxxStickyHeaderBehaviour }} {{ 'data-mobile-sticky-header-' ~ comaxxStickyHeaderMobileBehaviour }}></div>
+    {% endif %}
+
+    {% block base_header_top_bar %}
+        {% if comaxxTopBarShow %}
+            {% sw_include '@Storefront/storefront/layout/header/top-bar.html.twig' %}
+        {% endif %}
+    {% endblock %}
+
+    <header class="header-main{% if comaxxTopBarHideMobile %} no-top-bar{% endif %}{% if comaxxActivateStickyHeader %} {{ comaxxStickyHeaderBehaviour }}{% endif %}{% if comaxxShowHero and controllerAction == 'home' %} has-hero{% endif %} {% block header_main_classes %}{% endblock %}"
+        style="--top-bar-height: {{ comaxxTopBarHeight }};">
+        {% block base_header_inner %}
+
+            {% block base_header_inner_container %}
+                <div class="header-main-container {% if comaxxHeaderWidth == 1 %}container{% elseif comaxxHeaderWidth == 2 %}container-fluid{% endif %}" {% if comaxxHeaderWidth == 2 or comaxxHeaderWidth == 3 %} style="background: {{ comaxxHeaderBackground }};" {% endif %}>
+                    <div class="header-main-inner {% if comaxxHeaderWidth == 3 %}container{% endif %}" {% if comaxxHeaderWidth == 1 %} style="background: {{ comaxxHeaderBackground }};" {% endif %}>
+                        {% sw_include '@Storefront/storefront/layout/header/header.html.twig' %}
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block base_navigation_inside %}
+                <div class="nav-main {% if comaxxHeaderType == '1' %}d-none d-lg-block{% endif %}">
+                    {% if comaxxHeaderType == '1' %}
+                        {% block base_navbar_inner_main %}
+                            {% sw_include '@Storefront/storefront/layout/navbar/navbar.html.twig' %}
+                        {% endblock %}
+                    {% else %}
+                        {% block base_navbar_inner_main_type_2 %}
+                            {% sw_include '@Storefront/storefront/layout/navbar/navbar-type-2.html.twig' %}
+                        {% endblock %}
+                    {% endif %}
+                </div>
+            {% endblock %}
+
+            {% if comaxxAnnouncementBannerShow %}
+                {% block base_announcement %}
+                    <div class="announcement-banner">
+                        {% block base_announcement_inner %}
+                            <div class="container">
+                                {% sw_include '@Storefront/storefront/layout/announcement/announcement-banner.html.twig' %}
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+            {% endif %}
+
+            {% block base_offcanvas_navigation_inside %}
+                {% if header.navigation %}
+                    <div class="d-none js-navigation-offcanvas-initial-content">
+                        {% block base_offcanvas_navigation_inner %}
+                            {% sw_include '@Storefront/storefront/layout/navigation/offcanvas/navigation.html.twig' with { navigation: header.navigation } %}
+                        {% endblock %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+        {% endblock %}
+    </header>
+{% endblock %}
+
+{% block base_navigation %}{% endblock %}
+
+{% block base_offcanvas_navigation %}{% endblock %}

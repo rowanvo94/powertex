@@ -1,0 +1,32 @@
+.breadcrumb {
+    .breadcrumb-item {
+        display: flex;
+        align-items: center;
+        padding: 0 $comaxx-base-padding-extra-small;
+
+        a,
+        span {
+            &.is-active {
+                color: $comaxx-grey-color;
+                font-weight: normal;
+            }
+        }
+
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+
+    .material-symbols-rounded {
+        padding: 0 $comaxx-base-padding-small;
+
+        &.is-last {
+            color: $comaxx-grey-color;
+        }
+    }
+
+    a,
+    div {
+        font-size: 0.875rem;
+    }
+}

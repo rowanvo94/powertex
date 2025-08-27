@@ -1,0 +1,269 @@
+{% sw_extends '@Storefront/storefront/component/product/listing.html.twig' %}
+
+{% set comaxxPaginationAboveListingShow = theme_config('comaxx-show-pagination-above-listing') %}
+{% set comaxxPaginationAlignment = theme_config('comaxx-pagination-alignment') %}
+{% set comaxxListingUspShow = theme_config('comaxx-show-usp-items-between-listing') %}
+{% if searchResult.currentFilters.navigationId %}
+    {% set customCategoryFields = get_category_custom_fields(searchResult.currentFilters.navigationId, context.context) %}
+{% else %}
+    {% set comaxxCategoryUspShow = false %}
+{% endif %}
+{% set comaxxListingBannerShow = customCategoryFields.comaxx_category_banner_product_show %}
+{% set comaxxCategoryUspShow = customCategoryFields.comaxx_category_usps_show %}
+{% set itemsPerPage = searchResult.limit %}
+{% set bannerPosition = customCategoryFields.comaxx_category_banner_product_position %} {# Position of the banner in the list (1-based index) #}
+{% set count = 0 %}
+{% set idx = 0 %}
+{% set comaxxIconStyleClass = theme_config('comaxx-icon-style')|lower %}
+
+{# Set UspIcons to easyily overwrite icon #}
+{% block product_listing_usp_array %}
+    {% set uspIcons = [
+    ] %}
+{% endblock %}
+
+{% block product_listing %}
+    <div class="cms-element-product-listing-wrapper"
+         data-listing-pagination="true"
+            {% if feature('v6.7.0.0') %}
+                data-listing-pagination-options="{{ paginationConfig|json_encode }}"
+            {% else %}
+                {# ludtwig-ignore html-string-quotation #}
+                data-listing-pagination-options='{{ paginationConfig }}'
+            {% endif %}
+         data-listing="true"
+         data-listing-options="{{ listingPagination|json_encode }}">
+        {% block element_product_listing_wrapper_content %}
+            <div class="cms-element-product-listing">
+                {% if searchResult.total > 0 %}
+                    {% block element_product_listing_pagination_nav_actions %}
+                        <div class="cms-element-product-listing-actions row justify-content-between">
+                            <div class="col-md-auto">
+                                {% block element_product_listing_pagination_nav_actions_count %}
+                                    {% if searchResult.total > searchResult.limit %}
+                                        {{ 'listing.filterPanelAriaLivePaginated'|trans({'%count%': searchResult.entities.elements|length, '%total%': searchResult.total})|sw_sanitize }}
+                                    {% else %}
+                                        {% if searchResult.total == 1 %}
+                                            {{ 'comaxx.listing.filterPanelAriaLiveSingular'|trans({'%count%': searchResult.total})|sw_sanitize }}
+                                        {% else %}
+                                            {{ 'listing.filterPanelAriaLive'|trans({'%count%': searchResult.total})|sw_sanitize }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+
+                            {% block element_product_listing_pagination_nav_top %}
+                                {% if comaxxPaginationAboveListingShow %}
+                                    <div class="col-md-auto d-none d-lg-block">
+                                        <div class="listing-pagination" style="justify-content: {{ comaxxPaginationAlignment }};">
+                                            {{ parent() }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+
+                            <div class="col-md-auto">
+                                {% block element_product_listing_sorting %}
+                                    {% sw_include '@Storefront/storefront/component/sorting.html.twig' with {
+                                        current: searchResult.sorting,
+                                        sortings: searchResult.availableSortings
+                                    } %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    {% endblock %}
+                {% endif %}
+
+                {% block element_product_listing_row %}
+                    <div class="row cms-listing-row js-listing-wrapper" data-aria-live-text="{{ ariaLiveText }}"{% if searchResult.total > 0 %} role="list"{% endif %}>
+                        {% if searchResult.total > 0 %}
+                            {% block element_product_listing_col %}
+
+                            {% if bannerPosition < 1 || bannerPosition > searchResult.elements|length %}
+                                {% set comaxxListingBannerShow = '0' %}
+                            {% endif %}
+
+                                {% if comaxxListingUspShow %}
+                                    {% if comaxxCategoryUspShow %}
+                                        {% set usps = [
+                                            customCategoryFields.comaxx_category_usps_text1,
+                                            customCategoryFields.comaxx_category_usps_text2,
+                                            customCategoryFields.comaxx_category_usps_text3
+                                        ] %}
+                                    {% else %}
+                                        {% set usps = [
+                                            'comaxx.header.top-bar.usp1.text',
+                                            'comaxx.header.top-bar.usp2.text',
+                                            'comaxx.header.top-bar.usp3.text'
+                                        ] %}
+                                    {% endif %}
+
+                                    {% if comaxxListingBannerShow == '1' %}
+                                        {% set newObject = {'key': 'value'} %} {# Define the new object you want to insert #}
+
+                                        {% set beforeIdx = searchResult.elements|slice(0, bannerPosition-1) %} {# Elements before the index #}
+                                        {% set afterIdx = searchResult.elements|slice(bannerPosition-1) %} {# Elements from the index onward #}
+
+                                        {# Merge the arrays to create a new one with the object inserted at idx #}
+                                        {% set modifiedElements = beforeIdx|merge([newObject])|merge(afterIdx) %}
+                                    {%  else %}
+                                        {% set modifiedElements = searchResult.elements %}
+                                    {% endif %}
+
+                                    {% set isBannerShown = false %}
+
+                                    {% for product in modifiedElements %}
+                                        <div class="cms-listing-col {{ listingColumns }}" role="listitem">
+                                            {% if count + 1 == bannerPosition and comaxxListingBannerShow == '1' %}
+                                                {% sw_include '@Storefront/storefront/component/product/card/box-banner.html.twig' %}
+                                                {% set isBannerShown = true %}
+                                            {% else %}
+                                                {% block element_product_listing_box %}
+                                                    {% sw_include '@Storefront/storefront/component/product/card/box.html.twig' with {
+                                                        layout: boxLayout,
+                                                        displayMode: displayMode
+                                                    } %}
+                                                {% endblock %}
+                                            {% endif %}
+                                        </div>
+
+                                        {# Increment the count after each product #}
+                                        {% set count = count + 1 %}
+
+                                        {# Stop the loop once we have processed the required number of items #}
+                                        {% if comaxxListingBannerShow == '1' and count >= (itemsPerPage+1)  %}
+                                            {% break %}
+                                        {% endif %}
+
+                                        {# Define products per row for different viewports #}
+                                        {% set productsPerRowSm = comaxxProductsSM == 'col-sm-6' ? 2 : 1 %}
+                                        {% set productsPerRowLg = comaxxProductsLG == 'col-lg-4' ? 3 : 4 %}
+                                        {% set productsPerRowXl = comaxxProductsXL == 'col-xl-4' ? 3 : 4 %}
+
+                                        {# USP for smaller viewports (< lg), show after every 2 products #}
+                                        {% if count % 2 == 0 and loop.index < searchResult|length %}
+                                            {% set usp_index = ((count / 2) - 1) % usps|length %}
+                                            <div class="col-12 cms-listing-col listing-usp listing-usp-sm">
+                                                <div class="listing-usp-holder">
+                                                    <div class="listing-usp-item">
+                                                        {% if uspIcons[usp_index] is defined %}
+                                                            <span class="material-symbols-{{ comaxxIconStyleClass }}">{{ uspIcons[usp_index] }}</span>
+                                                        {% else %}
+                                                            <span class="material-symbols-{{ comaxxIconStyleClass }}">check</span>
+                                                        {% endif %}
+                                                        {% if comaxxCategoryUspShow %}
+                                                            {{ usps[usp_index] }}
+                                                        {% else %}
+                                                            {{ usps[usp_index]|trans }}
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                        {# USP for larger viewports (>= lg) #}
+                                        {% if comaxxProductsLG and count % (productsPerRowLg * ctaAfterRow) == 0 and loop.index < searchResult|length %}
+                                            <div class="col-12 cms-listing-col listing-usp listing-usp-lg">
+                                                <div class="listing-usp-holder">
+                                                    {% for key, usp in usps %}
+                                                        <div class="listing-usp-item">
+                                                            {% if uspIcons[key] is defined %}
+                                                                <span class="material-symbols-{{ comaxxIconStyleClass }}">{{ uspIcons[key] }}</span>
+                                                            {% else %}
+                                                                <span class="material-symbols-{{ comaxxIconStyleClass }}">check</span>
+                                                            {% endif %}
+                                                            {% if comaxxCategoryUspShow %}
+                                                                {{ usp }}
+                                                            {% else %}
+                                                                {{ usp|trans }}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                        {# USP for extra-large viewports (>= xl) #}
+                                        {% if comaxxProductsXL and count % (productsPerRowXl * ctaAfterRow) == 0 and loop.index < searchResult|length %}
+                                            <div class="col-12 cms-listing-col listing-usp listing-usp-xl">
+                                                <div class="listing-usp-holder">
+                                                    {% for key, usp in usps %}
+                                                        <div class="listing-usp-item">
+                                                            {% if uspIcons[key] is defined %}
+                                                                <span class="material-symbols-{{ comaxxIconStyleClass }}">{{ uspIcons[key] }}</span>
+                                                            {% else %}
+                                                                <span class="material-symbols-{{ comaxxIconStyleClass }}">check</span>
+                                                            {% endif %}
+                                                            {% if comaxxCategoryUspShow %}
+                                                                {{ usp }}
+                                                            {% else %}
+                                                                {{ usp|trans }}
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                {% elseif comaxxListingBannerShow == '1' and comaxxListingUspShow == '0' %}
+
+                                    {% if comaxxListingBannerShow == '1' %}
+                                        {% set newObject = {'key': 'value'} %} {# Define the new object you want to insert #}
+
+                                        {% set beforeIdx = searchResult.elements|slice(0, bannerPosition-1) %} {# Elements before the index #}
+                                        {% set afterIdx = searchResult.elements|slice(bannerPosition-1) %} {# Elements from the index onward #}
+
+                                        {# Merge the arrays to create a new one with the object inserted at idx #}
+                                        {% set modifiedElements = beforeIdx|merge([newObject])|merge(afterIdx) %}
+                                    {% else %}
+                                        {% set modifiedElements = searchResult.elements %}
+                                    {% endif %}
+
+                                    {% set isBannerShown = false %}
+
+                                    {% for product in modifiedElements %}
+                                        <div class="cms-listing-col {{ listingColumns }}" role="listitem">
+                                            {% if count + 1 == bannerPosition and comaxxListingBannerShow == '1' %}
+                                                {% sw_include '@Storefront/storefront/component/product/card/box-banner.html.twig' %}
+                                                {% set isBannerShown = true %}
+                                            {% else %}
+                                                {% block element_product_listing_box_banneronly %}
+                                                    {% sw_include '@Storefront/storefront/component/product/card/box.html.twig' with {
+                                                        layout: boxLayout,
+                                                        displayMode: displayMode
+                                                    } %}
+                                                {% endblock %}
+                                            {% endif %}
+                                            {{ count }}
+                                        </div>
+
+                                        {# Increment the count after each product #}
+                                        {% set count = count + 1 %}
+
+                                        {# Stop the loop once we have processed the required number of items #}
+                                        {% if comaxxListingBannerShow == '1' and count >= (itemsPerPage+1)  %}
+                                            {% break %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {{ parent() }}
+                                {% endif %}
+                            {% endblock %}
+                        {% else %}
+                            {% block element_product_listing_col_empty %}
+                                {{ parent() }}
+                            {% endblock %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                    {% block element_product_listing_pagination_nav_bottom %}
+                        <div class="listing-pagination" style="justify-content: {{ comaxxPaginationAlignment }};">
+                            {{ parent() }}
+                        </div>
+                    {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}

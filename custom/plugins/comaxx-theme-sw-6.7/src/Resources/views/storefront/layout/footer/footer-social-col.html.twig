@@ -1,0 +1,70 @@
+{% set showFacebook = theme_config('comaxx-show-facebook') %}
+{% set facebookLink = theme_config('comaxx-facebook-link') %}
+{% set showTwitter = theme_config('comaxx-show-twitter') %}
+{% set twitterLink = theme_config('comaxx-twitter-link') %}
+{% set showLinkedIn = theme_config('comaxx-show-linkedin') %}
+{% set linkedInLink = theme_config('comaxx-linkedin-link') %}
+{% set showYouTube = theme_config('comaxx-show-youtube') %}
+{% set youTubeLink = theme_config('comaxx-youtube-link') %}
+{% set showInstagram = theme_config('comaxx-show-instagram') %}
+{% set instagramLink = theme_config('comaxx-instagram-link') %}
+{% set showPinterest = theme_config('comaxx-show-pinterest') %}
+{% set pinterestLink = theme_config('comaxx-pinterest-link') %}
+
+{% set socialMedia = [
+    { 'name': 'Facebook', 'show': showFacebook, 'link': facebookLink, 'icon': 'facebook-icon-new.svg' },
+    { 'name': 'Twitter', 'show': showTwitter, 'link': twitterLink, 'icon': 'twitter-icon-new.svg' },
+    { 'name': 'LinkedIn', 'show': showLinkedIn, 'link': linkedInLink, 'icon': 'linkedin-icon-new.svg' },
+    { 'name': 'YouTube', 'show': showYouTube, 'link': youTubeLink, 'icon': 'youtube-icon-new.svg' },
+    { 'name': 'Instagram', 'show': showInstagram, 'link': instagramLink, 'icon': 'instagram-icon-new.svg' },
+    { 'name': 'Pinterest', 'show': showPinterest, 'link': pinterestLink, 'icon': 'pinterest-icon-new.svg' }
+] %}
+
+{% block layout_footer_navigation_information_headline %}
+	<div class="footer-column-headline footer-headline js-footer-column-headline" id="collapseFooterTitle{{ loop.index }}" role="listitem">
+
+		{{ 'comaxx.footer.columnSocialHeadline.title'|trans|sw_sanitize }}
+
+		{% block layout_footer_navigation_information_icons %}
+			<button class="footer-column-toggle btn btn-link btn-link-inline js-collapse-footer-column-trigger" data-bs-target="#collapseFooter{{ loop.index }}" data-bs-toggle="collapse" aria-controls="collapseFooter{{ loop.index }}" aria-labelledby="collapseFooterTitle{{ loop.index }}" aria-expanded="true">
+				{% sw_icon 'plus' style {
+                        class: 'footer-plus'
+                    } %}
+
+				{% sw_icon 'minus' style {
+                        class: 'footer-minus'
+                    } %}
+			</button>
+		{% endblock %}
+	</div>
+{% endblock %}
+
+{% block layout_footer_navigation_information_content %}
+
+	{% set useCustomIcons = theme_config('comaxx-use-custom-social-icons') == '1' %}
+	{% set activeThemeName = app.request.attributes.get('theme-name')|lower %}
+
+	<div id="collapseFooter{{ loop.index }}" class="footer-column-content collapse js-footer-column-content footer-socials" aria-labelledby="collapseFooterTitle{{ loop.index }}" role="listitem">
+		<div class="footer-column-content-inner">
+			{% block layout_footer_navigation_information_links %}
+				<ul class="list-unstyled">
+					{% for platform in socialMedia %}
+						{% if platform.show == '1' and platform.link is not empty %}
+							<li>
+								<a href="{{ platform.link }}" target="_blank" rel="noopener noreferrer">
+									{% if useCustomIcons %}
+										{% set iconPath = asset('bundles/' ~ activeThemeName ~ '/' ~ platform.icon) %}
+										<img src="{{ iconPath }}" alt="{{ platform.name }} Icon">
+									{% else %}
+										{% set iconPathFallback = asset('bundles/comaxxtheme/' ~ platform.icon) %}
+										<img src="{{ iconPathFallback }}" alt="{{ platform.name }} Icon">
+									{% endif %}
+								</a>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			{% endblock %}
+		</div>
+	</div>
+{% endblock %}

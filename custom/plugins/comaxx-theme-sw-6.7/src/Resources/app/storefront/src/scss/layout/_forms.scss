@@ -1,0 +1,124 @@
+input[type='text'],
+input[type='email'],
+input[type='phone'],
+textarea,
+.form-control,
+.filter-panel-item .filter-panel-item-toggle,
+.filter-boolean {
+    background-color: $comaxx-input-background-color;
+    border-color: $comaxx-input-border-color;
+    color: $comaxx-input-text-color;
+    font-size: $comaxx-input-font-size;
+    padding: $comaxx-input-padding;
+    border-radius: $comaxx-input-border-radius;
+
+    &:active {
+        border-color: $comaxx-input-active-border-color;
+    }
+
+    &:focus {
+        border-color: $comaxx-input-active-border-color;
+        box-shadow: none !important;
+        background-color: $comaxx-input-active-background-color;
+    }
+
+    &::placeholder {
+        font-size: $comaxx-input-placeholder-font-size;
+        color: $comaxx-input-placeholder-color;
+    }
+}
+
+.form-select {
+    background-color: $comaxx-input-background-color;
+    border-color: $comaxx-input-border-color;
+    color: $comaxx-input-text-color;
+    font-size: $comaxx-input-font-size;
+    border-radius: $comaxx-input-border-radius;
+    padding: $comaxx-input-padding;
+
+    &:active {
+        border-color: $comaxx-input-active-border-color;
+    }
+
+    &:focus {
+        border-color: $comaxx-input-active-border-color;
+        box-shadow: none !important;
+        background-color: $comaxx-input-active-background-color;
+    }
+
+    &::placeholder {
+        font-size: $comaxx-input-placeholder-font-size;
+        color: $comaxx-input-placeholder-color;
+    }
+}
+
+.form-text {
+    font-size: $comaxx-font-size-text * 0.8;
+}
+
+input[type='text'] {
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+
+.form-check-input {
+    border-color: $comaxx-input-border-color;
+}
+
+.filter-panel-item .filter-panel-item-toggle,
+.filter-boolean .form-check {
+    padding: 0.3rem 1rem;
+    margin: 0;
+}
+
+.filter-boolean {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 45px;
+
+    .form-check {
+    }
+}
+
+.quantity-selector-group .btn-outline-light {
+    border-color: $comaxx-input-border-color;
+}
+
+.input-group .btn {
+    padding: $comaxx-input-button-padding;
+    border-radius: $comaxx-input-border-radius;
+
+    @include media-breakpoint-down(md) {
+        padding: 0.2rem 0.5rem;
+    }
+
+    .icon {
+        color: $comaxx-input-text-color;
+    }
+
+    &-minus {
+        border-top-left-radius: $comaxx-input-border-radius !important;
+        border-bottom-left-radius: $comaxx-input-border-radius !important;
+    }
+
+    &-plus {
+        border-top-right-radius: $comaxx-input-border-radius;
+        border-bottom-right-radius: $comaxx-input-border-radius;
+    }
+}
+
+.header-search {
+    .input-group {
+        button.btn {
+            border-top-right-radius: $comaxx-input-border-radius !important;
+            border-bottom-right-radius: $comaxx-input-border-radius !important;
+        }
+    }
+}
+
+.form-group {
+    label {
+        margin-bottom: $comaxx-base-padding-extra-small / 2;
+    }
+}

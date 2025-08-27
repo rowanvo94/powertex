@@ -1,0 +1,48 @@
+.is-act-loginpage,
+.is-act-checkoutregisterpage {
+    .login-card,
+    .register-card {
+        .register-submit,
+        .login-submit {
+            @media (min-width: 768px) {
+                margin: 0;
+            }
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+}
+
+.register-card {
+    .register-submit {
+        .btn {
+            &:disabled {
+                background: lighten($sw-color-buy-button, 20%);
+                color: lighten($sw-color-buy-button-text, 30%);
+                border-color: lighten($comaxx-buy-button-border-color, 30%);
+                opacity: 0.6;
+                cursor: not-allowed;
+                pointer-events: none;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+    }
+}
+
+.login-form,
+.register-form {
+    a {
+        color: inherit;
+    }
+}
+
+.advantages-register {
+    margin-top: $comaxx-base-padding-large;
+}
+
+.account-register {
+    margin: ($comaxx-base-padding-extra-large * 1.5) 0;
+}

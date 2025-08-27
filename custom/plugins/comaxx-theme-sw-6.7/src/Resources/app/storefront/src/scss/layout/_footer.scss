@@ -1,0 +1,155 @@
+// Define the preferred font size from theme settings
+$preferred-font-size-headline: $comaxx-footer-main-font-size-headlines;
+$preferred-font-size-text: $comaxx-footer-main-font-size;
+
+// Calculate min and max values for font-size based on the preferred value
+$min-font-size-headline: $preferred-font-size-headline * 0.7;
+$max-font-size-headline: $preferred-font-size-headline * 1.2;
+
+$min-font-size-text: $preferred-font-size-text * 0.7;
+$max-font-size-text: $preferred-font-size-text * 1.2;
+
+.footer-main {
+    border-top: 1px solid $sw-border-color;
+    background-color: $comaxx-footer-main-background-color;
+    color: $comaxx-footer-main-text-color;
+    font-size: clamp(#{$min-font-size-text}, $preferred-font-size-text, #{$max-font-size-text});
+
+    .footer-column-headline {
+        font-size: clamp(#{$min-font-size-headline}, $preferred-font-size-headline, #{$max-font-size-headline});
+        font-weight: $comaxx-footer-main-font-weight-headlines;
+        color: $comaxx-footer-headline-text-color;
+    }
+
+    .footer-link {
+        color: $comaxx-footer-main-link-color;
+
+        &:hover {
+            color: $comaxx-footer-main-link-hover-color;
+        }
+    }
+}
+
+.footer-socials {
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: $comaxx-base-padding $comaxx-base-padding-large;
+
+        li {
+            img {
+                width: 30px;
+            }
+        }
+    }
+}
+
+.footer-contact-form {
+    @include media-breakpoint-down(md) {
+        padding-bottom: $comaxx-base-padding;
+    }
+
+    a {
+        color: inherit;
+    }
+}
+
+.footer-bottom {
+    background-color: $comaxx-footer-bottom-background-color;
+    color: $comaxx-footer-bottom-text-color;
+    font-size: $comaxx-footer-bottom-font-size;
+    padding-left: 0;
+    padding-right: 0;
+
+    > .container {
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+        padding-left: calc(var(--bs-gutter-x) * 0.5);
+    }
+
+    a {
+        color: $comaxx-footer-bottom-link-color;
+
+        &:hover {
+            color: $comaxx-footer-bottom-link-hover-color;
+        }
+    }
+
+    &-holder {
+        display: flex;
+        align-items: center;
+    }
+
+    &-logo {
+        padding: $comaxx-base-padding 0;
+
+        img {
+            width: 60px;
+        }
+    }
+
+    .footer-service-menu-list {
+        margin-bottom: 0;
+
+        .footer-service-menu-item {
+            font-weight: $comaxx-footer-bottom-link-font-weight;
+            font-size: $comaxx-footer-bottom--link-font-size;
+        }
+    }
+
+    &-madeby {
+        font-size: $comaxx-footer-bottom-font-size;
+        display: flex;
+        justify-content: flex-start;
+        padding: $comaxx-base-padding 0;
+
+        @media (min-width: 768px) {
+            justify-content: center;
+        }
+    }
+
+    &-copyright {
+        font-size: $comaxx-footer-bottom-font-size;
+        display: flex;
+        justify-content: flex-end;
+        padding: $comaxx-base-padding 0;
+    }
+
+    .footer-service-menu-list {
+        text-align: left;
+        padding-top: 0;
+
+        @media (min-width: 768px) {
+            padding: $comaxx-base-padding 0;
+        }
+    }
+}
+
+.footer-usp {
+    &.full-width {
+        border-top: $comaxx-footer-usp-border-top-width solid $comaxx-footer-usp-border-color;
+        border-bottom: $comaxx-footer-usp-border-bottom-width solid $comaxx-footer-usp-border-color;
+    }
+
+    &.boxed {
+        .footer-usp-inner {
+            border-top: $comaxx-footer-usp-border-top-width solid $comaxx-footer-usp-border-color;
+            border-bottom: $comaxx-footer-usp-border-bottom-width solid $comaxx-footer-usp-border-color;
+        }
+    }
+
+    &-inner {
+        background-color: $comaxx-footer-usp-background-color;
+        padding: $comaxx-footer-usp-padding;
+    }
+
+    .usp-bar-item {
+        color: $comaxx-footer-usp-text-color;
+        font-size: $comaxx-footer-usp-font-size;
+
+        span {
+            color: $comaxx-footer-usp-icon-color;
+        }
+    }
+}

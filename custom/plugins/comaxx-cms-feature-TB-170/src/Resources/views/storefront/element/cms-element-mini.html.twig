@@ -1,0 +1,68 @@
+{% set miniBackgroundColor = element.config.miniBackgroundColor.value %}
+{% set miniTitle = element.config.miniTitle.value %}
+{% set miniTitleSize = element.config.miniTitleSize.value %}
+{% set miniDescription = element.config.miniDescription.value %}
+{% set miniDescriptionSize = element.config.miniDescriptionSize.value %}
+{% set miniTextColor = element.config.miniTextColor.value %}
+{% set miniButtonUrl = element.config.miniButtonUrl.value %}
+{% set miniButtonText = element.config.miniButtonText.value %}
+{% set miniButtonColor = element.config.miniButtonColor.value %}
+{% set miniButtonBackgroundColor = element.config.miniButtonBackgroundColor.value %}
+{% set miniDisplayMode = element.config.displayMode.value %}
+
+{% if element.config.media.value %}
+    {% set elementMediaId = element.config.media.value %}
+    {% set mediaCollection = searchMedia([elementMediaId], context.context) %}
+    {% set elementMedia = mediaCollection.get(elementMediaId) %}
+{% else %}
+    {% set elementMedia = '' %}
+{% endif %}
+
+{% if slot.type %}
+    {% set elementClass = slot.type %}
+{% else %}
+    {% set elementClass = element.type %}
+{% endif %}
+
+{% block cms_element_element %}
+    <div class="cms-element-{{ elementClass }}">
+        <div class="cms-element-{{ elementClass }}-container" style="background-color:{{ miniBackgroundColor }}">
+            <a href="{{ miniButtonUrl }}">
+                {% block cms_element_mini_image %}
+                    {% if elementMedia.url %}
+                        <div class="cms-element-{{ elementClass }}-image">
+                            <div class="cms-element-{{ elementClass }}-image-holder">
+                                {% sw_thumbnails 'cms-image-thumbnails' with {
+                                    media: elementMedia,
+                                    attributes: {
+                                        'style': 'object-fit: ' ~ miniDisplayMode
+                                    }
+                                } %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% block cms_element_mini_content %}
+                    <div class="cms-element-{{ elementClass }}-content">
+                        <div class="cms-element-{{ elementClass }}-content-title">
+                            <span style="color:{{ miniTextColor }}; font-size: {{ miniTitleSize }};">
+                                {{ miniTitle }}
+                            </span>
+                        </div>
+                        <div class="cms-element-{{ elementClass }}-content-description">
+                            <span style="color:{{ miniTextColor }}; font-size: {{ miniDescriptionSize }};">
+                                {{ miniDescription }}
+                            </span>
+                        </div>
+                        <div class="cms-element-{{ elementClass }}-content-link"
+                             style="background-color:{{ miniButtonBackgroundColor }}">
+                            <span class="material-symbols-rounded"
+                                  style="color:{{ miniButtonColor }}">
+                                arrow_forward</span>
+                        </div>
+                    </div>
+                {% endblock %}
+            </a>
+        </div>
+    </div>
+{% endblock %}

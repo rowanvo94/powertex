@@ -1,0 +1,70 @@
+{% sw_extends '@Storefront/storefront/component/pagination.html.twig' %}
+
+{% block component_pagination_first %}
+{% endblock %}
+
+{% block component_pagination_prev %}
+{% endblock %}
+
+{% block component_pagination_next %}
+{% endblock %}
+
+{% block component_pagination_last %}
+{% endblock %}
+
+{% block component_pagination_loop %}
+    {% set paginationItems = [] %}
+
+    {# Define pagination items based on total pages #}
+    {% if totalPages == 1 %}
+        {% set paginationItems = [1] %}
+    {% elseif totalPages == 2 %}
+        {% set paginationItems = [1, 2] %}
+    {% elseif totalPages == 3 %}
+        {% set paginationItems = [1, 2, 3] %}
+    {% elseif totalPages == 4 %}
+        {% set paginationItems =
+            (currentPage == 1 or currentPage == 2) ? [1, 2, 3, '...', 4] :
+            (currentPage == 3) ? [1, '...', 2, 3, 4] :
+            [1, '...', 2, 3, 4]
+        %}
+    {% elseif totalPages == 5 %}
+        {% set paginationItems =
+            (currentPage == 1 or currentPage == 2) ? [1, 2, 3, '...', 5] :
+            (currentPage == 3) ? [1, '...', 2, 3, 4, '...', 5] :
+            (currentPage == 4) ? [1, '...', 3, 4, 5] :
+            [1, '...', 3, 4, 5]
+        %}
+    {% else %}
+        {# Handle total pages greater than 5 #}
+        {% set lastPage = totalPages %}
+        {% set lastMinusOne = totalPages - 1 %}
+        {% set lastMinusTwo = totalPages - 2 %}
+        {% set paginationItems = [1] %}
+
+        {% if currentPage == 1 %}
+            {% set paginationItems = paginationItems|merge([2, 3, '...', lastPage]) %}
+        {% elseif currentPage == 2 %}
+            {% set paginationItems = paginationItems|merge([2, 3, '...', lastPage]) %}
+        {% elseif currentPage == 3 %}
+            {% set paginationItems = paginationItems|merge(['...', 2, 3, 4, '...', lastPage]) %}
+        {% elseif currentPage == 4 %}
+            {% set paginationItems = paginationItems|merge(['...', 3, 4, 5, '...', lastPage]) %}
+        {% elseif currentPage == lastMinusOne %}
+            {% set paginationItems = paginationItems|merge(['...', lastMinusTwo, lastMinusOne, lastPage]) %}
+        {% elseif currentPage == lastPage %}
+            {% set paginationItems = paginationItems|merge(['...', lastMinusTwo, lastMinusOne, lastPage]) %}
+        {% else %}
+            {% set paginationItems = paginationItems|merge(['...', currentPage - 1, currentPage, currentPage + 1, '...', lastPage]) %}
+        {% endif %}
+    {% endif %}
+
+    {# Render the pagination items #}
+    {% for page in paginationItems %}
+        <li class="page-item{% if currentPage == page %} active{% endif %}"{% if currentPage == page %} aria-current="page"{% endif %}>
+            <a href="?p={{ page }}{{ paginationSuffix }}" class="page-link" data-page="{{ page }}" aria-label="Page {{ page }}"{% if currentPage == page %} aria-current="page"{% endif %}>
+                {{ page }}
+            </a>
+        </li>
+    {% endfor %}
+{% endblock %}

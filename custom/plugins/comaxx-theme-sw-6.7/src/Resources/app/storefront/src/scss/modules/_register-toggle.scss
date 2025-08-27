@@ -1,0 +1,13 @@
+
+.collapse-toggle:not(.show) {
+    display: none;
+}
+
+.form-collapse {
+    overflow: hidden;
+    transition: height .6s ease;
+    height: 0;
+}
+.form-collapse.show {
+    height: auto;
+}

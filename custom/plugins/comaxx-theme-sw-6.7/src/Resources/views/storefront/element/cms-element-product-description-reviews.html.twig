@@ -1,0 +1,71 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-product-description-reviews.html.twig' %}
+
+{% set comaxxTabsDisplay = theme_config('comaxx-product-tabs-display-mode') %}
+
+{% set downloadTabId = "download-tab-" ~ product.id %}
+{% set downloadTabHref = "#download-tab-" ~ product.id ~ "-pane" %}
+{% set downloadTabContent = "download-tab-" ~ product.id ~ "-pane" %}
+
+{% block element_product_description_reviews_tabs_navigation %}
+    {% if comaxxTabsDisplay == 'tabs' %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block element_product_description_reviews_tabs_content %}
+    {% if comaxxTabsDisplay == 'blocks' %}
+        <div class="product-detail-tabs-content card-body tabs-content-blocks">
+            {% block element_product_description_reviews_tabs_content_container %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block element_product_description_reviews_tabs_navigation_review %}
+
+    {{ parent() }}
+
+    {% block element_product_description_reviews_tabs_navigation_downloads %}
+
+        {% set showDownloadTab = false %}
+
+        {% if product.translated.customFields is not empty %}
+            {% for i in 1..3 %}
+                {% set key = 'comaxx_product_downloads_' ~ i ~ '_file' %}
+                {% if product.translated.customFields[key] is not empty %}
+                    {% set showDownloadTab = true %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if showDownloadTab %}
+            <li class="nav-item">
+                <a class="nav-link {% if (ratingSuccess == 1) or (ratingSuccess == -1) %}active{% endif %} product-detail-tab-navigation-link download-tab" id="{{ downloadTabId }}" data-bs-toggle="tab" data-off-canvas-tabs="true" href="{{ downloadTabHref }}" role="tab" aria-controls="{{ downloadTabContent }}" aria-selected="true">
+                    {{ "comaxx.product.detail.tabsDownload"|trans|sw_sanitize }}
+                    <span class="product-detail-tab-navigation-icon">
+                        {% sw_icon 'arrow-medium-right' style {'pack':'solid'} %}
+                    </span>
+                </a>
+            </li>
+        {% endif %}
+
+    {% endblock %}
+{% endblock %}
+
+{% block element_product_description_reviews_tabs_content_review %}
+
+	{{ parent() }}
+
+	{% block element_product_description_reviews_tabs_content_downloads %}
+		{% if product.translated.customFields is not empty %}
+			<div class="tab-pane fade show {% if (element.data.ratingSuccess == 1) or (element.data.ratingSuccess == -1) %}active{% endif %}" id="{{ downloadTabContent }}" role="tabpanel" aria-labelledby="{{ downloadTabId }}">
+				{% sw_include '@Storefront/storefront/component/product/downloads.html.twig' %}
+			</div>
+		{% endif %}
+	{% endblock %}
+
+{% endblock %}

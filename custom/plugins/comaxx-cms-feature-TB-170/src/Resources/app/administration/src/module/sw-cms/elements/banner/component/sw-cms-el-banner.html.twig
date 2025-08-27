@@ -1,0 +1,20 @@
+{% block sw_cms_element_banner %}
+    <div class="sw-cms-el-banner"
+         :style="{
+            backgroundColor: element.config.bannerBackgroundColor.value,
+            backgroundImage: element.config.media.value ? 'url(' + mediaUrl + ')' : '',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            display: 'flex',
+            alignItems: element.config.textAlignment.value
+         }">
+        <div class="sw-cms-el-banner-content"
+             :style="{
+                backgroundColor: element.config.textContainerBackground.value,
+                height: 'fit-content',
+                padding: element.config.textContainerPadding.value
+             }">
+            <div v-html="element.config.bannerContent.value"></div>
+        </div>
+    </div>
+{% endblock %}

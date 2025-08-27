@@ -1,22 +1,83 @@
 {
-  "name": "PowertexInternational",
-  "author": "Shopware AG",
-  "views": [
-     "@Storefront",
-     "@Plugins",
-     "@PowertexInternational"
-  ],
-  "style": [
-    "app/storefront/src/scss/overrides.scss",
-    "@Storefront",
-    "app/storefront/src/scss/base.scss"
-  ],
-  "script": [
-    "@Storefront",
-    "app/storefront/dist/storefront/js/powertex-international/powertex-international.js"
-  ],
-  "asset": [
-    "@Storefront",
-    "app/storefront/src/assets"
-  ]
+    "name": "PowertexInternational",
+    "author": "Rowanvo",
+    "description": {
+        "en-GB": "Powertex International by Rowanvo",
+        "de-DE": "Powertex International by Rowanvo"
+    },
+    "views": [
+        "@Storefront",
+        "@Plugins",
+        "@ComaxxTheme",
+        "@PowertexInternational"
+    ],
+    "style": [
+        "app/storefront/src/scss/overrides.scss",
+        "@Storefront",
+        "@ComaxxTheme",
+        "app/storefront/src/scss/base.scss"
+    ],
+    "script": [
+        "@Storefront",
+        "@ComaxxTheme",
+        "app/storefront/dist/storefront/js/powertex-international/powertex-international.js"
+    ],
+    "asset": [
+        "@Storefront",
+        "@ComaxxTheme",
+        "app/storefront/src/assets"
+    ],
+    "configInheritance": [
+        "@Storefront",
+        "@ComaxxTheme"
+    ],
+    "config": {
+        "fields": {
+            "comaxx-h1-font-size": {
+                "label": {
+                    "en-GB": "CACHE H1 Font Size",
+                    "de-DE": "H5 Schriftgröße"
+                },
+                "type": "text",
+                "value": "1.2rem",
+                "editable": true
+            },
+            "comaxx-h2-font-size": {
+                "label": {
+                    "en-GB": "CACHE H2 Font Size",
+                    "de-DE": "H5 Schriftgröße"
+                },
+                "type": "text",
+                "value": "1.2rem",
+                "editable": true
+            },
+            "comaxx-h3-font-size": {
+                "label": {
+                    "en-GB": "CACHE H3 Font Size",
+                    "de-DE": "H5 Schriftgröße"
+                },
+                "type": "text",
+                "value": "1.2rem",
+                "editable": true
+            },
+            "comaxx-h4-font-size": {
+                "label": {
+                    "en-GB": "CACHE H4 Font Size",
+                    "de-DE": "H5 Schriftgröße"
+                },
+                "type": "text",
+                "value": "1.2rem",
+                "editable": true
+            },
+            "comaxx-h5-font-size": {
+                "label": {
+                    "en-GB": "CACHE H5 Font Size",
+                    "de-DE": "H5 Schriftgröße"
+                },
+                "type": "text",
+                "value": "1.2rem",
+                "editable": true
+            }
+        }
+    }
 }

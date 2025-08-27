@@ -52,6 +52,16 @@
             &.offcanvas-hidden {
                 display: none;
             }
+
+            &-label {
+                width: auto;
+                flex: 1;
+            }
+
+            &-select-wrapper {
+                flex: unset;
+                width: auto;
+            }
         }
 
         .line-item-price {

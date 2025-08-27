@@ -41,11 +41,14 @@
 @import 'components/slider';
 @import 'components/buy-widget-sticky-buy';
 @import 'components/base-slider';
+@import 'components/filter-toggle-switch';
 
 // Element-related sections
 @import 'elements/cms-element-category-navigation';
 @import 'elements/cms-element-image-gallery';
 @import 'elements/cms-block-product-description-reviews';
+@import 'elements/cms-element-buy-box';
+@import 'elements/cms-element-sidebar-filter';
 
 // Layout-related sections
 @import 'layout/breadcrumbs';

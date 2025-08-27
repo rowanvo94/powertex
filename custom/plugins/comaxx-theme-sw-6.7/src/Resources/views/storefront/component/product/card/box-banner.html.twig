@@ -5,6 +5,7 @@
 {% set productBannerButton = customCategoryFields.comaxx_category_banner_product_button_show %}
 {% set productBannerLink = customCategoryFields.comaxx_category_banner_product_href_text %}
 {% set productBannerButtonText = customCategoryFields.comaxx_category_banner_product_button_text %}
+{% set productBannerButtonType = customCategoryFields.comaxx_category_banner_product_button_type %}
 {% set productBannerVerticalAlignment = customCategoryFields.comaxx_category_banner_product_vertical_alignment|default('flex-end') %}
 {% set productBannerTextAlignment = customCategoryFields.comaxx_category_banner_product_text_alignment|default('left') %}
 {% set productBannerOuterpadding = customCategoryFields.comaxx_category_banner_product_outer_padding|default('1rem') %}
@@ -42,7 +43,7 @@
 							{% endif %}
 							{% if productBannerButton %}
 								{% block product_box_banner_content_button %}
-									<a class="btn btn-primary mt-4" href="{{ productBannerLink }}" style="background-color: transparent; color: {{ productBannerTextColor }}; border-color: {{ productBannerTextColor }};">
+									<a class="btn btn-{{ productBannerButtonType }} mt-4" href="{{ productBannerLink }}">
 										{{ productBannerButtonText }}
 									</a>
 								{% endblock %}

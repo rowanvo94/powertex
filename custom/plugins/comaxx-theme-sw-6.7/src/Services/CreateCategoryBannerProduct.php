@@ -199,6 +199,51 @@ class CreateCategoryBannerProduct
                     ],
                     [
                         'id' => Uuid::randomHex(),
+                        'name' => 'comaxx_category_banner_product_button_type',
+                        'type' => CustomFieldTypes::SELECT,
+                        'config' => [
+                            'type' => 'select',
+                            'componentName' => 'sw-single-select',
+                            'customFieldType' => 'select',
+                            'customFieldPosition' => 105,
+                            'label' => [
+                                'en-GB' => 'Button type',
+                                'nl-NL' => 'Knop type'
+                            ],
+                            'options' => [
+                                [
+                                    'value' => 'primary',
+                                    'label' => [
+                                        'en-GB' => 'Primary',
+                                        'nl-NL' => 'Primary'
+                                    ]
+                                ],
+                                [
+                                    'value' => 'secondary',
+                                    'label' => [
+                                        'en-GB' => 'Secondary',
+                                        'nl-NL' => 'Secondary'
+                                    ]
+                                ],
+                                [
+                                    'value' => 'tertiary',
+                                    'label' => [
+                                        'en-GB' => 'Tertiary',
+                                        'nl-NL' => 'Tertiair'
+                                    ]
+                                ],
+                                [
+                                    'value' => 'buy',
+                                    'label' => [
+                                        'en-GB' => 'Buy button',
+                                        'nl-NL' => 'Koop knop'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    [
+                        'id' => Uuid::randomHex(),
                         'name' => 'comaxx_category_banner_product_button_text',
                         'type' => CustomFieldTypes::TEXT,
                         'config' => [

@@ -14,6 +14,7 @@ import ShowSecondThumbPlugin from './js-plugin/show-second-thumb.plugin';
 import DetailBuyStickyPlugin from './js-plugin/detail-buy-sticky.plugin';
 import RegisterButtonCheckPlugin from './js-plugin/register-button-check.plugin';
 import HeroPlugin from './js-plugin/hero.plugin';
+import ListingColorSwatchPlugin from './js-plugin/listing-color-swatch.plugin';
 
 // Register your plugin via the existing PluginManager
 const PluginManager = window.PluginManager;
@@ -34,3 +35,4 @@ PluginManager.register('ShowSecondThumb', ShowSecondThumbPlugin, '[data-second-t
 PluginManager.register('DetailBuySticky', DetailBuyStickyPlugin, '[data-buy-sticky]');
 PluginManager.register('RegisterButtonCheck', RegisterButtonCheckPlugin, '[data-register-check]');
 PluginManager.register('Hero', HeroPlugin, '[data-has-hero]');
+PluginManager.register('ListingColorSwatch', ListingColorSwatchPlugin, '[data-listing-color-swatch]');

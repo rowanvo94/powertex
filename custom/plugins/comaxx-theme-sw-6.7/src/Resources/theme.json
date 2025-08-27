@@ -6512,6 +6512,24 @@
                 "block": "blockProductBox",
                 "section": "sectionProductBoxGlobalConfiguration"
             },
+            "comaxx-detail-button-icon-code": {
+                "label": {
+                    "en-GB": "Detail button icon code",
+                    "de-DE": "Detailschaltflächensymbol-Code",
+                    "nl-NL": "Detailknop icooncode"
+                },
+                "type": "text",
+                "value": "settings",
+                "editable": true,
+                "helpText": {
+                    "en-GB": "This is for Material Symbols icon code only.",
+                    "de-DE": "Dies ist nur für Material Symbols Icon-Code.",
+                    "nl-NL": "Dit is alleen voor Material Symbols icon code."
+                },
+                "tab": "tabCategoryPage",
+                "block": "blockProductBox",
+                "section": "sectionProductBoxGlobalConfiguration"
+            },
             "comaxx-sale-price-color": {
                 "label": {
                     "en-GB": "Sale price color",
@@ -6546,6 +6564,74 @@
                             "label": {
                                 "en-GB": "No",
                                 "de-DE": "Nein"
+                            }
+                        }
+                    ]
+                },
+                "editable": true,
+                "tab": "tabCategoryPage",
+                "block": "blockProductBox",
+                "section": "sectionProductBoxGlobalConfiguration"
+            },
+            "comaxx-show-quantity-selector": {
+                "label": {
+                    "en-GB": "Show quantity selector",
+                    "de-DE": "Mengen-Auswahl anzeigen",
+                    "nl-NL": "Aantal selector tonen"
+                },
+                "type": "single-select",
+                "value": "0",
+                "custom": {
+                    "componentName": "sw-single-select",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": {
+                                "en-GB": "Yes",
+                                "de-DE": "Ja",
+                                "nl-NL": "Ja"
+                            }
+                        },
+                        {
+                            "value": "0",
+                            "label": {
+                                "en-GB": "No",
+                                "de-DE": "Nein",
+                                "nl-NL": "Nee"
+                            }
+                        }
+                    ]
+                },
+                "editable": true,
+                "tab": "tabCategoryPage",
+                "block": "blockProductBox",
+                "section": "sectionProductBoxGlobalConfiguration"
+            },
+            "comaxx-show-color-swatches": {
+                "label": {
+                    "en-GB": "Show color swatches",
+                    "de-DE": "Farbmuster anzeigen",
+                    "nl-NL": "Kleurstaaltjes tonen"
+                },
+                "type": "single-select",
+                "value": "1",
+                "custom": {
+                    "componentName": "sw-single-select",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": {
+                                "en-GB": "Yes",
+                                "de-DE": "Ja",
+                                "nl-NL": "Ja"
+                            }
+                        },
+                        {
+                            "value": "0",
+                            "label": {
+                                "en-GB": "No",
+                                "de-DE": "Nein",
+                                "nl-NL": "Nee"
                             }
                         }
                     ]
@@ -6749,41 +6835,6 @@
                     ]
                 },
                 "editable": true,
-                "tab": "tabCategoryPage",
-                "block": "blockProductBox",
-                "section": "sectionProductBoxStandardConfiguration"
-            },
-            "comaxx-show-quantity-select-box-standard": {
-                "label": {
-                    "en-GB": "Show quantity select",
-                    "de-DE": "Mengenwahl anzeigen"
-                },
-                "type": "single-select",
-                "value": "0",
-                "custom": {
-                    "componentName": "sw-single-select",
-                    "options": [
-                        {
-                            "value": "1",
-                            "label": {
-                                "en-GB": "Yes",
-                                "de-DE": "Ja"
-                            }
-                        },
-                        {
-                            "value": "0",
-                            "label": {
-                                "en-GB": "No",
-                                "de-DE": "Nein"
-                            }
-                        }
-                    ]
-                },
-                "editable": true,
-                "helpText": {
-                    "en-GB": "Dropdown to select quantity. Works only for directly purchasable products.",
-                    "de-DE": "Dropdown zur Mengenauswahl. Funktioniert nur bei direkt kaufbaren Produkten."
-                },
                 "tab": "tabCategoryPage",
                 "block": "blockProductBox",
                 "section": "sectionProductBoxStandardConfiguration"
@@ -7041,41 +7092,6 @@
                 "block": "blockProductBox",
                 "section": "sectionProductBoxBigImageConfiguration"
             },
-            "comaxx-show-quantity-select-box-image": {
-                "label": {
-                    "en-GB": "Show quantity select",
-                    "de-DE": "Mengenwahl anzeigen"
-                },
-                "type": "single-select",
-                "value": "0",
-                "custom": {
-                    "componentName": "sw-single-select",
-                    "options": [
-                        {
-                            "value": "1",
-                            "label": {
-                                "en-GB": "Yes",
-                                "de-DE": "Ja"
-                            }
-                        },
-                        {
-                            "value": "0",
-                            "label": {
-                                "en-GB": "No",
-                                "de-DE": "Nein"
-                            }
-                        }
-                    ]
-                },
-                "editable": true,
-                "helpText": {
-                    "en-GB": "Dropdown to select quantity. Works only for directly purchasable products.",
-                    "de-DE": "Dropdown zur Mengenauswahl. Funktioniert nur bei direkt kaufbaren Produkten."
-                },
-                "tab": "tabCategoryPage",
-                "block": "blockProductBox",
-                "section": "sectionProductBoxBigImageConfiguration"
-            },
             "comaxx-product-box-padding-box-image": {
                 "label": {
                     "en-GB": "Product Box Padding (Big Image)",
@@ -7294,41 +7310,6 @@
                     ]
                 },
                 "editable": true,
-                "tab": "tabCategoryPage",
-                "block": "blockProductBox",
-                "section": "sectionProductBoxMinimalContentConfiguration"
-            },
-            "comaxx-show-quantity-select-box-minimal": {
-                "label": {
-                    "en-GB": "Show quantity select",
-                    "de-DE": "Mengenwahl anzeigen"
-                },
-                "type": "single-select",
-                "value": "0",
-                "custom": {
-                    "componentName": "sw-single-select",
-                    "options": [
-                        {
-                            "value": "1",
-                            "label": {
-                                "en-GB": "Yes",
-                                "de-DE": "Ja"
-                            }
-                        },
-                        {
-                            "value": "0",
-                            "label": {
-                                "en-GB": "No",
-                                "de-DE": "Nein"
-                            }
-                        }
-                    ]
-                },
-                "editable": true,
-                "helpText": {
-                    "en-GB": "Dropdown to select quantity. Works only for directly purchasable products.",
-                    "de-DE": "Dropdown zur Mengenauswahl. Funktioniert nur bei direkt kaufbaren Produkten."
-                },
                 "tab": "tabCategoryPage",
                 "block": "blockProductBox",
                 "section": "sectionProductBoxMinimalContentConfiguration"
@@ -8132,6 +8113,44 @@
                             "label": {
                                 "en-GB": "No",
                                 "de-DE": "Nein"
+                            }
+                        }
+                    ]
+                },
+                "editable": true,
+                "tab": "tabCategoryPage",
+                "block": "blockNavigationFilterOptions"
+            },
+            "comaxx-show-sale-filter": {
+                "label": {
+                    "en-GB": "Show Sale Filter",
+                    "de-DE": "Sale-Filter anzeigen",
+                    "nl-NL": "Sale-filter tonen"
+                },
+                "helpText": {
+                    "en-GB": "Displays a filter for products on sale.",
+                    "de-DE": "Zeigt einen Filter für Produkte im Sale an.",
+                    "nl-NL": "Toont een filter voor producten in de sale."
+                },
+                "type": "select",
+                "value": "0",
+                "custom": {
+                    "componentName": "sw-single-select",
+                    "options": [
+                        {
+                            "value": "1",
+                            "label": {
+                                "en-GB": "Yes",
+                                "de-DE": "Ja",
+                                "nl-NL": "Ja"
+                            }
+                        },
+                        {
+                            "value": "0",
+                            "label": {
+                                "en-GB": "No",
+                                "de-DE": "Nein",
+                                "nl-NL": "Nee"
                             }
                         }
                     ]

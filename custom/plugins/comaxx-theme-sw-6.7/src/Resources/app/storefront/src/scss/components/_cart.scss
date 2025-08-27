@@ -99,8 +99,12 @@
             margin-left: 78px;
             flex: auto;
 
-            .line-item-quantity-label {
+            &-label {
                 display: none;
+            }
+
+            &-select-wrapper {
+                width: auto !important;
             }
         }
     }

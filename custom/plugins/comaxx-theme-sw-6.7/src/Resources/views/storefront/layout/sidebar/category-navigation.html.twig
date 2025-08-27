@@ -1,0 +1,25 @@
+{% sw_extends '@Storefront/storefront/layout/sidebar/category-navigation.html.twig' %}
+
+{% block layout_navigation_categories_link_children_name %}
+    {{ parent() }}
+    {% set productCount = get_category_product_count(item.category.id, context.context) %}
+    {% if productCount > 0 %}
+        <span class="product-count">({{ productCount }})</span>
+    {% endif %}
+{% endblock %}
+
+{% block layout_navigation_categories_link_name %}
+    {{ parent() }}
+    {% set productCount = get_category_product_count(item.category.id, context.context) %}
+    {% if productCount > 0 %}
+        <span class="product-count">({{ productCount }})</span>
+    {% endif %}
+{% endblock %}
+
+{% block layout_navigation_categories_text %}
+    {{ parent() }}
+    {% set productCount = get_category_product_count(item.category.id, context.context) %}
+    {% if productCount > 0 %}
+        <span class="product-count">({{ productCount }})</span>
+    {% endif %}
+{% endblock %}

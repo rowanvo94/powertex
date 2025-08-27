@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+. ./load-env
+
+ddev start
+
+ddev auth ssh

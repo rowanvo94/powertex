@@ -1,0 +1,18 @@
+{% block sw_cms_element_mini %}
+    <div class="sw-cms-el-mini" :style="miniBackgroundColor">
+        <div class="sw-cms-el-mini-content">
+            <h3 :style="miniTextColor">{{ element.config.miniTitle.value }}</h3>
+            <p :style="miniTextColor" v-html="element.config.miniDescription.value"></p>
+            <a :style="miniButtonStyles" class="btn btn-primary">
+                {{ element.config.miniButtonText.value }}
+            </a>
+        </div>
+        <div class="sw-cms-el-mini-image"
+             :class="displayModeClass">
+            <img
+                :src="mediaUrl"
+                alt=""
+            >
+        </div>
+    </div>
+{% endblock %}

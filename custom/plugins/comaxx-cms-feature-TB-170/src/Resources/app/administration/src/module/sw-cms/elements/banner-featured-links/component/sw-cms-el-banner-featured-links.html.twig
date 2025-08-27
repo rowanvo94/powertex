@@ -1,0 +1,13 @@
+{% block sw_cms_element_banner_featured_links %}
+    <div class="sw-cms-el-banner-featured-links" :style="bannerBackgroundColor">
+        <div class="sw-cms-el-banner-featured-links-content">
+            <div v-html="element.config.bannerContent.value"></div>
+        </div>
+        <div class="sw-cms-el-banner-featured-links-image">
+            <img
+                :src="mediaUrl"
+                alt=""
+            >
+        </div>
+    </div>
+{% endblock %}

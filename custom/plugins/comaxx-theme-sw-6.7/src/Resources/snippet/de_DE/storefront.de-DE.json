@@ -1,0 +1,109 @@
+{
+    "general": {
+        "star": ""
+    },
+    "comaxx": {
+        "header": {
+            "top-bar": {
+                "usp1": {
+                    "text": "Kostenloser Versand bei einem Einkauf von über 100€",
+                    "icon": "schedule"
+                },
+                "usp2": {
+                    "text": "Vor 14:00 Uhr bestellt, am selben Tag versandt",
+                    "icon": "package_2"
+                },
+                "usp3": {
+                    "text": "30-Tage-Rückgaberecht",
+                    "icon": "headset_mic"
+                }
+            },
+            "usp-bar": {
+                "usp1": {
+                    "text": "Kostenloser Versand bei einem Einkauf von über 100€",
+                    "icon": "schedule"
+                },
+                "usp2": {
+                    "text": "Vor 14:00 Uhr bestellt, am selben Tag versandt",
+                    "icon": "package_2"
+                },
+                "usp3": {
+                    "text": "30-Tage-Rückgaberecht",
+                    "icon": "headset_mic"
+                }
+            },
+            "announcementbanner": {
+                "text": "<b>Announcement banner</b> Comaxx thema meldung!"
+            }
+        },
+        "megamenu": {
+            "rightCol": {
+                "categoryView": "Ansehen"
+            }
+        },
+        "checkout": {
+            "register": {
+                "toggle": "Registrieren"
+            },
+            "steps": {
+                "loginRegistration": "Anmeldung / Registrierung",
+                "loginPaymentMethod": "Zahlungs- und Versandarten",
+                "loginConfirmation": "Bestätigung"
+            }
+        },
+        "footer": {
+            "bottom": {
+                "madeby": "gemacht von Comaxx"
+            },
+            "columnSocialHeadline": {
+                "title": "Folgen Sie uns"
+            }
+        },
+        "product": {
+            "description": {
+                "readmore": "Mehr lesen",
+                "readless": "Weniger lesen"
+            },
+            "price": {
+                "tax": {
+                    "incLabel": "Inkl. MwSt",
+                    "exclLabel": "Exkl. MwSt"
+                }
+            },
+            "detail": {
+                "downloadsTitle": "Downloads",
+                "tabsDownload": "Downloads"
+            }
+        },
+        "account": {
+            "loginForm": {
+                "description": "Anmeldung für bestehende Kunden"
+            },
+            "register": {
+                "toggle": "Register"
+            }
+        },
+        "listing": {
+            "filterPanelAriaLiveSingular": "Zeigt %count% Produkt.",
+            "sidebar": {
+                "count": "(%count%)",
+                "navigation-title": "Categories"
+            }
+        },
+        "search": {
+            "breadcrumb": {
+                "text": "Suchergebnisse"
+            }
+        },
+        "cart": {
+            "line-item": {
+                "remove": "Löschen"
+            }
+        },
+        "card": {
+            "badge": {
+                "discount": "Sale"
+            }
+        }
+    }
+}

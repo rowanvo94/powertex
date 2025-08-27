@@ -1,0 +1,316 @@
+
+<div class="sw-cms-el-config-image-slider">
+   
+    <sw-tabs
+        position-identifier="sw-cms-element-config-image-slider"
+        class="sw-cms-el-config-image-slider__tabs"
+        default-item="content"
+    >
+        <template #default="{ active }">
+           
+            <sw-tabs-item
+                :title="$t('sw-cms.elements.general.config.tab.content')"
+                name="content"
+                :active-tab="active"
+            >
+                {{ $t('sw-cms.elements.general.config.tab.content') }}
+            </sw-tabs-item>
+         
+            <sw-tabs-item
+                :title="$t('sw-cms.elements.general.config.tab.settings')"
+                name="settings"
+                :active-tab="active"
+            >
+                {{ $t('sw-cms.elements.general.config.tab.settings') }}
+            </sw-tabs-item>
+         
+        </template>
+
+        <template
+            #content="{ active }"
+        >
+          
+            <sw-container
+                v-if="active === 'content'"
+                class="sw-cms-el-config-image-slider__tab-content"
+            >
+                
+                <sw-media-list-selection-v2
+                    :entity-media-items="mediaItems"
+                    :entity="entity"
+                    :upload-tag="uploadTag"
+                    :default-folder-name="defaultFolderName"
+                    @upload-finish="onImageUpload"
+                    @item-remove="onItemRemove"
+                    @open-sidebar="onOpenMediaModal"
+                    @item-sort="onItemSort"
+                />
+                
+                <sw-media-modal-v2
+                    v-if="mediaModalIsOpen"
+                    variant="full"
+                    :caption="$t('sw-cms.elements.general.config.caption.mediaUpload')"
+                    :entity-context="cmsPageState.entityName"
+                    :initial-folder-id="cmsPageState.defaultMediaFolderId"
+                    @media-upload-remove-image="onItemRemove"
+                    @media-modal-selection-change="onMediaSelectionChange"
+                    @modal-close="onCloseMediaModal"
+                />
+               
+            </sw-container>
+         
+
+            <sw-container
+                v-if="active === 'settings'"
+                class="sw-cms-el-config-image-slider__tab-settings"
+            >
+                <div class="sw-cms-el-config-image-slider__settings-options">
+
+                    <div class="sw-cms-el-config-image-slider__setting-option">
+
+                        <mt-select
+                            v-model="element.config.displayMode.value"
+                            class="sw-cms-el-config-image-slider__setting-display-mode"
+                            :label="$t('sw-cms.elements.general.config.label.displayMode')"
+                            :help-text="$t('sw-cms.elements.imageSlider.config.helpText.displayMode')"
+                            :options="displayModeValueOptions"
+                            @update:model-value="onChangeDisplayMode"
+                        />
+
+                        <mt-text-field
+                            v-model="element.config.minHeight.value"
+                            :label="$t('sw-cms.elements.image.config.label.minHeight')"
+                            :placeholder="$t('sw-cms.elements.image.config.label.minHeight')"
+                            :help-text="$t('sw-cms.elements.image.config.label.minHeightHelpText')"
+                            :disabled="element.config.displayMode.value !== 'cover'"
+                            @update:model-value="onChangeMinHeight"
+                        />
+                        <mt-select
+                            v-model="element.config.verticalAlign.value"
+                            :label="$t('sw-cms.elements.general.config.label.verticalAlign')"
+                            :placeholder="$t('sw-cms.elements.general.config.label.verticalAlign')"
+                            :disabled="element.config.displayMode.value === 'cover'"
+                            :options="verticalAlignValueOptions"
+                        />
+                    </div>
+                  
+                    <div class="sw-cms-el-config-image-slider__setting-navigations sw-cms-el-config-image-slider__setting-option">
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                            
+                            <mt-select
+                                v-model="element.config.navigationArrows.value"
+                                :label="$t('sw-cms.elements.imageSlider.config.label.navigationArrows')"
+                                :options="navigationArrowsValueOptions"
+                                @update:model-value="emitUpdateEl"
+                            />
+                           
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                           
+                            <mt-select
+                                v-model="element.config.navigationDots.value"
+                                :label="$t('sw-cms.elements.imageSlider.config.label.navigationDots')"
+                                :options="navigationDotsValueOptions"
+                                @update:model-value="emitUpdateEl"
+                            />
+                          
+                        </div>
+
+                        
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                         
+                                <mt-number-field
+                                    v-model="element.config.itemsSm.value"
+                                    number-type="int"
+                                    :min="0"
+                                    :max="10"
+                                    :label="'Amount of slides on Mobile'"
+                                    :placeholder="2"
+                                    :help-text="'Maximum number of slides on mobile devices'"
+                                />
+                   
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                           
+                                <mt-number-field
+                                    v-model="element.config.itemsMd.value"
+                                    number-type="int"
+                                    :min="0"
+                                    :max="10"
+                                    :label="'Amount of slides on Tablet'"
+                                    :placeholder="4"
+                                    :help-text="'Maximum number of slides on tablets'"
+                                />
+                
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                         
+                                <mt-number-field
+                                    v-model="element.config.itemsLg.value"
+                                    number-type="int"
+                                    :min="0"
+                                    :max="10"
+                                    :label="'Amount of slides on Desktop'"
+                                    :placeholder="8"
+                                    :help-text="'Maximum number of slides on desktop screens'"
+                                />
+                       
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                            <mt-switch
+                                v-model="element.config.categorySliderLazy.value"
+                                class="sw-cms-el-config-image-slider__setting-category-slider-lazy"
+                                label="Enable lazy loading"
+                                bordered
+                                @update:model-value="onChangeCategorySliderLazy"
+                            />
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                            <mt-switch
+                                v-model="element.config.categorySliderLoop.value"
+                                class="sw-cms-el-config-image-slider__setting-category-slider-loop"
+                                label="Enable loop"
+                                bordered
+                                @update:model-value="onChangeCategorySliderLoop"
+                            />
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                            <mt-switch
+                                v-model="element.config.categorySliderDrag.value"
+                                class="sw-cms-el-config-image-slider__setting-category-slider-drag"
+                                label="Enable mouse drag"
+                                bordered
+                                @update:model-value="onChangeCategorySliderDrag"
+                            />
+                        </div>
+
+                        <div class="sw-cms-el-config-image-slider__settings-navigation">
+                            <mt-number-field
+                                v-model="element.config.gutter.value"
+                                number-type="int"
+                                :min="0"
+                                :max="999"
+                                :label="'Space between slides (Gutter)'"
+                                :placeholder="32"
+                            />
+                        </div>
+                    </div>
+                 
+                    <div class="sw-cms-el-config-image-slider__setting-speed">
+                       
+                        <mt-number-field
+                            v-model="element.config.speed.value"
+                            class="sw-cms-el-config-image-slider__setting-speed-slide"
+                            number-type="int"
+                            :min="0"
+                            :max="3600000"
+                            :label="$t('sw-cms.elements.general.config.label.speed')"
+                            :placeholder="$t('sw-cms.elements.general.config.label.speed')"
+                            :help-text="$t('sw-cms.elements.general.config.helpText.speed')"
+                        />
+                     
+                    </div>
+
+                    <mt-banner
+                        class="sw-cms-el-config-image-slider__setting-auto-slide"
+                        variant="attention"
+                        :title="$t('sw-cms.elements.general.config.infoText.autoSlideTitle')"
+                    >
+                        <p class="sw-cms-el-config-image-slider__setting-auto-slide-attention">
+                            {{ $t('sw-cms.elements.general.config.infoText.autoSlide') }}
+                        </p>
+
+                        <div class="sw-cms-el-config-image-slider__setting-auto-slide-container sw-cms-el-config-image-slider__setting-option">
+                            <div class="sw-cms-el-config-image-slider__setting-auto-slide-switch">
+                             
+                                <mt-switch
+                                    v-model="element.config.autoSlide.value"
+                                    class="sw-cms-el-config-image-slider__setting-auto-slide"
+                                    :label="$t('sw-cms.elements.general.config.label.autoSlide')"
+                                    bordered
+                                    @update:model-value="onChangeAutoSlide"
+                                />
+                           
+                            </div>
+
+                            <div class="sw-cms-el-config-image-slider__setting-auto-slide-delay">
+                               
+                                <mt-number-field
+                                    v-model="element.config.autoplayTimeout.value"
+                                    class="sw-cms-el-config-image-slider__setting-delay-slide"
+                                    number-type="int"
+                                    :min="0"
+                                    :max="3600000"
+                                    :label="$t('sw-cms.elements.general.config.label.autoplayTimeout')"
+                                    :placeholder="$t('sw-cms.elements.general.config.label.autoplayTimeout')"
+                                    :help-text="$t('sw-cms.elements.general.config.helpText.autoplayTimeout')"
+                                />
+                            
+                            </div>
+                        </div>
+                    </mt-banner>
+
+                   
+                    <div class="sw-cms-el-config-image-slider__settings-links sw-cms-el-config-image-slider__setting-option">
+                        <div
+                            v-for="(sliderItem, index) in items"
+                            :key="index"
+                            class="sw-cms-el-config-image-slider__settings-link"
+                        >
+
+                           
+                            <sw-container
+                                :key="sliderItem.mediaId"
+                                class="sw-cms-el-config-image-slider__settings-link-container"
+                            >
+                                <img
+                                    v-if="sliderItem.mediaUrl"
+                                    class="sw-cms-el-config-image-slider__settings-link-prefix"
+                                    :src="sliderItem.mediaUrl"
+                                    alt=""
+                                >
+
+                                <mt-url-field
+                                    v-model="sliderItem.url"
+                                    class="sw-cms-el-config-image-slider__settings-link-input"
+                                    :name="sliderItem.mediaUrl"
+                                    :label="$t('sw-cms.elements.image.config.label.linkTo')"
+                                    :placeholder="$t('sw-cms.elements.image.config.placeholder.enterUrl')"
+                                />
+                            </sw-container>
+                         
+
+                            <mt-switch
+                                v-model="sliderItem.newTab"
+                                class="sw-cms-el-config-image-slider__settings-link-tab"
+                                :name="sliderItem.mediaId"
+                                :label="$t('sw-cms.elements.image.config.label.linkNewTab')"
+                                bordered
+                            />
+                          
+                        </div>
+                    </div>
+           
+
+                    <mt-switch
+                        class="sw-cms-el-config-image-slider__settings-is-decorative"
+                        :model-value="element.config.isDecorative.value"
+                        :label="$t('sw-cms.elements.image.config.label.isDecorative')"
+                        :help-text="$t('sw-cms.elements.image.config.label.isDecorativeHelpText')"
+                        bordered
+                        @update:model-value="onChangeIsDecorative"
+                    />
+                </div>
+            </sw-container>
+
+        </template>
+    </sw-tabs>
+   
+</div>
+

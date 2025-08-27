@@ -1,0 +1,70 @@
+{% block sw_cms_el_config_faq_nested %}
+    <div>
+        <template v-for="(category, catIndex) in element.config.categories.value">
+            <sw-card
+                :key="catIndex"
+                :title="`Categorie ${catIndex + 1}`"
+                class="mb-4"
+            >
+                <sw-container columns="1fr auto" gap="10px" class="mb-4">
+                    <mt-text-field
+                        v-model="category.name"
+                        label="Categorienaam"
+                    />
+                    <mt-button
+                        size="small"
+                        variant="danger"
+                        @click="removeCategory(catIndex)"
+                        v-if="element.config.categories.value.length > 1"
+                    >
+                        Verwijder categorie
+                    </mt-button>
+                </sw-container>
+
+                <template v-for="(question, qIndex) in category.questions">
+                    <sw-container columns="1fr auto" gap="10px" class="mb-2">
+                        <mt-text-field
+                            v-model="question.question"
+                            :label="`Vraag ${qIndex + 1}`"
+                        />
+
+                        <mt-button
+                            size="small"
+                            variant="danger"
+                            @click="removeQuestion(catIndex, qIndex)"
+                            v-if="category.questions.length > 1"
+                        >
+                            Verwijder vraag
+                        </mt-button>
+                    </sw-container>
+
+                    <div class="mt-field">
+                        <sw-text-editor
+                             v-model="question.answer"
+                            :label="`Antwoord ${qIndex + 1}`"
+                            :allow-fullscreen="true"
+                            :height="150"
+                            class="mb-4"
+                        />
+                    </div>
+                </template>
+
+                <mt-button
+                    size="small"
+                    variant="primary"
+                    @click="addQuestion(catIndex)"
+                >
+                    Vraag toevoegen
+                </mt-button>
+            </sw-card>
+        </template>
+
+        <mt-button
+            size="small"
+            variant="primary"
+            @click="addCategory"
+        >
+            Categorie toevoegen
+        </mt-button>
+    </div>
+{% endblock %}

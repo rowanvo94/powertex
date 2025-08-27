@@ -1,0 +1,148 @@
+{% sw_extends '@Storefront/storefront/layout/footer/footer.html.twig' %}
+
+{% set comaxxColumnWidth = theme_config('comaxx-footer-columns-width') %}
+{% set comaxxShowHotline = theme_config('comaxx-show-footer-hotline') %}
+{% set comaxxShowSocialCol = theme_config('comaxx-show-social-media-column') %}
+{% set comaxxFooterMainWidth = theme_config('comaxx-footer-main-width') %}
+{% set comaxxFooterBottomWidth = theme_config('comaxx-footer-bottom-width') %}
+
+{% set comaxxFooterBottomPrivacyLinksShow = theme_config('comaxx-footer-bottom-privacy-links-show') %}
+{% set comaxxFooterBottomPrivacyLinksOrder = theme_config('comaxx-footer-bottom-privacy-links-order') %}
+{% set comaxxFooterBottomPrivacyLinksJustifyContent = theme_config('comaxx-footer-bottom-privacy-links-justify-content') %}
+
+{% set comaxxFooterBottomLogoShow = theme_config('comaxx-footer-bottom-logo-show') %}
+{% set comaxxFooterBottomLogoOrder = theme_config('comaxx-footer-bottom-logo-order') %}
+{% set comaxxFooterBottomLogoJustifyContent = theme_config('comaxx-footer-bottom-logo-justify-content') %}
+{% set comaxxFooterBottomLogo = theme_config('comaxx-footer-bottom-logo') %}
+
+{% set comaxxFooterBottomMadeByShow = theme_config('comaxx-footer-bottom-made-by-show') %}
+{% set comaxxFooterBottomMadeByOrder = theme_config('comaxx-footer-bottom-made-by-order') %}
+{% set comaxxFooterBottomMadeByJustifyContent = theme_config('comaxx-footer-bottom-made-by-justify-content') %}
+{% set comaxxFooterBottomMadeByText = theme_config('comaxx-footer-bottom-made-by-text') %}
+
+{% set comaxxFooterBottomCopyrightShow = theme_config('comaxx-footer-bottom-copyright-show') %}
+{% set comaxxFooterBottomCopyrightOrder = theme_config('comaxx-footer-bottom-copyright-order') %}
+{% set comaxxFooterBottomCopyrightJustifyContent = theme_config('comaxx-footer-bottom-copyright-justify-content') %}
+{% set comaxxFooterBottomCopyrightText = theme_config('comaxx-footer-bottom-copyright-text') %}
+
+{# Set class for footer main width #}
+{% if comaxxFooterMainWidth == '1' %}
+	{% set footerMainClasses = 'container' %}
+{% elseif comaxxFooterMainWidth == '2' %}
+	{% set footerMainClasses = 'container-fluid' %}
+{% else %}
+	{% set footerMainClasses = '' %}
+{% endif %}
+
+{# Set class for footer bottom width #}
+{% if comaxxFooterBottomWidth == '1' %}
+	{% set footerBottomClasses = 'container' %}
+{% elseif comaxxFooterBottomWidth == '2' %}
+	{% set footerBottomClasses = 'container-fluid' %}
+{% else %}
+	{% set footerBottomClasses = '' %}
+{% endif %}
+
+{% block layout_footer_inner_container %}
+	<div class="{{ footerMainClasses }}">
+		{% block layout_footer_navigation %}
+			{{ parent() }}
+		{% endblock %}
+	</div>
+	{% block layout_footer_bottom %}
+		<div class="footer-bottom">
+			<div class="{{ footerBottomClasses }}">
+				<div class="row">
+					<div class="col-12">
+						<div class="footer-bottom-holder row">
+							{% block layout_footer_bottom_logo %}
+								{% if comaxxFooterBottomLogo is not empty and comaxxFooterBottomLogoShow %}
+									<div class="col-12 col-md-1 order-{{ comaxxFooterBottomLogoOrder }}">
+										<div class="footer-bottom-logo d-flex justify-content-md-{{ comaxxFooterBottomLogoJustifyContent }}">
+											<a href="/">
+												<img src="{{ asset(comaxxFooterBottomLogo) }}" alt="Footer Bottom Logo">
+											</a>
+										</div>
+									</div>
+								{% endif %}
+							{% endblock %}
+
+							{% block layout_footer_service_menu %}
+								{% if comaxxFooterBottomPrivacyLinksShow %}
+									{% block layout_footer_service_menu_content %}
+										<div class="col-12 col-md order-{{ comaxxFooterBottomPrivacyLinksOrder }} d-flex justify-content-md-{{ comaxxFooterBottomPrivacyLinksJustifyContent}} ">
+											{{ parent() }}
+										</div>
+									{% endblock %}
+								{% endif %}
+							{% endblock %}
+
+							{% block layout_footer_bottom_company %}
+								{% if comaxxFooterBottomMadeByText is not empty and comaxxFooterBottomMadeByShow %}
+									<div class="col-6 col-md order-{{ comaxxFooterBottomMadeByOrder }} d-flex justify-content-md-{{ comaxxFooterBottomMadeByJustifyContent }}">
+										<div class="footer-bottom-madeby">
+											{{ comaxxFooterBottomMadeByText }}
+										</div>
+									</div>
+								{% endif %}
+							{% endblock %}
+
+							{% block layout_footer_bottom_copyright %}
+								{% if comaxxFooterBottomCopyrightText is not empty and comaxxFooterBottomCopyrightShow%}
+									<div class="col-6 col-md order-{{ comaxxFooterBottomCopyrightOrder }} d-flex justify-content-md-{{ comaxxFooterBottomCopyrightJustifyContent }}">
+										<div class="footer-bottom-copyright">
+											{{ comaxxFooterBottomCopyrightText }}
+										</div>
+									</div>
+								{% endif %}
+							{% endblock %}
+
+							{% block layout_footer_vat %}{% endblock %}
+
+							{% block layout_footer_copyright %}{% endblock %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endblock %}
+{% endblock %}
+
+{# Set column classes #}
+{% set columnClasses = 'col-md-6 col-lg-' ~ comaxxColumnWidth %}
+
+{% block layout_footer_navigation_hotline %}
+	{% if comaxxShowHotline %}
+		<div class="{{ columnClasses }} footer-column js-footer-column">
+			{% block layout_footer_navigation_hotline_headline %}
+				{{ parent() }}
+			{% endblock %}
+			{% block layout_footer_navigation_hotline_content %}
+				{{ parent() }}
+			{% endblock %}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block layout_footer_navigation_columns %}
+	{% for root in footer.navigation.tree %}
+		{% block layout_footer_navigation_column %}
+			<div class="{{ columnClasses }} footer-column js-footer-column">
+				{% block layout_footer_navigation_information_headline %}
+					{{ parent() }}
+				{% endblock %}
+				{% block layout_footer_navigation_information_content %}
+					{{ parent() }}
+				{% endblock %}
+			</div>
+		{% endblock %}
+	{% endfor %}
+
+	{% block layout_footer_social_col %}
+		{% if comaxxShowSocialCol %}
+			<div class="{{ columnClasses }} footer-column js-footer-column">
+				{% sw_include '@Storefront/storefront/layout/footer/footer-social-col.html.twig' %}
+			</div>
+		{% endif %}
+	{% endblock %}
+{% endblock %}

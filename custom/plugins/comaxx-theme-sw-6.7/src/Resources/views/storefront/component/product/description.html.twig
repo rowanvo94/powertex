@@ -1,0 +1,36 @@
+{% sw_extends '@Storefront/storefront/component/product/description.html.twig' %}
+
+{% set showDescription = theme_config('comaxx-show-product-properties-description') %}
+{% set showToggle = theme_config('comaxx-read-more-toggle') %}
+
+{% block component_product_description_content %}
+	
+	{% block component_product_description_content_text %}
+		<div class="product-detail-description-text" itemprop="description">
+			<div class="description-content{% if showDescription == " 2" %} description-has-columns{% endif %}{% if showtoggle %} has-toggle{% if product.translated.description|split(' ')|length > 50 or product.sortedproperties|length > 0 %} description-content-has-toggle{% endif %}{% endif %}">
+				<div class="description-content-inner">
+					{{ product.translated.description|raw }}
+				</div>
+
+				{% if showDescription == "1" or showDescription == "2" and product.sortedProperties|length > 0%}
+					<div class="description-content-properties {% if showDescription == " 2" %} properties-col{% endif %}">
+						{% sw_include '@Storefront/storefront/component/product/properties.html.twig' %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	{% endblock %}
+
+	{% if product.translated.description|split(' ')|length > 50 and showToggle %}
+		<div class="product-detail-description-toggle" data-detail-description-toggle>
+			<button class="read-more-btn btn btn-secondary square-link">
+				<span class="card-blog-link-square"></span>
+				{{ 'comaxx.product.description.readmore'|trans|sw_sanitize }}
+			</button>
+			<button class="read-less-btn btn btn-secondary square-link" style="display: none;">
+				<span class="card-blog-link-square"></span>
+				{{ 'comaxx.product.description.readless'|trans|sw_sanitize }}
+			</button>
+		</div>
+	{% endif %}
+{% endblock %}

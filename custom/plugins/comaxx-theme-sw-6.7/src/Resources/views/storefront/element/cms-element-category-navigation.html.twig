@@ -1,0 +1,14 @@
+{% sw_extends '@Storefront/storefront/element/cms-element-category-navigation.html.twig' %}
+
+{% set comaxxShowNavigationTitle = theme_config('comaxx-show-navigation-title') %}
+
+{% block element_category_navigation_element %}
+
+    {% block element_category_navigation_element_headline %}
+        {% if comaxxShowNavigationTitle %}
+            <h4>{{ 'comaxx.listing.sidebar.navigation-title'|trans|sw_sanitize }}</h3>
+        {% endif %}
+    {% endblock %}
+
+    {{ parent() }}
+{% endblock %}

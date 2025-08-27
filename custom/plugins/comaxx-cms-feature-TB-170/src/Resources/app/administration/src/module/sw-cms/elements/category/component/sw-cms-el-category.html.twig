@@ -1,0 +1,23 @@
+{% block sw_cms_element_category %}
+    <div class="sw-cms-el-category" :class="categoryShape">
+        <div class="sw-cms-el-category-image" :style="categoryBackgroundColor">
+            <img :src="mediaUrl" alt="Category Image" :class="categoryImageFit">
+        </div>
+        <div class="sw-cms-el-category-content" :class="categoryContentClass">
+            <component
+                :is="categoryTitleStyle"
+                v-if="categoryName"
+                :style="categoryTitleColorStyle"
+            >
+                {{ categoryName }}
+            </component>
+            <component
+                :is="categoryTitleStyle"
+                v-else
+                :style="categoryTitleColorStyle"
+            >
+                Category placeholder
+            </component>
+        </div>
+    </div>
+{% endblock %}

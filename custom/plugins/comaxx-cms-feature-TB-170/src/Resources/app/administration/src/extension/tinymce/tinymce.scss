@@ -1,0 +1,89 @@
+@import '../../../../storefront/src/scss/variables.scss';
+
+.sw-text-editor {
+    textarea {
+        display: none;
+    }
+
+    div {
+        font-family: 'Inter var', -apple-system, blinkmacsystemfont, 'San Francisco', 'Segoe UI', roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    &.is--boxed .sw-text-editor__box {
+        border: none;
+    }
+
+    .btn {
+        &.btn-primary {
+            background: var(--comaxx-primary-button-background-color);
+            padding: var(--comaxx-primary-button-padding);
+            font-size: var(--comaxx-primary-button-font-size);
+            font-weight: var(--comaxx-primary-button-font-weight);
+            color: var(--comaxx-primary-button-text-color);
+        }
+    }
+
+    .list-horizontal {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+        list-style: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .list-vertical {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+.mce-content-body {
+    p {
+        line-height: var(--comaxx-base-line-height);
+    }
+
+    .btn {
+        &.btn-primary {
+            background: var(--comaxx-primary-button-background-color);
+            padding: var(--comaxx-primary-button-padding);
+            font-size: var(--comaxx-primary-button-font-size);
+            font-weight: var(--comaxx-primary-button-font-weight);
+            color: var(--comaxx-primary-button-text-color);
+        }
+
+        &.btn-secondary {
+            background: var(--comaxx-secondary-button-background-color);
+            padding: var(--comaxx-secondary-button-padding);
+            font-size: var(--comaxx-secondary-button-font-size);
+            font-weight: var(--comaxx-secondary-button-font-weight);
+            color: var(--comaxx-secondary-button-text-color);
+        }
+
+        &.btn-tertiary {
+            background: var(--comaxx-tertiary-button-background-color);
+            padding: var(--comaxx-tertiary-button-padding);
+            font-size: var(--comaxx-tertiary-button-font-size);
+            font-weight: var(--comaxx-tertiary-button-font-weight);
+            color: var(--comaxx-tertiary-button-text-color);
+        }
+    }
+
+    .list-horizontal {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+        list-style: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .list-vertical {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+}

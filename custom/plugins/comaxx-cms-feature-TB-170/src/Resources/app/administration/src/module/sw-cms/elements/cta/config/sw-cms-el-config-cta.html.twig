@@ -1,0 +1,190 @@
+{% block sw_cms_element_cta_config %}
+    <mt-tabs
+        :items="[
+            { label: 'General settings', name: 'general' },
+            { label: 'Button settings', name: 'button' }
+        ]"
+        @new-item-active="setActiveItem"
+    />
+
+    <!-- General Tab Content -->
+    <sw-container v-if="activeTab === 'general'" class="sw-cms-el-config-cta__tab-content" style="margin-top: 2rem;">
+
+        <mt-text-field
+            v-model="ctaTitle"
+            label="Call to action title"
+            placeholder="Enter a title"
+            @update:model-value="changeTitle"
+        />
+
+        <mt-select
+            v-model="element.config.ctaTitleType.value"
+            class="sw-cms-el-config-cta-title-type"
+            label="Title HTML tag"
+            @update:model-value="onChangeTitleType"
+            :options="titleOptions"
+        />
+
+        <mt-colorpicker
+            v-model="ctaTitleColor"
+            color-output="hex"
+            label="Title color"
+            :alpha="true"
+            :z-index="1000"
+            @update:model-value="onChangeTitleColor"
+        />
+
+        <div class="mt-field">
+            <sw-text-editor
+                v-model="ctaDescription"
+                label="Call to action description"
+                placeholder="Enter a description"
+                @update:model-value="changeDescription"
+            />
+        </div>
+
+        <mt-colorpicker
+            v-model="ctaBackgroundColor"
+            color-output="hex"
+            label="Call to action background color"
+            :alpha="true"
+            zIndex="1000"
+            @update:model-value="changeBackgroundColor"
+        />
+
+        <!-- Media upload -->
+        <div class="sw-cms-el-config-image">
+            {% block sw_cms_element_image_config_media_upload %}
+                <sw-cms-mapping-field
+                    v-model:config="element.config.media"
+                    :label="$tc('sw-cms.elements.image.label')"
+                    value-types="entity"
+                    entity="media"
+                >
+                    <sw-media-upload-v2
+                        variant="regular"
+                        :upload-tag="uploadTag"
+                        :source="previewSource"
+                        :allow-multi-select="false"
+                        :default-folder="cmsPageState.pageEntityName"
+                        :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')"
+                        @media-upload-sidebar-open="onOpenMediaModal"
+                        @media-upload-remove-image="onImageRemove"
+                    />
+
+                    <template #preview="{ demoValue }">
+                        <div class="sw-cms-el-config-image__mapping-preview">
+                            <img
+                                v-if="demoValue.url"
+                                :src="demoValue.url"
+                                alt=""
+                            >
+                            <mt-banner
+                                v-else
+                                class="sw-cms-el-config-image__preview-info"
+                                variant="info"
+                            >
+                                {{ $tc('sw-cms.detail.label.mappingEmptyPreview') }}
+                            </mt-banner>
+                        </div>
+                    </template>
+                </sw-cms-mapping-field>
+
+                <sw-upload-listener
+                    :upload-tag="uploadTag"
+                    auto-upload
+                    @media-upload-finish="onImageUpload"
+                />
+            {% endblock %}
+
+            {% block sw_cms_element_image_config_media_modal %}
+                <sw-media-modal-v2
+                    v-if="mediaModalIsOpen"
+                    variant="full"
+                    :caption="$tc('sw-cms.elements.general.config.caption.mediaUpload')"
+                    :entity-context="cmsPageState.entityName"
+                    :allow-multi-select="false"
+                    :initial-folder-id="cmsPageState.defaultMediaFolderId"
+                    @media-upload-remove-image="onImageRemove"
+                    @modal-close="onCloseModal"
+                    @media-modal-selection-change="onSelectionChanges"
+                />
+            {% endblock %}
+        </div>
+    </sw-container>
+
+    <!-- Button Tab Content -->
+    <sw-container v-if="activeTab === 'button'" class="sw-cms-el-config-cta__tab-button-settings" style="margin-top: 2rem;">
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="ctaClickable"
+                label="Element is clickable"
+                help-text="This removes the button element"
+                @change="onCtaClickableChange"
+            />
+        </div>
+
+        <mt-text-field
+            v-if="isCtaNotClickable"
+            v-model="ctaButtonText"
+            label="Call to action button text"
+            placeholder="Enter cta button text"
+            @update:model-value="changeButtonText"
+        />
+
+        <mt-text-field
+            v-model="ctaButtonUrl"
+            label="Call to action button url"
+            placeholder="Enter cta button url"
+            @update:model-value="changeButtonUrl"
+        />
+
+        <mt-select
+            v-if="isCtaNotClickable"
+            v-model="element.config.buttonType.value"
+            class="sw-cms-el-config-button-type"
+            label="Button type"
+            @update:model-value="onChangeButtonType"
+            :options="buttonOptions"
+        />
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="ctaIconShow"
+                label="Show CTA Icon"
+                @change="onctaIconShow"
+            />
+        </div>
+
+        <mt-colorpicker
+            v-if="!ctaNoIcon"
+            v-model="ctaIconBorderColor"
+            color-output="hex"
+            label="Icon border color"
+            :alpha="true"
+            zIndex="1000"
+            @update:model-value="onChangeIconBorderColor"
+        />
+
+        <mt-colorpicker
+            v-if="!ctaNoIcon"
+            v-model="ctaIconBackgroundColor"
+            color-output="hex"
+            label="Icon background color"
+            :alpha="true"
+            zIndex="1000"
+            @update:model-value="onChangeIconBackgroundColor"
+        />
+
+        <mt-colorpicker
+            v-if="!ctaNoIcon"
+            v-model="ctaIconColor"
+            color-output="hex"
+            label="Icon color"
+            :alpha="true"
+            zIndex="1000"
+            @update:model-value="onChangeIconColor"
+        />
+    </sw-container>
+{% endblock %}

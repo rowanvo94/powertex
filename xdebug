@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+status=$(ddev xdebug status)
+
+if [[ $status == "xdebug disabled" ]]; then
+    ddev xdebug enable
+else
+    ddev xdebug disable
+fi

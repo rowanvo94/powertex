@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -f ./code/ddev.config.yaml ]; then
+    if [ ! -f .ddev/config.local.yaml ]; then
+      cd .ddev
+      ln -s ../code/ddev.config.yaml config.local.yaml
+      cd ..
+    fi
+fi

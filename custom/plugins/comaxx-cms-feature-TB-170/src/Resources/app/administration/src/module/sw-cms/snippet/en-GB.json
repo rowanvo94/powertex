@@ -1,0 +1,117 @@
+{
+    "sas-cms-grid": {
+        "blocks": {
+            "grid": {
+                "category": {
+                    "label": "Grid"
+                },
+                "oneColumn": {
+                    "label": "Full width"
+                },
+                "twoColumn": {
+                    "label": "Two columns"
+                },
+                "threeColumn": {
+                    "label": "Three columns"
+                },
+                "fourColumn": {
+                    "label": "Four columns"
+                },
+                "sixColumn": {
+                    "label": "Six columns"
+                },
+                "3-6-3": {
+                    "label": "3-6-3 columns"
+                },
+                "3-3-6": {
+                    "label": "3-3-6 columns"
+                },
+                "6-3-3": {
+                    "label": "6-3-3 columns"
+                },
+                "2-8-2": {
+                    "label": "2-8-2 column"
+                },
+                "3-9": {
+                    "label": "3-9 column"
+                },
+                "9-3": {
+                    "label": "9-3 column"
+                },
+                "4-8": {
+                    "label": "4-8 column"
+                },
+                "8-4": {
+                    "label": "8-4 column"
+                },
+                "5-7": {
+                    "label": "5-7 column"
+                },
+                "7-5": {
+                    "label": "7-5 column"
+                },
+                "fiveColumn": {
+                    "label": "Five columns"
+                }
+            }
+        }
+    },
+    "comaxx-cms": {
+        "blocks": {
+            "textImage": {
+                "textImageAction": {
+                    "label": "Text image and action"
+                }
+            }
+        }
+    },
+    "sw-cms": {
+        "elements": {
+            "banner-featured-links": {
+                "label": "Featured links"
+            },
+            "cta": {
+                "label": "Call To Action"
+            },
+            "faq": {
+                "label": "FAQ"
+            },
+            "faq-nested": {
+                "label": "FAQ Nested"
+            },
+            "tabs": {
+                "label": "Tabs"
+            },
+            "banner": {
+                "label": "Banner element"
+            },
+            "banner-link": {
+                "label": "Banner Call to action"
+            },
+            "category-highlight": {
+                "label": "Category highlight"
+            },
+            "mini": {
+                "label": "Mini cta"
+            },
+            "category": {
+                "label": "Category image & text"
+            },
+            "category-slider": {
+                "label": "Category slider"
+            }
+        }
+    },
+    "tiny-mce": {
+        "label": "Tiny MCE",
+        "linkLabelCategory": "Category",
+        "linkLabelProduct": "Product",
+        "newTabCheckboxLabel": "Open in new tab",
+        "customLinkModal": {
+            "title": "Custom link"
+        },
+        "helpText": {
+            "newTab": "The link will be opened in a new tab instead of the current one"
+        }
+    }
+}

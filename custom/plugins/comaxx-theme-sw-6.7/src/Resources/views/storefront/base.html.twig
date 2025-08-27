@@ -1,0 +1,145 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% set comaxxHeaderType = theme_config('comaxx-header-variant') %}
+{% set comaxxHeaderWidth = theme_config('comaxx-header-width') %}
+{% set comaxxHeaderBackground = theme_config('comaxx-header-background') %}
+{% set comaxxTopBarShow = theme_config('comaxx-header-top-bar-show') %}
+{% set comaxxAnnouncementBannerShow = theme_config('comaxx-announcement-show') %}
+{% set comaxxActivateStickyHeader = theme_config('comaxx-header-sticky-header-activate') %}
+{% set comaxxStickyHeaderBehaviour = theme_config('comaxx-header-sticky-header-behaviour') %}
+{% set comaxxCustomerServiceShow = context.salesChannel.translated.customFields.comaxx_customer_service_show_element %}
+{% set comaxxIconStyleClass = theme_config('comaxx-icon-style')|lower %}
+{% set comaxxFooterUspShow = theme_config('comaxx-footer-usp-show') %}
+{% set comaxxShowUspBelowHeader = theme_config('comaxx-uspbar-show') %}
+{% set comaxxUspBelowHeaderLayout = theme_config('comaxx-uspbar-layout') %}
+{% set comaxxShowHero = context.salesChannel.customFields.comaxx_hero_show %}
+
+{# Set class for header type #}
+{% set bodyClasses = [] %}
+{% if comaxxHeaderType %}
+    {% set bodyClasses = ['comaxx-header-type-' ~ comaxxHeaderType]|merge(bodyClasses) %}
+{% endif %}
+
+{# Voeg class toe als hero wordt getoond #}
+{% if comaxxShowHero and controllerAction == 'home' %}
+    {% set bodyClasses = bodyClasses|merge(['page-has-hero']) %}
+{% endif %}
+
+{# Body classes #}
+{% block base_body_classes %}
+    {{
+        (parent() ~ ' ' ~ (bodyClasses|join(' ')))|replace({
+            '\t': '',
+            '\n': '',
+            '\r': '',
+            '\0': '',
+            '\x0B': '',
+            '\r\n': ''
+        })
+    }}
+{% endblock %}
+
+{% block base_body %}
+    {% set customFields = context.salesChannel.customFields %}
+
+    {% set comaxxTopbarBackgroundColor = customFields.comaxx_hero_header_topbar_background_color %}
+    {% set comaxxTopbarTextColor = customFields.comaxx_hero_header_topbar_text_color %}
+    {% set comaxxTopbarIconColor = customFields.comaxx_hero_header_topbar_icon_color %}
+    {% set comaxxHeaderBackgroundColor = customFields.comaxx_hero_header_background_color %}
+    {% set comaxxHeaderActionIconColor = customFields.comaxx_hero_header_action_icon_color %}
+    {% set comaxxNavBackgroundColor = customFields.comaxx_hero_header_nav_background_color %}
+    {% set comaxxNavLinkColor = customFields.comaxx_hero_header_nav_link_color %}
+    {% set comaxxNavLinkBgColor = customFields.comaxx_hero_header_nav_link_background_color %}
+    {% set comaxxNavActiveLinkColor = customFields.comaxx_hero_header_nav_active_link_color %}
+    {% set comaxxNavActiveBgColor = customFields.comaxx_hero_header_nav_active_background_color %}
+    {% set comaxxHeaderSearchInputBg = customFields.comaxx_hero_header_search_input_background_color %}
+
+    {% if controllerAction == 'home' and comaxxShowHero %}
+        <style>
+            :root { --hero-header-topbar-bg: {{ comaxxTopBarBackgroundColor|default('transparent') }}; --hero-header-topbar-text: {{ comaxxTopBarTextColor|default('#fff') }};
+            --hero-header-topbar-icon: {{ comaxxTopBarIconColor|default('#fff') }}; --hero-header-bg: {{ comaxxHeaderBackgroundColor|default('transparent') }}; --hero-header-action-icon: {{
+                comaxxActionIconColor|default('#fff')
+            }}; --hero-nav-bg: {{ comaxxNavBackgroundColor|default('transparent') }}; --hero-nav-link-color: {{ comaxxNavLinkColor|default('#fff') }}; --hero-nav-link-bg: {{
+                comaxxNavLinkBgColor|default('transparent')
+            }}; --hero-nav-link-active: {{ comaxxNavActiveLinkColor|default('#ff5000') }}; --hero-nav-link-active-bg: {{ comaxxNavActiveBgColor|default('transparent') }}; --top-bar-height: {{
+                comaxxTopBarHeight|default('40px')
+            }}; --hero-header-search-input-bg: {{ comaxxHeaderSearchInputBg|default('#fff') }}; }
+        </style>
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+{# Set class for header width #}
+{% if comaxxHeaderWidth == '1' %}
+    {% set headerClasses = 'container' %}
+{% elseif comaxxHeaderWidth == '2' %}
+    {% set headerClasses = 'container-fluid' %}
+{% elseif comaxxHeaderWidth == '3' %}
+    {% set headerClasses = 'container' %}
+{% else %}
+    {% set headerClasses = '' %}
+{% endif %}
+
+{% block base_esi_header %}
+    {# {% if comaxxActivateStickyHeader %}
+        <div {{ 'data-sticky-header-' ~ comaxxStickyHeaderBehaviour }}></div>
+    {% endif %}
+
+    {% block base_header_top_bar %}
+        {% if comaxxTopBarShow %}
+            {% sw_include '@Storefront/storefront/layout/header/top-bar.html.twig' %}
+        {% endif %}
+    {% endblock %} #}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block base_navigation %}
+
+{% endblock %}
+
+{% block base_flashbags %}
+    {% block main_hero %}
+        {% if comaxxShowHero and 'page-has-hero' in bodyClasses %}
+            {% sw_include '@Storefront/storefront/layout/hero.html.twig' %}
+        {% endif %}
+    {% endblock %}
+
+    {# Set class for header width #}
+    {% if comaxxUspBelowHeaderLayout == 'full' %}
+        {% set uspContainerClasses = 'container-fluid' %}
+    {% elseif comaxxUspBelowHeaderLayout == 'full-content-container' %}
+        {% set uspContainerClasses = 'container-fluid' %}
+    {% elseif comaxxUspBelowHeaderLayout == 'container' %}
+        {% set uspContainerClasses = 'container' %}
+    {% else %}
+        {% set uspContainerClasses = '' %}
+    {% endif %}
+
+    {% block main_usp_bar_top %}
+        {% if comaxxShowUspBelowHeader %}
+            {% sw_include '@Storefront/storefront/layout/header/usp-bar-below-header.html.twig' %}
+        {% endif %}
+    {% endblock %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block base_esi_footer %}
+    {% block comaxx_base_footer_service_container %}
+        {% if comaxxCustomerServiceShow %}
+            {% block comaxx_base_footer_service %}
+                {% sw_include '@Storefront/storefront/layout/footer/footer-customer-service.html.twig' %}
+            {% endblock %}
+        {% endif %}
+    {% endblock %}
+
+    {% block comaxx_base_footer_usp %}
+        {% if comaxxFooterUspShow %}
+            {% sw_include '@Storefront/storefront/layout/footer/footer-usp.html.twig' %}
+        {% endif %}
+    {% endblock %}
+
+    {{ parent() }}
+{% endblock %}

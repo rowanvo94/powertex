@@ -1,0 +1,89 @@
+{% block sw_cms_element_category_config %}
+
+    <mt-colorpicker
+        v-model="categoryBackgroundColor"
+        color-output="hex"
+        label="Category background color"
+        :alpha="true"
+        :z-index="1000"
+        @update:model-value="changeBackgroundColor"
+    />
+
+    <sw-entity-single-select
+        v-model:value="element.config.category.value"
+        :criteria="categoryCriteria"
+        entity="category"
+        label="Select a highlighted category"
+        @update:value="changeCategory">
+    </sw-entity-single-select>
+
+    <mt-select
+        v-model="element.config.categoryTitleStyle.value"
+        class="sw-cms-el-config-cta-title-type"
+        label="Select a title tag style"
+        @update:model-value="changeCategoryTitleStyle"
+        :options="titleOptions"
+    />
+
+    <mt-colorpicker
+        v-model="categoryTitleColor"
+        color-output="hex"
+        label="Category title color"
+        :alpha="true"
+        :z-index="1000"
+        @update:model-value="changeTitleColor"
+    />
+
+    <mt-select
+        v-model="element.config.categoryTitlePosition.value"
+        label="Select a title position"
+        @update:model-value="changeCategoryTitlePosition"
+        :options="titlePositionOptions"
+    />
+
+    <mt-select
+        v-if="element.config.categoryTitlePosition?.value === 'on-top'"
+        v-model="element.config.categoryTitleHorizontal.value"
+        label="Title horizontal alignment"
+        @update:model-value="changeCategoryTitleHorizontal"
+        :options="titleHorizontalOptions"
+    />
+
+    <mt-select
+        v-if="element.config.categoryTitlePosition?.value === 'on-top'"
+        v-model="element.config.categoryTitleVertical.value"
+        label="Title vertical alignment"
+        @update:model-value="changeCategoryTitleVertical"
+        :options="titleVerticalOptions"
+    />
+
+    <mt-text-field
+        v-if="element.config.categoryTitlePosition?.value === 'on-top'"
+        v-model="categoryImageInnerPadding"
+        label="Image inner padding"
+        placeholder="16px"
+        @update:model-value="onChangeInnerPadding"
+    />
+
+    <mt-select
+        v-model="element.config.categoryShape.value"
+        label="Select a shape option"
+        @update:model-value="changeCategoryShape"
+        :options="categoryShapeOptions"
+    />
+
+    <mt-select
+        v-model="element.config.categoryImageFit.value"
+        label="Select an image fit option"
+        @update:model-value="changeCategoryImageFit"
+        :options="imageFitOptions"
+    />
+
+    <mt-text-field
+        v-model="categoryImagePadding"
+        label="Image padding"
+        placeholder="0px"
+        @update:model-value="onChangePadding"
+    />
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% sw_extends '@Storefront/storefront/component/line-item/type/product.html.twig' %}
+
+{% set showLineItemProperties = theme_config('comaxx-line-item-show-properties') %}
+{% set showLineItemProductNumber = theme_config('comaxx-line-item-show-product-number') %}
+{% set showLineItemDeliveryDate = theme_config('comaxx-line-item-show-delivery-date') %}
+{% set showLineItemQuantity = theme_config('comaxx-cart-offcanvas-quantity-select') %}
+
+{% block component_line_item_type_product_details_container %}
+    <div class="line-item-details-container">
+        {% block component_line_item_type_product_label %}
+            {{ parent() }}
+        {% endblock %}
+
+        {% if lineItem.payload.options is not empty %}
+            {% block component_line_item_type_product_variant_characteristics %}
+                {% if showLineItemProperties %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+
+        {% if lineItem.payload.features is not empty %}
+            {% block component_line_item_type_product_features %}
+                {% sw_include '@Storefront/storefront/component/product/feature/list.html.twig' with {
+                    features: lineItem.payload.features
+                } %}
+            {% endblock %}
+        {% endif %}
+
+        {% if lineItem.payload.productNumber %}
+            {% block component_line_item_type_product_number %}
+                {% if showLineItemProductNumber %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+
+        {% if config('core.cart.showDeliveryTime') %}
+            {% block component_line_item_type_product_delivery_date %}
+                {% if showLineItemDeliveryDate %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+        {% endif %}
+
+        {% if config('core.cart.wishlistEnabled') %}
+            {% block component_line_item_type_product_wishlist %}
+            {% endblock %}
+        {% endif %}
+
+        {% block component_line_item_type_product_actions %}
+            <div class="line-item-action-holder">
+                {% block component_line_item_type_product_action_remove %}
+                    <div class="line-item-remove">
+                        {% if lineItem.removable and nestingLevel < 1 %}
+                            {% sw_include '@Storefront/storefront/component/line-item/element/remove.html.twig' %}
+                        {% endif %}
+                    </div>
+                {% endblock %}
+
+                {% block component_line_item_type_product_action_wishlist %}
+                    {% if config('core.cart.wishlistEnabled') %}
+                        {% sw_include '@Storefront/storefront/component/product/card/wishlist.html.twig' with {
+                            showText: true,
+                            size: 'sm',
+                            productId: lineItem.referencedId
+                        } %}
+                    {% endif %}
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block component_line_item_type_product_col_remove %}
+{% endblock %}
+
+{% block component_line_item_type_product_col_quantity %}
+    <div class="line-item-quantity {% if not showLineItemQuantity %}offcanvas-hidden{% endif %}">
+        {% sw_include '@Storefront/storefront/component/line-item/element/quantity.html.twig' %}
+    </div>
+{% endblock %}

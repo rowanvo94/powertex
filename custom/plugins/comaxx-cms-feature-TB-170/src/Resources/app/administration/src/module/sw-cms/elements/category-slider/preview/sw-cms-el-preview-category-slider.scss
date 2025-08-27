@@ -1,0 +1,64 @@
+.sw-cms-preview-category-slider {
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    gap: 10px;
+    height: 100%;
+    background-color: white;
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+
+        &-top {
+            align-items: center;
+            display: grid;
+            grid-template-columns: 10px 1fr 10px;
+            grid-gap: 5px;
+        }
+
+        &-image {
+            border-radius: 50%;
+            background: #ececec;
+            width: 80px;
+            height: 80px;
+            position: relative;
+            margin-bottom: 8px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 50%;
+                padding: 10px;
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            margin: 0;
+        }
+    }
+
+    &-button {
+        font-size: 10px;
+        width: 100%;
+        text-align: center;
+        background: black;
+        font-weight: bold;
+        color: #fff;
+        padding: 8px;
+        margin-top: auto;
+    }
+}

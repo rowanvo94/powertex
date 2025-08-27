@@ -1,0 +1,63 @@
+{% set categoryId = element.config.category.value %}
+{% set fallbackImageUrl = asset('bundles/comaxxcms/images/cms/fallback.jpg') %}
+{% set category = categoryId ? get_category(categoryId, context) : null %}
+
+{% block cms_element_category %}
+    {% set categoryBackgroundColor = element.config.categoryBackgroundColor.value %}
+    {% set categoryShape = element.config.categoryShape.value %}
+    {% set categoryImageFit = element.config.categoryImageFit.value %}
+    {% set categoryImagePadding = element.config.categoryImagePadding.value %}
+    {% set categoryTitleStyle = element.config.categoryTitleStyle.value %}
+    {% set categoryTitleColor = element.config.categoryTitleColor.value %}
+    {% set categoryTitlePosition = element.config.categoryTitlePosition.value %}
+    {% set categoryTitleHorizontal = element.config.categoryTitleHorizontal.value %}
+    {% set categoryTitleVertical = element.config.categoryTitleVertical.value %}
+    {% set categoryInnerPadding = element.config.categoryImageInnerPadding.value %}
+
+    <div class="cms-element-{{ element.type }}">
+        {% if category %}
+            <a href="{{ category_url(category) }}">
+                <div class="cms-element-{{ element.type }}-container is-{{ categoryTitlePosition }}"
+                    {% if categoryTitlePosition == 'on-top' %}
+                        style="
+                        justify-content: {{ categoryTitleVertical }};
+                        align-items: {{ categoryTitleHorizontal }}
+                        "{% endif %}>
+                    <div class="cms-element-{{ element.type }}-image is-{{ categoryShape }}" style="background-color:{{ categoryBackgroundColor }}; padding:{{ categoryImagePadding }}">
+                        {% if category.mediaId %}
+                            {% set media = searchMedia([category.mediaId], context.context).get(category.mediaId) %}
+                            {% if media %}
+                                <img src="{{ media.url }}" alt="" class="is-{{ categoryImageFit }}">
+                            {% else %}
+                                <img src="{{ fallbackImageUrl }}" alt="Fallback Image" class="is-{{ categoryImageFit }}">
+                            {% endif %}
+                        {% else %}
+                            <img src="{{ fallbackImageUrl }}" alt="Fallback Image" class="is-{{ categoryImageFit }}">
+                        {% endif %}
+                    </div>
+                    <div class="cms-element-{{ element.type }}-content"
+                    {% if categoryTitlePosition == 'on-top' %}
+                        style="padding: {{ categoryInnerPadding }}"
+                    {% endif %}>
+                        {% if category.translated.name %}
+                            {% set tag = categoryTitleStyle ?: 'span' %}
+                            <{{tag}} style="color: {{ categoryTitleColor }}">{{ category.translated.name }}</{{tag}}>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        {% else %}
+            <div class="cms-element-{{ element.type }}-container">
+                <div class="cms-element-{{ element.type }}-image is-{{ categoryShape }}" style="background-color:{{ categoryBackgroundColor }}; padding:{{ categoryImagePadding }}">
+                    <img src="{{ fallbackImageUrl }}" alt="Fallback Image" class="is-{{ categoryImageFit }}">
+                </div>
+                <div class="cms-element-{{ element.type }}-content"
+                {% if categoryTitlePosition == 'on-top' %}
+                    style="padding: {{ categoryInnerPadding }}"
+                {% endif %}>
+                    <{{tag}} style="color: {{ categoryTitleColor }}">No category selected</{{tag}}>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

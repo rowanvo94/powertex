@@ -1,0 +1,19 @@
+.alert {
+    color: #fff;
+
+    &-warning {
+        background-color: $sw-color-warning;
+    }
+
+    &-info {
+        background-color: $sw-color-info;
+    }
+
+    &-danger {
+        background-color: $sw-color-danger;
+    }
+
+    &-success {
+        background-color: $sw-color-success;
+    }
+}

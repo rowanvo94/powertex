@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+if [ -z "$1" ]
+    then
+        echo -n "Please enter the repository url:"
+        read repos
+    else
+        repos="$1"
+fi
+
+git clone "$repos" code

@@ -1,0 +1,17 @@
+{% sw_extends '@Storefront/storefront/layout/header/actions/currency-widget.html.twig' %}
+
+{% set comaxxCurrencyLayout = theme_config('comaxx-header-currency-selector-layout') %}
+
+{% block layout_header_actions_currency_widget %}
+    {% if position is empty %}
+        {% set position = 'top-bar' %}
+    {% endif %}
+
+    {% if (header.currencies|length) > 1 %}
+        <div class="top-bar-nav-item top-bar-currency {{ comaxxCurrencyLayout }}">
+            {% block layout_header_actions_currency_widget_form %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

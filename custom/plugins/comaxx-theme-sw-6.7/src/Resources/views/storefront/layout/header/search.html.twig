@@ -1,0 +1,26 @@
+{% sw_extends '@Storefront/storefront/layout/header/search.html.twig' %}
+
+{% set showSearchOverlay = theme_config('comaxx-header-search-focus-overlay') %}
+{% set comaxxSearchWidth = theme_config('comaxx-search-input-width') %}
+
+{% block layout_header_search %}
+	<div class="collapse" id="searchCollapse">
+		<div class="header-search {{ comaxxSearchWidth }}">
+			{% block layout_header_search_form %}
+				{{ parent() }}
+			{% endblock %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block layout_header_search_button %}
+	<button type="submit" class="btn header-search-btn header-actions-btn" aria-label="{{ 'header.searchButton'|trans|striptags }}">
+		<span class="icon material-symbols-{{ comaxxIconStyleClass }}">
+			search
+		</span>
+	</button>
+{% endblock %}
+
+{% block layout_header_search_input %}
+	<input type="search" name="search" class="form-control header-search-input" autocomplete="off" autocapitalize="off" placeholder="{{ 'header.searchPlaceholder'|trans|striptags }}" aria-label="{{ 'header.searchPlaceholder'|trans|striptags }}" value="{{ page.searchTerm }}" data-search-keyboard {% if showSearchOverlay %} data-search-focus {% endif %}>
+{% endblock %}

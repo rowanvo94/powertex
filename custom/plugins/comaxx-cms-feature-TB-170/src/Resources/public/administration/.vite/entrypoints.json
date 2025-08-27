@@ -1,0 +1,25 @@
+{
+  "base": "/bundles/comaxxcms/administration/",
+  "entryPoints": {
+    "comaxx-cms": {
+      "css": [
+        "/bundles/comaxxcms/administration/assets/comaxx-cms-Bx8oMn37.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/bundles/comaxxcms/administration/assets/comaxx-cms-BWekMET4.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

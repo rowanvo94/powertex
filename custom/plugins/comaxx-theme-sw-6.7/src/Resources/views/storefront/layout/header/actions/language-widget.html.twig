@@ -1,0 +1,17 @@
+{% sw_extends '@Storefront/storefront/layout/header/actions/language-widget.html.twig' %}
+
+{% set comaxxLanguageLayout = theme_config('comaxx-header-language-selector-layout') %}
+
+{% block layout_header_actions_language_widget %}
+    {% if position is empty %}
+        {% set position = 'top-bar' %}
+    {% endif %}
+
+    {% if (header.languages|length) > 1 %}
+        <div class="top-bar-nav-item top-bar-language {{ comaxxLanguageLayout }}">
+            {% block layout_header_actions_language_widget_form %}
+                {{ parent() }}
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}

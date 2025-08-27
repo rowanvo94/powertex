@@ -1,0 +1,22 @@
+.card-tabs .nav-link {
+    color: $comaxx-product-nav-link-color;
+    background-color: $comaxx-product-nav-link-background-color;
+    border-color: $comaxx-product-nav-link-border-color;
+    font-size: $comaxx-product-nav-link-font-size;
+    font-weight: $comaxx-product-nav-link-font-weight;
+
+    &:hover {
+        color: $comaxx-product-nav-link-hover-color;
+        background-color: $comaxx-product-nav-link-background-hover-color;
+        border-color: $comaxx-product-nav-link-border-hover-color;
+    }
+
+    &.active {
+        color: $comaxx-product-nav-link-active-link-color;
+        border-color: $comaxx-product-nav-link-active-border-color;
+
+        &:hover {
+            color: $comaxx-product-nav-link-active-link-hover-color;
+        }
+    }
+}

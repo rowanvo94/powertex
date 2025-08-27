@@ -1,0 +1,37 @@
+{% sw_extends '@Storefront/storefront/component/product/card/badges.html.twig' %}
+
+{% set comaxxBadgeAlignment = theme_config('comaxx-badge-alignment') %}
+{% set comaxxBadgeVerticalAlignment = theme_config('comaxx-badge-vertical-alignment') %}
+
+{% block component_product_badges %}
+	<div class="product-badges {{ comaxxBadgeAlignment }} {{ comaxxBadgeVerticalAlignment }}">
+		{% block component_product_badges_discount %}
+			{% set price = product.calculatedPrice %}
+			{% if product.calculatedPrices.count > 0 %}
+				{% set price = product.calculatedPrices.last %}
+			{% endif %}
+
+			{% set listPrice = price.listPrice.percentage > 0 %}
+			{% set hasRange = product.calculatedPrices.count > 1 %}
+
+			{% set displayParent = product.variantListingConfig.displayParent and product.parentId === null %}
+			{% if displayParent %}
+				{% set displayFromVariants = displayParent and price.unitPrice !== product.calculatedCheapestPrice.unitPrice %}
+			{% endif %}
+
+			{% if listPrice and not hasRange and not displayFromVariants %}
+				<div class="badge bg-danger badge-discount">
+					<span>{{ 'comaxx.card.badge.discount'|trans }}</span>
+				</div>
+			{% endif %}
+		{% endblock %}
+
+		{% block component_product_badges_topseller %}
+			{{ parent() }}
+		{% endblock %}
+
+		{% block component_product_badges_new %}
+			{{ parent() }}
+		{% endblock %}
+	</div>
+{% endblock %}

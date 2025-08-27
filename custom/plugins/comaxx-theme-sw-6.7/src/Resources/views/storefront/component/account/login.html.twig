@@ -1,0 +1,19 @@
+{% sw_extends '@Storefront/storefront/component/account/login.html.twig' %}
+
+{% block component_account_login_header %}
+    <div class="card-title">
+        {{ 'comaxx.account.loginForm.description'|trans|sw_sanitize }}
+    </div>
+{% endblock %}
+
+{% block component_account_login_form_description %}
+{% endblock %}
+
+{% block component_account_login_submit %}
+    <div class="login-submit">
+        <button type="submit"
+                class="btn btn-primary btn-buy">
+            {{ 'account.loginSubmit'|trans|sw_sanitize }}
+        </button>
+    </div>
+{% endblock %}

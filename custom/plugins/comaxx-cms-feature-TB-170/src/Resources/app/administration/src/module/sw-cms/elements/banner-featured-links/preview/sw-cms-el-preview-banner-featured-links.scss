@@ -1,0 +1,37 @@
+.sw-cms-preview-banner-featured-links {
+    display: flex;
+    flex-direction: row;
+    color: #000;
+    gap: 10px;
+    height: 100%;
+    padding: 0;
+    background-color: #ececec;
+    position: relative;
+    overflow: hidden;
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding: 10px;
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            color: black;
+        }
+    }
+
+    &-button {
+        font-size: 10px;
+        width: 100%;
+        text-align: center;
+        background: black;
+        font-weight: bold;
+        color: #fff;
+        padding: 8px;
+        margin-top: auto;
+    }
+}

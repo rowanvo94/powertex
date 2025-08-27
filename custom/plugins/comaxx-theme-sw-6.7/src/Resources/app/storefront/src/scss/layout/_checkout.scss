@@ -1,0 +1,28 @@
+.is-act-checkoutregisterpage {
+    .address-main-header {
+        display: none;
+    }
+
+    .checkout {
+        .checkout-main {
+            &.no-sidebar {
+                width: 100%;
+            }
+        }
+    }
+
+    .login-card,
+    .register-card {
+        .register-submit,
+        .login-submit {
+            @media (min-width: 768px) {
+                margin: 0;
+            }
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+}

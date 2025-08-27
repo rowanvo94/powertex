@@ -1,0 +1,8 @@
+{# Define a macro for Google Fonts links #}
+{% macro google_fonts_link(fontFamily, fontWeights) %}
+    {% if fontFamily %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family={{ fontFamily | replace({' ': '+'}) }}:wght@{{ fontWeights | replace({',': ';'}) }}&display=swap" rel="stylesheet">
+    {% endif %}
+{% endmacro %}

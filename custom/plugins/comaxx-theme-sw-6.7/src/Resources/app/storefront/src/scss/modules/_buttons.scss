@@ -1,0 +1,237 @@
+a:not(.btn) {
+    //color: $comaxx-link-color;
+    transition: all 0.4s;
+
+    &:hover {
+        color: $comaxx-link-hover-color;
+    }
+}
+
+a {
+    color: $comaxx-link-color;
+    text-decoration: none;
+
+    &:hover {
+        color: $comaxx-link-hover-color;
+    }
+}
+
+// Button styling
+.btn {
+    transition: all 0.4s;
+
+    &.btn-primary {
+        background: $comaxx-primary-button-background-color;
+        color: $comaxx-primary-button-text-color;
+        font-size: $comaxx-primary-button-font-size;
+        font-weight: $comaxx-primary-button-font-weight;
+        padding: $comaxx-primary-button-padding;
+        border-color: $comaxx-primary-button-border-color;
+
+        &:hover {
+            background: $comaxx-primary-button-hover-background-color;
+            color: $comaxx-primary-button-hover-text-color;
+            border-color: $comaxx-primary-button-hover-border-color;
+
+            .icon {
+                color: $comaxx-primary-button-hover-text-color;
+            }
+        }
+
+        .icon {
+            color: $comaxx-primary-button-text-color;
+        }
+
+        &.btn-buy {
+            padding: $comaxx-buy-button-padding;
+            font-size: $comaxx-buy-button-font-size;
+            background: $sw-color-buy-button;
+            color: $sw-color-buy-button-text;
+            border-color: $comaxx-buy-button-border-color;
+            font-weight: $comaxx-buy-button-font-weight;
+
+            &:hover {
+                background: $comaxx-color-buy-button-hover-background;
+                color: $comaxx-color-buy-button-hover-text;
+                border-color: $comaxx-buy-button-hover-border-color;
+
+                .icon {
+                    color: $comaxx-color-buy-button-hover-text;
+                }
+            }
+
+            .icon {
+                color: $sw-color-buy-button-text;
+            }
+        }
+    }
+
+    &-outline-primary {
+        font-size: $comaxx-primary-button-font-size;
+        font-weight: $comaxx-primary-button-font-weight;
+        padding: $comaxx-primary-button-padding;
+    }
+
+    &.btn-buy,
+    &.begin-checkout-btn {
+        padding: $comaxx-buy-button-padding;
+        font-size: $comaxx-buy-button-font-size;
+        background: $sw-color-buy-button;
+        color: $sw-color-buy-button-text;
+        border-color: $comaxx-buy-button-border-color;
+        font-weight: $comaxx-buy-button-font-weight;
+
+        &.has-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .btn-buy-icon {
+                margin-right: $comaxx-base-padding-extra-small;
+            }
+        }
+
+        &:hover {
+            background: $comaxx-color-buy-button-hover-background;
+            color: $comaxx-color-buy-button-hover-text;
+            border-color: $comaxx-buy-button-hover-border-color;
+        }
+    }
+
+    &.btn-buy:disabled {
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
+    &.btn-secondary {
+        background: $comaxx-secondary-button-background-color;
+        color: $comaxx-secondary-button-text-color;
+        font-size: $comaxx-secondary-button-font-size;
+        font-weight: $comaxx-secondary-button-font-weight;
+        padding: $comaxx-secondary-button-padding;
+        border-color: $comaxx-secondary-button-border-color;
+
+        &:hover {
+            background: $comaxx-secondary-button-hover-background-color;
+            color: $comaxx-secondary-button-hover-text-color;
+            border-color: $comaxx-secondary-button-hover-border-color;
+
+            .icon {
+                color: $comaxx-secondary-button-hover-text-color;
+            }
+        }
+
+        .icon {
+            color: $comaxx-secondary-button-text-color;
+        }
+    }
+
+    &-outline-secondary {
+        font-size: $comaxx-secondary-button-font-size;
+        font-weight: $comaxx-secondary-button-font-weight;
+        padding: $comaxx-secondary-button-padding;
+
+        &:hover {
+            color: $comaxx-secondary-button-text-color !important;
+
+            .icon {
+                color: $comaxx-secondary-button-text-color !important;
+            }
+        }
+    }
+
+    &.btn-tertiary {
+        background: $comaxx-tertiary-button-background-color;
+        color: $comaxx-tertiary-button-text-color;
+        font-size: $comaxx-tertiary-button-font-size;
+        font-weight: $comaxx-tertiary-button-font-weight;
+        padding: $comaxx-tertiary-button-padding;
+        border-color: $comaxx-tertiary-button-border-color;
+
+        &:hover {
+            background: $comaxx-tertiary-button-hover-background-color;
+            color: $comaxx-tertiary-button-hover-text-color;
+            border-color: $comaxx-tertiary-button-hover-border-color;
+        }
+    }
+
+    &.btn-detail {
+        padding: $comaxx-buy-button-padding;
+        font-size: $comaxx-buy-button-font-size;
+    }
+
+    &.btn-link {
+        font-size: $comaxx-button-link-font-size;
+        color: $comaxx-button-link-text-color;
+        font-weight: $comaxx-button-link-font-weight;
+
+        &:hover {
+            color: $comaxx-button-link-text-hover-color;
+        }
+    }
+
+    &.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.register-submit {
+    .btn.btn-primary {
+        padding: $comaxx-buy-button-padding;
+        font-size: $comaxx-buy-button-font-size;
+        background: $sw-color-buy-button;
+        color: $sw-color-buy-button-text;
+        border-color: $comaxx-buy-button-border-color;
+        font-weight: $comaxx-buy-button-font-weight;
+
+        &:hover {
+            background: $comaxx-color-buy-button-hover-background;
+            color: $comaxx-color-buy-button-hover-text;
+            border-color: $comaxx-buy-button-hover-border-color;
+        }
+    }
+}
+
+#confirmOrderForm {
+    .btn.btn-primary {
+        padding: $comaxx-buy-button-padding;
+        font-size: $comaxx-buy-button-font-size;
+        background: $sw-color-buy-button;
+        color: $sw-color-buy-button-text;
+        border-color: $comaxx-buy-button-border-color;
+        font-weight: $comaxx-buy-button-font-weight;
+
+        &:hover {
+            background: $comaxx-color-buy-button-hover-background;
+            color: $comaxx-color-buy-button-hover-text;
+            border-color: $comaxx-buy-button-hover-border-color;
+        }
+    }
+}
+
+.scroll-up-button {
+    .btn {
+        background: $comaxx-scroll-to-top-background-color;
+        color: $comaxx-scroll-to-top-icon-color;
+        border-color: $comaxx-scroll-to-top-border-color;
+        padding: $comaxx-scroll-to-top-padding;
+
+        &:hover {
+            background: $comaxx-scroll-to-top-hover-background-color;
+            color: $comaxx-scroll-to-top-hover-icon-color;
+            border-color: $comaxx-scroll-to-top-hover-border-color;
+        }
+    }
+}
+
+.header-search-btn {
+    border-color: $comaxx-input-border-color;
+
+    &:hover {
+        border-top-color: $comaxx-input-border-color;
+        border-right-color: $comaxx-input-border-color;
+        border-bottom-color: $comaxx-input-border-color;
+    }
+}

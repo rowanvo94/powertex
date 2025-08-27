@@ -1,0 +1,33 @@
+.page-item {
+    .page-link {
+        background-color: $pagination-item-background-color;
+        color: $pagination-item-text-color;
+        border: 1px solid $pagination-item-border-color;
+        margin: ($comaxx-base-padding-small / 2);
+        border-radius: $pagination-item-border-radius !important;
+
+        &:hover {
+            background-color: $pagination-item-hover-background-color;
+            color: $pagination-item-hover-text-color;
+            border: 1px solid $pagination-item-hover-border-color;
+        }
+
+        &.disabled {
+            background-color: transparent;
+        }
+    }
+
+    &.active {
+        .page-link {
+            background-color: $pagination-item-active-background-color;
+            color: $pagination-item-active-text-color;
+            border: 1px solid $pagination-item-active-border-color;
+
+            &:hover {
+                background-color: $pagination-item-active-hover-background-color;
+                color: $pagination-item-active-hover-text-color;
+                border: 1px solid $pagination-item-active-hover-border-color;
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.base-slider-controls {
+
+    &-prev,
+    &-next {
+        opacity: 1;
+    }
+
+    &-next {
+        right: 0;
+    }
+}

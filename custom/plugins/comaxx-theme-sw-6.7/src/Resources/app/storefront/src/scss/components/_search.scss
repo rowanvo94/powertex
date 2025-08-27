@@ -1,0 +1,92 @@
+.search-suggest-container {
+    z-index: 1001;
+}
+
+body.is-search-focused {
+    @include media-breakpoint-up(sm) {
+        overflow: hidden;
+    }
+
+    .header-search {
+        &:after {
+            @include media-breakpoint-up(sm) {
+                background-color: rgba(0, 0, 0, 0.4);
+                z-index: 999;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        &-form {
+            position: relative;
+            z-index: 1000;
+        }
+    }
+}
+
+.header-search {
+    margin: 0 auto;
+
+    &:after {
+        visibility: hidden;
+        position: fixed;
+        z-index: -1;
+        background-color: transparent;
+        width: 100%;
+        // height: 100vh;
+        height: calc(100vh + var(--top-bar-height));
+        top: calc(-1 * var(--top-bar-height, 0px));
+        // top: 0;
+        left: 0;
+        content: '';
+        opacity: 0;
+        transition: opacity 0.15s ease-in-out;
+    }
+
+    &.fill {
+        max-width: unset;
+    }
+
+    .input-group {
+        .btn {
+            padding: $comaxx-search-button-padding;
+            background: $comaxx-search-button-background-color;
+
+            span.icon {
+                color: $comaxx-search-button-icon-color;
+            }
+
+            &:hover {
+                background: $comaxx-search-button-hover-background-color;
+
+                span {
+                    color: $comaxx-search-button-hover-icon-color;
+                }
+            }
+        }
+    }
+}
+
+input[type='search'].header-search-input {
+    background-color: $comaxx-search-input-background-color;
+    border-color: $comaxx-search-border-color;
+    color: $comaxx-search-input-text-color;
+    font-size: clamp($comaxx-search-input-font-size * 0.8, $comaxx-search-input-font-size, $comaxx-search-input-font-size * 1.2);
+    padding: $comaxx-search-input-padding;
+    border-radius: $comaxx-search-input-border-radius;
+
+    &::placeholder {
+        color: $comaxx-search-input-placeholder-color;
+        font-size: clamp($comaxx-search-input-placeholder-font-size * 0.8, $comaxx-search-input-placeholder-font-size, $comaxx-search-input-placeholder-font-size * 1.2);
+    }
+
+    &:focus,
+    &:active {
+        border-color: $comaxx-search-active-border-color;
+        background-color: $comaxx-search-active-background-color;
+    }
+
+    &:focus ~ .header-search-btn {
+        border-color: $comaxx-search-active-border-color;
+    }
+}

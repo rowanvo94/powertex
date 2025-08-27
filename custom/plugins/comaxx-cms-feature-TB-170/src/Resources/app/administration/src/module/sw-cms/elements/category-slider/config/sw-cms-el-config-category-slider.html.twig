@@ -1,0 +1,192 @@
+{% block sw_cms_element_category_slider_config %}
+    <mt-tabs
+        :items="[
+            { label: 'Category Settings', name: 'category' },
+            { label: 'Slider Settings', name: 'slider' }
+        ]"
+        @new-item-active="setActiveItem"
+    />
+    
+    <sw-container v-if="activeTab === 'category'" class="sw-cms-el-config-category-slider__tab-content" style="margin-top: 2rem;">
+
+        <div class="mt-field">
+            <sw-text-editor
+                v-model="categoryContent"
+                label="Content"
+                placeholder="Enter content"
+                @update:model-value="onChangeContent"
+            />
+        </div>
+        
+        <sw-multi-select
+            v-model:value="categories"
+            label="Select categories"
+            :options="multiSelectValues"
+            @update:value="changeCategories"
+            :loading="isLoading">
+        </sw-multi-select>
+  
+        <div v-if="warningMessage" style="color: red; margin-top: -24px; margin-bottom: 24px;">
+            {{ warningMessage }}
+        </div>
+
+        <mt-colorpicker
+            v-model="categoryBackgroundColor"
+            color-output="hex"
+            label="Category background color"
+            :alpha="true"
+            zIndex="1000"
+            @update:model-value="changeBackgroundColor"
+        />
+
+        <mt-select
+            v-model="element.config.categoryShape.value"
+            label="Select a shape option"
+            @update:model-value="changeCategoryShape"
+            :options="shapeOptions"
+        />
+
+        <mt-select
+            v-model="element.config.categoryImageFit.value"
+            label="Select an image fit option"
+            @update:model-value="changeCategoryImageFit"
+            :options="imageFitOptions"
+        />
+
+        <sw-text-field
+            v-model="categoryImagePadding"
+            label="Image padding"
+            placeholder="16px"
+            @update:value="onChangePadding">
+        </sw-text-field>
+    </sw-container>
+
+    <sw-container v-if="activeTab === 'slider'" class="sw-cms-el-config-category-slider__tab-slider-settings" style="margin-top: 2rem;">
+
+        <mt-text-field
+            v-model="categorySliderItemsSm"
+            label="Items on Small Screens (sm)"
+            placeholder="2"
+            @update:model-value="changeCategorySliderItemsSm"
+        />
+
+        <mt-text-field
+            v-model="categorySliderItemsMd"
+            label="Items on Medium Screens (md)"
+            placeholder="4"
+            @update:model-value="changeCategorySliderItemsMd"
+        />
+
+        <mt-text-field
+            v-model="categorySliderItemsLg"
+            label="Items on Large Screens (lg)"
+            placeholder="6"
+            @update:model-value="changeCategorySliderItemsLg"
+        />
+
+        <mt-text-field
+            v-model="categorySliderSpeed"
+            label="Slider Speed"
+            placeholder="Enter speed in ms (e.g., 300)"
+            @update:model-value="changeCategorySliderSpeed"
+        />
+
+        <mt-text-field
+            v-model="categorySliderGutter"
+            label="Slider gutter"
+            placeholder="Enter gutter (e.g., 16)"
+            @update:model-value="changeCategorySliderGutter"
+        />
+
+        <mt-select
+            v-model="element.config.categorySliderControlPosition.value"
+            label="Controls Position"
+            @update:model-value="changeCategorySliderControlPosition"
+            :options="controlPositionOptions"
+        />
+
+        <mt-text-field
+            v-if="categorySliderControlPosition === 'centered-whitespace'"
+            v-model="categorySliderControlSpacing"
+            label="Space between controls and slider"
+            placeholder="Enter space in px (e.g., 50)"
+            @update:model-value="changeCategorySliderControlSpacing"
+        />
+
+        <mt-text-field
+            v-model="categorySliderSlideBy"
+            label="Slide By"
+            placeholder="Enter a positive number or page"
+            :help-text="'Set how many items to slide at once. Use a positive number (e.g., 2) or page to slide by the number of visible items.'"
+            @update:model-value="changeCategorySliderSlideBy"
+        />
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderNav"
+                label="Show navigation"
+                @change="changeCategorySliderNav"
+            />
+        </div>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderControls"
+                label="Show controls"
+                @change="changeCategorySliderControls"
+            />
+        </div>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderAuto"
+                label="Enable autoplay"
+                @change="changeCategorySliderAuto"
+            />
+        </div>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderLazy"
+                label="Enable lazy loading"
+                @change="changeCategorySliderLazy"
+            />
+        </div>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderLoop"
+                label="Enable loop"
+                @change="changeCategorySliderLoop"
+            />
+        </div>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderDrag"
+                label="Enable mouse drag"
+                @change="changeCategorySliderDrag"
+            />
+        </div>
+
+        <!-- Responsive Settings (Section Header) -->
+        <h3 style="margin-top: 20px;">Responsive Settings</h3>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderMobileNav"
+                label="Mobile Navigation"
+                @change="changeCategorySliderMobileNav"
+            />
+        </div>
+
+        <div class="mt-field">
+            <mt-checkbox
+                :model-value="categorySliderMobileControls"
+                label="Mobile Controls"
+                @change="changeCategorySliderMobileControls"
+            />
+        </div>
+    </sw-container>
+            
+{% endblock %}

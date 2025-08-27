@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+. ./load-env
+
+ddev composer install
+ddev shopware system:install
+ddev build-storefront

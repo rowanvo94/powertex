@@ -1,0 +1,79 @@
+{% sw_extends '@Storefront/storefront/layout/header/top-bar.html.twig' %}
+
+{% set comaxxLanguageShow = theme_config('comaxx-header-top-bar-show-language-menu') %}
+{% set comaxxCurrenciesShow = theme_config('comaxx-header-top-bar-show-currencies-menu') %}
+{% set comaxxTopBarWidth = theme_config('comaxx-header-top-bar-width') %}
+{% set comaxxUspShow = theme_config('comaxx-header-top-bar-show-usp') %}
+{% set comaxxUspShowCarousel = theme_config('comaxx-header-top-bar-show-usp-carousel') %}
+{% set comaxxLangCurLocation = theme_config('comaxx-header-language-currency-location') %}
+{% set comaxxTopBarHeight = theme_config('comaxx-header-top-bar-height') %}
+{% set comaxxIconStyleClass = theme_config('comaxx-icon-style')|lower %}
+{% set comaxxTopBarHideMobile = theme_config('comaxx-header-top-bar-hide-mobile')|lower %}
+
+{# Top bar width class #}
+{% if comaxxTopBarWidth == '1' %}
+	{% set topBarClasses = 'container' %}
+{% elseif comaxxTopBarWidth == '2' %}
+	{% set topBarClasses = 'container-fluid' %}
+{% else %}
+	{% set topBarClasses = '' %}
+{% endif %}
+
+{% block layout_header_top_bar %}
+	<div class="top-bar {% if comaxxTopBarHideMobile %}d-none d-sm-flex{% endif %}" style="--top-bar-height: {{ comaxxTopBarHeight }};">
+		<div class="{{ topBarClasses }}">
+			<div class="top-bar-holder">
+				{% block layout_header_top_bar_inner %}
+					{% if comaxxUspShow %}
+						{% block layout_header_top_bar_inner_usps %}
+							<div class="top-bar-usp swiper js-top-bar-usp-slider usp-bar" {% if comaxxUspShowCarousel %} data-top-bar-carousel {% endif %}>
+								{% if comaxxUspShowCarousel %}
+									<div class="swiper-wrapper">
+									{% endif %}
+									{% block layout_header_top_bar_inner_usps_items %}
+										<div class="{% if comaxxUspShowCarousel %}swiper-slide {% endif %}top-bar-usp-item js-top-bar-usp-item usp-bar-item">
+											<span class="material-symbols-{{ comaxxIconStyleClass }}">
+												{{ 'comaxx.header.top-bar.usp1.icon'|trans }}
+											</span>
+											{{ 'comaxx.header.top-bar.usp1.text'|trans }}
+										</div>
+										<div class="{% if comaxxUspShowCarousel %}swiper-slide {% endif %}top-bar-usp-item js-top-bar-usp-item usp-bar-item">
+											<span class="material-symbols-{{ comaxxIconStyleClass }}">
+												{{ 'comaxx.header.top-bar.usp2.icon'|trans }}
+											</span>
+											{{ 'comaxx.header.top-bar.usp2.text'|trans }}
+										</div>
+										<div class="{% if comaxxUspShowCarousel %}swiper-slide {% endif %}top-bar-usp-item js-top-bar-usp-item usp-bar-item">
+											<span class="material-symbols-{{ comaxxIconStyleClass }}">
+												{{ 'comaxx.header.top-bar.usp3.icon'|trans }}
+											</span>
+											{{ 'comaxx.header.top-bar.usp3.text'|trans }}
+										</div>
+									{% endblock %}
+									{% if comaxxUspShowCarousel %}
+									</div>
+								{% endif %}
+							</div>
+						{% endblock %}
+					{% endif %}
+
+					{% if comaxxLangCurLocation == 'top-bar' %}
+						{% if (comaxxLanguageShow and header.languages|length > 1) or (comaxxCurrenciesShow and header.currencies|length > 1) %}
+							{% block layout_header_top_bar_navigation %}
+								<nav class="top-bar-nav d-flex justify-content-end" aria-label="{{ 'header.topBarAriaLabel'|trans|striptags }}">
+									{% if comaxxLanguageShow %}
+										{% sw_include '@Storefront/storefront/layout/header/actions/language-widget.html.twig' %}
+									{% endif %}
+
+									{% if comaxxCurrenciesShow %}
+										{% sw_include '@Storefront/storefront/layout/header/actions/currency-widget.html.twig' %}
+									{% endif %}
+								</nav>
+							{% endblock %}
+						{% endif %}
+					{% endif %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

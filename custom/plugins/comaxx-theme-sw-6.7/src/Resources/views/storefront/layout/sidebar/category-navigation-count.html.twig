@@ -1,0 +1,39 @@
+{# THIS FILE IS BACK UP FOR THE COUNT. IS NOT BEING USED #}
+
+{% set comaxxSidebarCategoryCountShow = theme_config('comaxx-show-category-product-count') %}
+
+{# Define a macro to display the product count if the config is set #}
+{% macro displayProductCount(productCount, showCount) %}
+    {% if showCount %}
+        {{ 'comaxx.listing.sidebar.count'|trans({'%count%': "<span class='product-count'>" ~ productCount ~ "</span>"})|raw }}
+    {% endif %}
+{% endmacro %}
+
+{% block layout_navigation_categories_list_entry %}
+    {% if item.category.linkType != 'landing_page' %}
+        {% if item.category is defined and item.category.id is not null %}
+            {% set productCount = get_category_product_count(item.category.id, context.context) %}
+        {% endif %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block layout_navigation_categories_folder_children %}
+    {{ parent() }}
+    {{ _self.displayProductCount(productCount, comaxxSidebarCategoryCountShow) }}
+{% endblock %}
+
+{% block layout_navigation_categories_link_name %}
+    {{ parent() }}
+    {{ _self.displayProductCount(productCount, comaxxSidebarCategoryCountShow) }}
+{% endblock %}
+
+{% block layout_navigation_categories_text %}
+    {{ parent() }}
+    {{ _self.displayProductCount(productCount, comaxxSidebarCategoryCountShow) }}
+{% endblock %}
+
+{% block layout_navigation_categories_link_children_name %}
+    {{ parent() }}
+    {{ _self.displayProductCount(productCount, comaxxSidebarCategoryCountShow) }}
+{% endblock %}

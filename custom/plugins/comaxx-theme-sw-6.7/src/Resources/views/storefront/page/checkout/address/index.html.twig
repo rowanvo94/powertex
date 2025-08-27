@@ -1,0 +1,35 @@
+{% sw_extends '@Storefront/storefront/page/checkout/address/index.html.twig' %}
+
+{% set comaxxCheckoutSidebarShow = theme_config('comaxx-show-summary-cart-sidebar') %}
+
+{% block page_checkout_aside %}
+    {% if comaxxCheckoutSidebarShow %}
+        {{ parent() }}
+    {% endif %}
+{%endblock %}
+
+{% block page_checkout_address_login_toggle %}
+{% endblock %}
+
+{% block page_checkout_address_login %}
+    <div class="row">
+        <div class="col-lg-6 my-4 my-lg-0">
+            <div class="collapse show" id="loginCollapse">
+                {% block page_checkout_address_login_card %}
+                    {% sw_include '@Storefront/storefront/component/account/login.html.twig' %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            {% block page_checkout_address_register_card_moved %}
+                {% sw_include '@Storefront/storefront/page/checkout/address/register.html.twig' with {
+                    cardTitle: 'checkout.addressRegisterCardTitle'|trans|sw_sanitize
+                } %}
+            {% endblock %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page_checkout_address_register %}
+{% endblock %}

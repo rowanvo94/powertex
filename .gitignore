@@ -1,20 +1,21 @@
-/.idea
-/vendor/
+/sources/vendor/
+/sources/var/
+/sources/public/media/
+/sources/public/bundles/
+/sources/public/theme/
+/sources/public/thumbnail/
+/sources/public/sitemap/
+/sources/.env
+/sources/.env.local
+/sources/auth.json
+/sources/install.lock
+/sources/files/
+!/sources/files/.htaccess
+.DS_Store
+**/.DS_Store
+._.DS_Store
+**/._.DS_Store
+/sources/public/.htaccess
 
-###> shopware/core ###
-.env.local
-.env.local.php
-.env.*.local
-/public/bundles/*
-/public/media/*
-/public/theme/*
-/public/thumbnail/*
-/public/sitemap/*
-/files/*
-!/files/.htaccess
-/var/*
-!/var/.htaccess
-/auth.json
-/install.lock
-public/asset-manifest.json
-###< shopware/core ###
+# Ignore everything in the SwagExtensionStore plugin
+/sources/custom/plugins/SwagExtensionStore/

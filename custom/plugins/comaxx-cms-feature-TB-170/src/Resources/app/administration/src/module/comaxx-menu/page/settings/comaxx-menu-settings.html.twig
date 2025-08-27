@@ -1,33 +1,31 @@
 {% block comaxx_menu_settings %}
     <sw-page class="comaxx-menu-settings">
         <template v-slot:content>
-            <sw-card-view>
-                <template class="comaxx-settings-settings__content">
-                    <sw-tabs>
-                        <template v-slot:content="{ active }">
-                            <sw-card
-                                :title="$tc('Comaxx Thema')"
-                            >
-                                <router-link
-                                        :to="{ name: 'sw.theme.manager.detail', params: { id: customThemeId }}"
-                                >
-                                    <p>Naar de Comaxx Thema instellingen</p>
-                                </router-link>
-                            </sw-card>
-
-                            <sw-card
-                                    :title="$tc('Comaxx CMS')"
-                            >
-                                <router-link
-                                        :to="{ name: 'sw.extension.config', params: { namespace: 'ComaxxCms' }}"
-                                >
-                                    <p>Naar de Comaxx CMS instellingen</p>
-                                </router-link>
-                            </sw-card>
-                        </template>
-                    </sw-tabs>
+            <br>
+            <br>
+            <sw-meteor-card defaultTab="tab1">
+                <template #tabs="{ activeTab }">
+                    <sw-tabs-item name="comaxxTheme" :activeTab="activeTab">Comaxx Theme</sw-tabs-item>
+                    <sw-tabs-item name="comaxxTab" :activeTab="activeTab">Comaxx CMS</sw-tabs-item>
                 </template>
-            </sw-card-view>
+
+                <template #default="{ activeTab }">
+                    <p v-if="activeTab === 'tab1'">
+                        <router-link
+                                :to="{ name: 'sw.theme.manager.detail', params: { id: customThemeId }}"
+                        >
+                            <p>Naar de Comaxx Thema instellingen</p>
+                        </router-link>
+                    </p>
+                    <p v-if="activeTab === 'tab2'">
+                        <router-link
+                                :to="{ name: 'sw.extension.config', params: { namespace: 'ComaxxCms' }}"
+                        >
+                            <p>Naar de Comaxx CMS instellingen</p>
+                        </router-link>
+                    </p>
+                </template>
+            </sw-meteor-card>
         </template>
     </sw-page>
 {% endblock %}

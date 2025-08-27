@@ -13,7 +13,15 @@ export default class DetailBuySticky extends Plugin {
         this._logHeaderState('Page load');
 
         this._setupScrollHandler();
-        this._startGlobalHeaderWatcher(); // NEW: always watch header
+        this._startGlobalHeaderWatcher();
+        this._observeHeaderResize(); // NEW: observe header changes
+
+        // NEW: Delay recalculation on page load (helps with header transitions)
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                this._recalculateStickyPosition();
+            }, 500); // match your header transition duration
+        });
     }
 
     _setupScrollHandler() {
@@ -40,6 +48,7 @@ export default class DetailBuySticky extends Plugin {
 
     _logHeaderState(context) {
         const { visible, height } = this._isHeaderVisible();
+        // keep logging if needed
     }
 
     _startGlobalHeaderWatcher() {
@@ -68,6 +77,36 @@ export default class DetailBuySticky extends Plugin {
         };
 
         requestAnimationFrame(check);
+    }
+
+    // NEW: observe header resizing
+    _observeHeaderResize() {
+        if (!this.header) {
+            return;
+        }
+
+        const resizeObserver = new ResizeObserver(() => {
+            this._recalculateStickyPosition();
+        });
+
+        resizeObserver.observe(this.header);
+    }
+
+    // NEW: recalculation helper
+    _recalculateStickyPosition() {
+        if (!this.stickyBuyWidget) {
+            return;
+        }
+
+        const headerState = this._isHeaderVisible();
+
+        if (!this.stickyBuyWidget.hasAttribute('hidden')) {
+            // Kill the margin from parent plugin
+            this.stickyBuyWidget.style.marginTop = '0px';
+
+            // Use top positioning instead
+            this.stickyBuyWidget.style.top = `${headerState.height}px`;
+        }
     }
 
     _onScroll() {
@@ -110,5 +149,8 @@ export default class DetailBuySticky extends Plugin {
                 }, 200);
             }
         }
+
+        // NEW: recalc position on scroll
+        this._recalculateStickyPosition();
     }
 }

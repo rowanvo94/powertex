@@ -1,0 +1,72 @@
+// A custom variant of the default true/false filter
+.filter-toggle-switch {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &.filter-boolean {
+        padding: 0;
+    }
+
+    .form-check {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .filter-boolean-label {
+        line-height: 1;
+        height: auto;
+    }
+
+    &-label {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 32px;
+
+        &-holder {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    &-indicator {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #d8d8d8;
+        border-radius: 2.5rem;
+        transition: 0.4s;
+
+        &:before {
+            position: absolute;
+            content: '';
+            height: 24px;
+            width: 24px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+    }
+
+    &-title {
+        font-family: $sw-font-family-headline;
+        font-weight: 600;
+    }
+
+    input:checked + label .filter-toggle-switch-indicator {
+        background-color: $sw-color-brand-primary;
+    }
+
+    input:checked + label .filter-toggle-switch-indicator:before {
+        transform: translateX(26px);
+    }
+}

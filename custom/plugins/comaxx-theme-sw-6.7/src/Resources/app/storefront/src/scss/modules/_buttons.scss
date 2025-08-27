@@ -98,6 +98,18 @@ a {
         }
     }
 
+    &.btn-detail {
+        &.has-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .btn-buy-icon {
+                margin-right: $comaxx-base-padding-extra-small;
+            }
+        }
+    }
+
     &.btn-buy:disabled {
         &:hover {
             cursor: not-allowed;
@@ -133,7 +145,7 @@ a {
         padding: $comaxx-secondary-button-padding;
 
         &:hover {
-            color: $comaxx-secondary-button-text-color !important;
+            // color: $comaxx-secondary-button-text-color !important;
 
             .icon {
                 color: $comaxx-secondary-button-text-color !important;

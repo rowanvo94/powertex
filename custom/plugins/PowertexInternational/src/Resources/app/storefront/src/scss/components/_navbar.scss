@@ -6,6 +6,16 @@
     }
 }
 
+.header-main.is-sticky {
+    .navbar-holder {
+        .dropdown-menu {
+            .nav-item.nav-link {
+                color: $sw-text-color;
+            }
+        }
+    }
+}
+
 .category-navigation-link.is-active {
     color: $sw-text-color;
 }

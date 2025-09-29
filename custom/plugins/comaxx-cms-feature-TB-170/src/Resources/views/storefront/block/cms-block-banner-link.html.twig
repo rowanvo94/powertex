@@ -1,7 +1,0 @@
-{% set element = block.slots.getSlot('content') %}
-
-{% block block_banner_link %}
-
-    {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
-
-{% endblock %}

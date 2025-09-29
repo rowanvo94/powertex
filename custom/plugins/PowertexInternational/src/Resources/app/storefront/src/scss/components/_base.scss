@@ -1,0 +1,24 @@
+.bg-dark {
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    .product-name,
+    .product-price {
+        color: #fff;
+    }
+
+    .product-box {
+        .card-body {
+            background: transparent !important;
+        }
+    }
+}
+
+.header-logo-main .header-logo-picture {
+    width: clamp(120px, 10vw, 250px);
+}
+

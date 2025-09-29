@@ -22,3 +22,10 @@
 .header-logo-main .header-logo-picture {
     width: clamp(120px, 10vw, 250px);
 }
+
+.base-slider-controls-prev,
+.base-slider-controls-next {
+    span {
+        color: $sw-text-color;
+    }
+}

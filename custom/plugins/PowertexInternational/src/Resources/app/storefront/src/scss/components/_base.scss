@@ -13,7 +13,7 @@
 
     .product-box {
         .card-body {
-            background: transparent !important;
+            background: #0b0b0b !important;
         }
     }
 }
@@ -21,4 +21,3 @@
 .header-logo-main .header-logo-picture {
     width: clamp(120px, 10vw, 250px);
 }
-

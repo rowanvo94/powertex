@@ -1,1 +1,0 @@
-tinymce.util.Tools.resolve("tinymce.PluginManager").add("textcolor",function(){});

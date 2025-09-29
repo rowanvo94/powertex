@@ -1,6 +1,0 @@
-{% set element = block.slots.getSlot('content') %}
-{% block block_category_highlight %}
-
-    {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
-
-{% endblock %}

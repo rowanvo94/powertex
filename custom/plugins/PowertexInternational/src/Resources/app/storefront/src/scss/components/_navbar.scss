@@ -2,6 +2,10 @@
     .dropdown-menu {
         .nav-item.nav-link {
             color: $sw-text-color;
+
+            &:hover {
+                color: $comaxx-link-hover-color;
+            }
         }
     }
 }
@@ -11,6 +15,10 @@
         .dropdown-menu {
             .nav-item.nav-link {
                 color: $sw-text-color;
+
+                &:hover {
+                    color: $comaxx-link-hover-color;
+                }
             }
         }
     }

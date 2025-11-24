@@ -1,0 +1,47 @@
+{% sw_extends '@ComaxxTheme/storefront/component/buy-widget/buy-widget.html.twig' %}
+
+{% set pricesAllowed = false %}
+
+{% if context.currentCustomerGroup.translated.name == 'CustomerGroupAllowed' %}
+    {% set pricesAllowed = true %}
+{% endif %}
+
+{% block buy_widget_price_placement %}
+    {% if pricesAllowed %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block buy_widget_price_placement_buy_form %}
+    {% if pricesAllowed %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block buy_widget_price_one_placement %}
+    {% if pricesAllowed %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block buy_widget_buy_form %}
+    {% block buy_widget_price_placement_container %}
+        {{ parent() }}
+    {% endblock %}
+
+    {% if pricesAllowed %}
+        {{ parent() }}
+    {% endif %}
+
+    {% if comaxxDetailShowDelivery %}
+        {% block buy_widget_delivery_placement %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+
+    {% if comaxxShowBuySticky %}
+        {% block buy_widget_buy_sticky %}
+            {{ parent() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% sw_extends '@ComaxxTheme/storefront/layout/header/header.html.twig' %}
+
+{% set pricesAllowed = false %}
+
+{% if context.currentCustomerGroup.translated.name == 'CustomerGroupAllowed' %}
+    {% set pricesAllowed = true %}
+{% endif %}
+
+{% block layout_header_actions_cart %}
+    {% if pricesAllowed %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}

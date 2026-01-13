@@ -1,0 +1,15 @@
+.cms-element-category-slider {
+    &-image {
+        border: 5px solid #d3a132;
+    }
+
+    &-content {
+        background: white;
+        padding: 1rem;
+
+        span {
+            color: black;
+            font-weight: bold;
+        }
+    }
+}

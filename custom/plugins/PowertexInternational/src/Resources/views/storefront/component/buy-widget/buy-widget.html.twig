@@ -26,7 +26,7 @@
 
 {% block buy_widget_buy_form %}
     <pre>
-        {{ context.currentCustomerGroup|json_encode(constant('JSON_PRETTY_PRINT')) }}
+        {{ dump(context.currentCustomerGroup) }}
     </pre>
 
     {% block buy_widget_price_placement_container %}

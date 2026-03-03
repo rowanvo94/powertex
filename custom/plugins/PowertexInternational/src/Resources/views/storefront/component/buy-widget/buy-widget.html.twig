@@ -8,6 +8,9 @@
 
 {% block buy_widget_price_placement %}
     {% if pricesAllowed %}
+        <pre>
+            {{ dump() }}
+        </pre>
         {{ parent() }}
     {% endif %}
 {% endblock %}

@@ -7,7 +7,9 @@
         {% set pricesAllowed = true %}
     {% endif %}
 
-    {{ context.currentCustomerGroup.customFields }}
+    <pre>
+        {{ context.currentCustomerGroup|json_encode(constant('JSON_PRETTY_PRINT')) }}
+    </pre>
 
     {{ parent() }}
 {% endblock %}

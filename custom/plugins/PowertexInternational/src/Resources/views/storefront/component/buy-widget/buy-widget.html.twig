@@ -2,7 +2,7 @@
 
 {% set pricesAllowed = false %}
 
-{% if context.currentCustomerGroup.translated.name == 'CustomerGroupAllowed' %}
+{% if context.currentCustomerGroup.customFields.powertex_customergroup_prices %}
     {% set pricesAllowed = true %}
 {% endif %}
 
@@ -25,10 +25,6 @@
 {% endblock %}
 
 {% block buy_widget_buy_form %}
-    <pre>
-        {{ dump(context.currentCustomerGroup) }}
-    </pre>
-
     {% block buy_widget_price_placement_container %}
         {{ parent() }}
     {% endblock %}

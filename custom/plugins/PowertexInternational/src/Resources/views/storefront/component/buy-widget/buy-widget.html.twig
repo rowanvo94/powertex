@@ -2,7 +2,7 @@
 
 {% set pricesAllowed = false %}
 
-{% if context.currentCustomerGroup.customFields.powertex_customergroup_prices == true %}
+{% if context.currentCustomerGroup.customFields.powertex_customergroup_prices %}
     {% set pricesAllowed = true %}
 {% endif %}
 

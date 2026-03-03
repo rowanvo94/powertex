@@ -7,10 +7,11 @@
         {% set pricesAllowed = true %}
     {% endif %}
 
-    <h1>
-        TEST
-    </h1>
-    {{ pricesAllowed }}
+    {% if pricesAllowed %}
+        <h1>
+            1
+        </h1>
+    {% endif %}
 
     {{ parent() }}
 {% endblock %}

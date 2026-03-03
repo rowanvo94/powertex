@@ -1,6 +1,12 @@
 {% sw_extends '@ComaxxTheme/storefront/layout/header/header.html.twig' %}
 
 {% block layout_header_actions_cart %}
+    {% set pricesAllowed = false %}
+
+    {% if context.currentCustomerGroup.translated.customFields.powertex_customergroup_prices|default(false) %}
+        {% set pricesAllowed = true %}
+    {% endif %}
+
     {% if pricesAllowed %}
         {{ parent() }}
     {% endif %}

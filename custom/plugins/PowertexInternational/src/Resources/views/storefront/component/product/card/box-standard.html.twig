@@ -1,5 +1,11 @@
 {% sw_extends '@ComaxxTheme/storefront/component/product/card/box-standard.html.twig' %}
 
+{% set pricesAllowed = false %}
+
+{% if context.currentCustomerGroup.translated.customFields.powertex_customergroup_prices|default(false) %}
+    {% set pricesAllowed = true %}
+{% endif %}
+
 {% block component_product_box_price %}
     {% if pricesAllowed %}
         {{ parent() }}

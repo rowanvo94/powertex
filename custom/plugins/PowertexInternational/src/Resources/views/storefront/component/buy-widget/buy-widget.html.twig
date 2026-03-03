@@ -25,7 +25,9 @@
 {% endblock %}
 
 {% block buy_widget_buy_form %}
-    {{ dump() }}
+    <pre>
+        {{ customerGroup.customFields|json_encode(constant('JSON_PRETTY_PRINT')) }}
+    </pre>
 
     {% block buy_widget_price_placement_container %}
         {{ parent() }}

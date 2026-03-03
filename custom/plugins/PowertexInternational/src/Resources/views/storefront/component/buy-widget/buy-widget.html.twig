@@ -7,10 +7,10 @@
 {% endif %}
 
 {% block buy_widget_price_placement %}
+    <pre>
+        {{ dump() }}
+    </pre>
     {% if pricesAllowed %}
-        <pre>
-            {{ dump() }}
-        </pre>
         {{ parent() }}
     {% endif %}
 {% endblock %}

@@ -1,13 +1,6 @@
 {% sw_extends '@ComaxxTheme/storefront/component/buy-widget/buy-widget.html.twig' %}
 
-{% set pricesAllowed = false %}
-
-{% if context.currentCustomerGroup.customFields.powertex_customergroup_prices %}
-    {% set pricesAllowed = true %}
-{% endif %}
-
 {% block buy_widget_price_placement %}
-    {{ context.currentCustomerGroup.customFields.powertex_customergroup_prices }}
     {% if pricesAllowed %}
         {{ parent() }}
     {% endif %}

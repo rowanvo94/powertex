@@ -1,0 +1,11 @@
+{% sw_extends '@ComaxxTheme/storefront/base.html.twig' %}
+
+{% block base_body %}
+    {% set pricesAllowed = false %}
+
+    {% if context.currentCustomerGroup.customFields.powertex_customergroup_prices %}
+        {% set pricesAllowed = true %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}

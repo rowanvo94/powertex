@@ -2,11 +2,12 @@
 
 {% set pricesAllowed = false %}
 
-{% if context.currentCustomerGroup.customFields.powertex_customergroup_prices %}
+{% if context.currentCustomerGroup.customFields.powertex_customergroup_prices == true %}
     {% set pricesAllowed = true %}
 {% endif %}
 
 {% block buy_widget_price_placement %}
+    {{ context.currentCustomerGroup.customFields.powertex_customergroup_prices }}
     {% if pricesAllowed %}
         {{ parent() }}
     {% endif %}

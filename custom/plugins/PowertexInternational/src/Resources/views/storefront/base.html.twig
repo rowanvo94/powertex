@@ -3,13 +3,9 @@
 {% block base_body %}
     {% set pricesAllowed = false %}
 
-    {% if context.currentCustomerGroup.customFields.powertex_customergroup_prices %}
+    {% if context.currentCustomerGroup.translated.customFields.powertex_customergroup_prices|default(false) %}
         {% set pricesAllowed = true %}
     {% endif %}
-
-    <pre>
-        {{ context.currentCustomerGroup|json_encode(constant('JSON_PRETTY_PRINT')) }}
-    </pre>
 
     {{ parent() }}
 {% endblock %}

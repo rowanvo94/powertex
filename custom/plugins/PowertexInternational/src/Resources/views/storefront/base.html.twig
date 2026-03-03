@@ -7,7 +7,7 @@
         {% set pricesAllowed = true %}
     {% endif %}
 
-    {{ context.currentCustomerGroup.translated.name }}
+    {{ context.currentCustomerGroup.customFields.powertex_customergroup_prices }}
 
     {{ parent() }}
 {% endblock %}
